@@ -1,5 +1,4 @@
-from command_line import *
-import fdr
+
 import os
 import platform
 import sys
@@ -30,12 +29,14 @@ if platform.system() == "Linux":
             #hasta lasanga don't get any on ya
             break
 elif platform.system() == "Darwin":
-    for app_dir in ["/Applications", os.path.join("~", "Applications")]:
+    for app_dir in ["/Applications", os.path.join("~", "Applications"),"/Users/user/programs"]:
         if os.path.exists(os.path.join(app_dir, "FDR4.app")):
             sys.path.append(os.path.join(
                 app_dir, "FDR4.app", "Contents", "Frameworks"))
             break
 
+# from command_line import *
+import fdr
 
 class FDRInterface(object):
     """Interfaces the monitor with FDR"""
