@@ -6,6 +6,7 @@ import os
 import sys
 import csv
 from os.path import exists
+import yaml
 
 ################
 ###CONSTANTS###
@@ -20,12 +21,29 @@ argParser = argparse.ArgumentParser()
 argParser.add_argument("model", help="The location of the model used as the oracle.", default = "model/mascot-safety-system.csp")
 argParser.add_argument("map", help="The location of the event map", default = "event_map.json")
 argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online', 'sm-test'])
+argParser.add_argument("-c", "--config", help="The location of the config file")
 argParser.add_argument("-n", "--name", help="The name of the check and therefore name of the log file")
 argParser.add_argument("--log_path", help="The path of the log dir")
 argParser.add_argument("-t", "--trace_file", help="The location of the trace file. Only used if type='offline'")
 argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the times and mean.).", type=bool, default = False)
 
 args = argParser.parse_args()
+
+if args.config:
+
+    config_path = args.config
+    with open(config_path, 'r') as data:
+        config = yaml.safe_load(data)
+
+    if 'alphabet' in config:
+        EXPLICIT_ALPHABET = False
+        ALPHABET = set(config['alphabet'])
+    if 'main_process' in config:
+        MAIN_PROCESS = config['main_process']
+else:
+    EXPLICIT_ALPHABET = False
+    ALPHABET = None
+    MAIN_PROCESS = None
 
 MODEL = args.model
 MAP = args.map
@@ -77,7 +95,7 @@ def run(check_type):
         elif check_type == "sm-test": # This is temporary, for testing the state machine
             t0 = time.time()
             mon = Monitor(MODEL, MAP)
-            mon.run_state_machine_test()
+            mon.run_state_machine_test(MAIN_PROCESS)
 
         #mon.run_online('127.0.0.1', 5044)
         #mon.run_online_websocket('127.0.0.1', 8080)

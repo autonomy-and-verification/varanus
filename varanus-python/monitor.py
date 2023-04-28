@@ -10,9 +10,11 @@ import json
 import time
 import logging
 
-#"MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
-#"model/mascot-safety-system.csp"
+
+# "MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
+# "model/mascot-safety-system.csp"
 varanus_logger = logging.getLogger("varanus")
+
 
 class Monitor(object):
     """The main class of the program, controls the process """
@@ -24,7 +26,7 @@ class Monitor(object):
         self.eventMapper = MascotEventAbstractor(event_map_path)
 
     def new_fdr_session(self):
-        assert(self.fdr != None)
+        assert (self.fdr != None)
         self.fdr.new_session()
 
     def load_fdr_model(self, model_path):
@@ -42,7 +44,7 @@ class Monitor(object):
         # Take a single line
         trace_line = trace_file.read()
         # parse to list
-        event_list =json.loads(trace_line)
+        event_list = json.loads(trace_line)
         varanus_logger.debug("event_list:" + str(event_list))
 
         # build trace from list
@@ -53,7 +55,7 @@ class Monitor(object):
                 new_event = Event(channel, params)
                 trace.add_event(new_event)
             else:
-                channel, params = event.split(".",1)
+                channel, params = event.split(".", 1)
                 new_event = Event(channel, params)
                 trace.add_event(new_event)
 
@@ -70,14 +72,13 @@ class Monitor(object):
 
         return result
 
-
-# This Doesn't Work As Expected.
-# Takes last event from each line and accumulates
-# so we get a failure:
-# MASCOT_SAFETY_SYSTEM
-#    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
-#Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
-#Obvious bullshit
+    # This Doesn't Work As Expected.
+    # Takes last event from each line and accumulates
+    # so we get a failure:
+    # MASCOT_SAFETY_SYSTEM
+    #    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
+    # Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
+    # Obvious bullshit
     def _run_offline_traces(self, log_path):
         system = OfflineInterface(log_path)
 
@@ -89,7 +90,7 @@ class Monitor(object):
                 continue
             varanus_logger.debug("json_line:" + json_line)
             # No convert_to_internal here because it's for a file of traces
-            event_list =json.loads(json_line)
+            event_list = json.loads(json_line)
             varanus_logger.debug("event_list" + str(event_list))
             last_event = event_list[-1]
             varanus_logger.debug("last_event" + last_event)
@@ -99,14 +100,14 @@ class Monitor(object):
                 event = Event(channel, params)
                 trace.add_event(event)
             else:
-                channel, params = last_event.split(".",1)
+                channel, params = last_event.split(".", 1)
                 event = Event(channel, params)
                 trace.add_event(event)
 
             varanus_logger.debug("trace: " + str(trace) + "and type: " + type(trace))
 
             result = self.fdr.check_trace(trace)
-            varanus_logger.debug("result: "+ result)
+            varanus_logger.debug("result: " + result)
 
             if not result:
                 system.close()
@@ -136,23 +137,22 @@ class Monitor(object):
             trace.add_event(event)
             varanus_logger.debug("event: " + event)
 
-            if event_map["channel"] == "speed" :
+            if event_map["channel"] == "speed":
                 speed_ok = Event("speed_ok")
                 trace.add_event(speed_ok)
 
-            if event_map["channel"] == "foot_pedal_pressed" and event_map["params"] == True :
+            if event_map["channel"] == "foot_pedal_pressed" and event_map["params"] == True:
                 mode_change = Event("enter_hands_on_mode")
                 trace.add_event(mode_change)
-            elif event_map["channel"] == "foot_pedal_pressed" and event_map["params"] == False :
+            elif event_map["channel"] == "foot_pedal_pressed" and event_map["params"] == False:
                 mode_change = Event("enter_autonomous_mode")
                 trace.add_event(mode_change)
 
             ####
 
+            # trace = eventMapper.new_traces(event)
 
-            #trace = eventMapper.new_traces(event)
-
-            varanus_logger.debug("trace: " +trace)
+            varanus_logger.debug("trace: " + trace)
             ###############
 
             result = self.fdr.check_trace(trace)
@@ -164,8 +164,7 @@ class Monitor(object):
 
         return result
 
-
-    def run_online_traces_accumulate(self, ip, port, timeRun = False):
+    def run_online_traces_accumulate(self, ip, port, timeRun=False):
         """Accepts events transferred across a socket, accumulates a trace,
         and for each new event checks the new trace in FDR. """
 
@@ -180,11 +179,10 @@ class Monitor(object):
             time_list = []
             t0 = time.time()
 
-
         # How to terminate? What is the end program signal?
         while 1:
 
-            #get the data from the system
+            # get the data from the system
             data = conn.recv(1024)
             # break if it's empty
             if not data: break
@@ -197,20 +195,19 @@ class Monitor(object):
                 new_event = Event(channel, params)
                 trace.add_event(new_event)
             else:
-                channel, params = data.split(".",1)
+                channel, params = data.split(".", 1)
                 new_event = Event(channel, params)
                 trace.add_event(new_event)
 
-
-            #Send to FDR
+            # Send to FDR
             result = self.fdr.check_trace(trace)
-            #result = True
+            # result = True
 
-            varanus_logger.debug("result: "+ str(result))
+            varanus_logger.debug("result: " + str(result))
 
             if timeRun:
                 t1 = time.time()
-                total = t1-t0
+                total = t1 - t0
                 time_tuple = (trace.get_length(), total)
                 time_list.append(time_tuple)
 
@@ -223,7 +220,6 @@ class Monitor(object):
 
     def run_online(self, ip, port):
 
-
         ##connect to the system
         system = TCPInterface(ip, port)
         conn = system.connect()
@@ -231,7 +227,7 @@ class Monitor(object):
         # How to terminate? What is the end program signal?
         while 1:
 
-            #get the data from the system
+            # get the data from the system
             data = conn.recv(1024)
             # break if it's empty
             if not data: break
@@ -239,31 +235,30 @@ class Monitor(object):
             varanus_logger.debug("received data:" + str(data))
             conn.send(data)  # echo
 
-
             new_traces = self.eventMapper.new_traces(json.loads(data))
-            varanus_logger.debug("new_traces: "+ new_traces)
+            varanus_logger.debug("new_traces: " + new_traces)
 
             results = []
             for new_trace in new_traces:
                 varanus_logger.debug("new_trace: " + new_trace)
                 result = self.fdr.check_trace(new_trace)
 
-                varanus_logger.debug("result: "+ result)
+                varanus_logger.debug("result: " + result)
                 results.append(result)
 
             num_of_results = len(results)
             num_of_t = 0
             for r in results:
-                if r: #is true
+                if r:  # is true
                     num_of_t = num_of_t + 1
 
             percentage_true = (float(num_of_t) / num_of_results) * 100
 
-            if percentage_true == 0 :
+            if percentage_true == 0:
                 varanus_logger.info("False (100%)")
             else:
-                prvaranus_logger.info("True (" + str(percentage_true) + "%)")
-# TODO if we get to here: UnboundLocalError: local variable 'result' referenced before assignment
+                varanus_logger.info("True (" + str(percentage_true) + "%)")
+        # TODO if we get to here: UnboundLocalError: local variable 'result' referenced before assignment
 
         return result
 
@@ -273,7 +268,7 @@ class Monitor(object):
         ##connect to the system
         system = WebSocketInterface(self.websockect_check_event, port)
         system.connect()
-        #conn = system.connect()
+        # conn = system.connect()
 
     def websockect_check_event(self, client, server, message):
         """Called when a client sends a message, callback method"""
@@ -281,7 +276,7 @@ class Monitor(object):
 
         json_original_message = json.loads(str(message))
         for key in json_original_message.keys():
-            tmp =  json_original_message[key]
+            tmp = json_original_message[key]
             del json_original_message[key]
             json_original_message[str(key)] = tmp
 
@@ -301,7 +296,7 @@ class Monitor(object):
         num_of_results = len(results)
         num_of_t = 0
         for r in results:
-            if r: #is true
+            if r:  # is true
                 num_of_t = num_of_t + 1
 
         percentage_true = (float(num_of_t) / num_of_results) * 100
@@ -323,35 +318,20 @@ class Monitor(object):
         #     message_dict['spec'] = property.PROPERTY
         #     server.send_message(client, json.dumps(message_dict))
 
-
-
     def close(self):
 
         self.fdr.close()
 
-    def run_state_machine_test(self):
+    def run_state_machine_test(self, main_process):
 
-        test_process = "a -> b -> SKIP"
-        test_process_sm = {'0': [('a', '1')], '1': [('b', '2')], '2': [
-            ('\xe2\x9c\x93', '3')]}
-
-        test_process2 = "a -> (b -> SKIP [] c -> SKIP)"
-        test_process2_sm = {'0': [('a', '1')], '1': [("b", '2'), ("c", "2")], '2': [
-            ('\xe2\x9c\x93', '3')]}
-
-        test_process3 = "(b -> SKIP [] c -> SKIP)"
-        test_process3_sm = {'1': [('\xe2\x9c\x93', '2')], '0': [
-            ('b', '1'), ('c', '1')]}
-
-
-        dict_sm = (state_machine.make_simple_state_machine(test_process, fdr_interface=self.fdr))
+        dict_sm = (state_machine.make_simple_state_machine(main_process, fdr_interface=self.fdr))
         # this is a dictionary where the key is the node number
         # the value is a list of tuples (transition, dest)
 
         CSPsm = CSPStateMachine(dict_sm)
 
         scenario1_events = ["a", "b"]
-        scenario2_events = ["a","c","b"]
+        scenario2_events = ["a", "c", "b"]
         scenario3_events = ["test", "a", "b"]
 
         print("Testing Scenario 1...")
@@ -365,5 +345,3 @@ class Monitor(object):
         print("Testing Scenario 3...")
         for event in scenario3_events:
             CSPsm.transit(event)
-
-

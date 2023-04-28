@@ -1,0 +1,3 @@
+---
+alphabet: [a,b,c]
+main_process: "a -> (b -> SKIP [] c -> SKIP)"
