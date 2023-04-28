@@ -6,14 +6,15 @@ Matt Luckcuck 2022
 from fdr_interface import *
 
 
-def make_simple_state_machine(process):
+def make_simple_state_machine(process, fdr_interface = None):
     """
     Makes a state machine from the process
     """
+    if fdr_interface is None:
+        fdr_interface = FDRInterface()
+        # This loads the whole model (channels and all)
+        fdr_interface.load_model("test/simple.csp")
 
-    fdr_interface = FDRInterface()
-    # This loads the whole model (channels and all)
-    fdr_interface.load_model("test/simple.csp")
 
     # This evaluates a process (say, the trace)
     LTS = fdr_interface.session.evaluate_process(

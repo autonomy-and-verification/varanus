@@ -19,7 +19,7 @@ PORT = 5088
 argParser = argparse.ArgumentParser()
 argParser.add_argument("model", help="The location of the model used as the oracle.", default = "model/mascot-safety-system.csp")
 argParser.add_argument("map", help="The location of the event map", default = "event_map.json")
-argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online'])
+argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online', 'sm-test'])
 argParser.add_argument("-n", "--name", help="The name of the check and therefore name of the log file")
 argParser.add_argument("--log_path", help="The path of the log dir")
 argParser.add_argument("-t", "--trace_file", help="The location of the trace file. Only used if type='offline'")
@@ -55,6 +55,8 @@ varanus_logger.setLevel(log_level)
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+print(LOG_PATH)
+print(TYPE)
 
 fileHandler = logging.FileHandler(LOG_PATH + "varanus-"+ TYPE +"-"+logFileName+"-"+time.strftime("%Y_%m_%d-%H:%M:%S")+ ".log")
 
@@ -72,6 +74,10 @@ def run(check_type):
             t0 = time.time()
             mon = Monitor(MODEL, MAP)
             mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
+        elif check_type == "sm-test": # This is temporary, for testing the state machine
+            t0 = time.time()
+            mon = Monitor(MODEL, MAP)
+            mon.run_state_machine_test()
 
         #mon.run_online('127.0.0.1', 5044)
         #mon.run_online_websocket('127.0.0.1', 8080)

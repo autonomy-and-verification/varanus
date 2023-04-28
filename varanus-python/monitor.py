@@ -4,6 +4,8 @@ from event_converter import *
 from rosmon_mascot_event_abstractor import *
 from mascot_event_abstractor import *
 from trace_representation import Event, Trace
+from CSPStateMachine import CSPStateMachine
+import state_machine
 import json
 import time
 import logging
@@ -86,7 +88,7 @@ class Monitor(object):
             if json_line == '\n':
                 continue
             varanus_logger.debug("json_line:" + json_line)
-            # No convert_to_internal here becasue it's for a file of traces
+            # No convert_to_internal here because it's for a file of traces
             event_list =json.loads(json_line)
             varanus_logger.debug("event_list" + str(event_list))
             last_event = event_list[-1]
@@ -326,3 +328,42 @@ class Monitor(object):
     def close(self):
 
         self.fdr.close()
+
+    def run_state_machine_test(self):
+
+        test_process = "a -> b -> SKIP"
+        test_process_sm = {'0': [('a', '1')], '1': [('b', '2')], '2': [
+            ('\xe2\x9c\x93', '3')]}
+
+        test_process2 = "a -> (b -> SKIP [] c -> SKIP)"
+        test_process2_sm = {'0': [('a', '1')], '1': [("b", '2'), ("c", "2")], '2': [
+            ('\xe2\x9c\x93', '3')]}
+
+        test_process3 = "(b -> SKIP [] c -> SKIP)"
+        test_process3_sm = {'1': [('\xe2\x9c\x93', '2')], '0': [
+            ('b', '1'), ('c', '1')]}
+
+
+        dict_sm = (state_machine.make_simple_state_machine(test_process, fdr_interface=self.fdr))
+        # this is a dictionary where the key is the node number
+        # the value is a list of tuples (transition, dest)
+
+        CSPsm = CSPStateMachine(dict_sm)
+
+        scenario1_events = ["a", "b"]
+        scenario2_events = ["a","c","b"]
+        scenario3_events = ["test", "a", "b"]
+
+        print("Testing Scenario 1...")
+        for event in scenario1_events:
+            CSPsm.transit(event)
+
+        print("Testing Scenario 2...")
+        for event in scenario2_events:
+            CSPsm.transit(event)
+
+        print("Testing Scenario 3...")
+        for event in scenario3_events:
+            CSPsm.transit(event)
+
+

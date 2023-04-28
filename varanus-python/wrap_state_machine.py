@@ -1,9 +1,6 @@
 from state_machine import *
 from CSPStateMachine import CSPStateMachine
 
-
-
-
 if __name__ == '__main__':
     # Make some test processes
     test_process = "a -> b -> SKIP"
