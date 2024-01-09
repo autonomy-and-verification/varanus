@@ -17,8 +17,7 @@ def make_simple_state_machine(process, fdr_interface = None):
 
 
     # This evaluates a process (say, the trace)
-    LTS = fdr_interface.session.evaluate_process(
-        process, fdr.SemanticModel_Traces, None)
+    LTS = fdr_interface.session.evaluate_process(process, fdr.SemanticModel_Traces, None)
 
     # The result of the evaluate_process call is a state machine
     machine = LTS.result()

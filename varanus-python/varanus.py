@@ -10,7 +10,7 @@ import yaml
 
 ################
 ###CONSTANTS###
-VERSION_NUM = '0.88.1'
+VERSION_NUM = '0.88.2'
 
 IP = '127.0.0.1'
 PORT = 5088
@@ -95,6 +95,7 @@ def run(check_type):
         elif check_type == "sm-test": # This is temporary, for testing the state machine
             t0 = time.time()
             mon = Monitor(MODEL, MAP)
+            print(MAIN_PROCESS)
             mon.run_state_machine_test(MAIN_PROCESS)
 
         #mon.run_online('127.0.0.1', 5044)
