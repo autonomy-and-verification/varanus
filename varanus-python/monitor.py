@@ -4,7 +4,7 @@ from event_converter import *
 from rosmon_mascot_event_abstractor import *
 from mascot_event_abstractor import *
 from trace_representation import Event, Trace
-from CSPStateMachine import CSPStateMachine
+from csp_state_machine import CSPStateMachine
 import state_machine
 import json
 import time
@@ -336,12 +336,12 @@ class Monitor(object):
 
         print("Testing Scenario 1...")
         for event in scenario1_events:
-            CSPsm.transit(event)
+            CSPsm.transition(event)
 
         print("Testing Scenario 2...")
         for event in scenario2_events:
-            CSPsm.transit(event)
+            CSPsm.transition(event)
 
         print("Testing Scenario 3...")
         for event in scenario3_events:
-            CSPsm.transit(event)
+            CSPsm.transition(event)

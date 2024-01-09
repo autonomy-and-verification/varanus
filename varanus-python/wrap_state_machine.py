@@ -1,5 +1,5 @@
 from state_machine import *
-from CSPStateMachine import CSPStateMachine
+from csp_state_machine import CSPStateMachine
 
 if __name__ == '__main__':
     # Make some test processes
