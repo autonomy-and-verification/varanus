@@ -32,6 +32,51 @@ class Monitor(object):
     def load_fdr_model(self, model_path):
         self.fdr.load_model(self.model_path)
 
+    def _run_offline_state_machine(self, main_process, trace_path):
+        """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
+        varanus_logger.info("+++ Running Offline -- Using State Machine +++")
+
+        ## Build the State Machine
+
+        config_file = "../sm-test/sm_test.yaml"
+        dict_sm = (self.fdr.convert_to_dictionary(main_process))
+        process = CSPStateMachine(dict_sm, config_file)
+        process.start()
+        #test_result = process.test_machine()
+        result = {}
+
+        ## Extract the Traces and start the loop
+        ## This interface should be extracted out to the Offline Interface class
+        ## This should essentially be 'there is the trace path' and then 'while .has_event'
+        system = OfflineInterface(trace_path)
+
+        trace_file = system.connect()
+        trace = Trace()
+
+        for json_line in trace_file:
+            if json_line == '\n':
+                continue
+            event_list = json.loads(json_line)
+            varanus_logger.debug("event_list = " +str(event_list))
+            ## Forgetting about data for a minute
+            parsed_event = Event(event_list['topic'])
+            transition = parsed_event.to_fdr()
+            varanus_logger.debug("transition string = " + transition)
+
+            if process.current_state.name not in result:
+                result[process.current_state.name] = []
+            old_state = process.current_state.name
+
+            resulting_state = process.transition(transition)
+
+            if resulting_state is not None:
+                result[old_state].append((transition, resulting_state.name))
+            else:
+                result[old_state].append((transition, resulting_state))
+
+
+
+    # deprecated
     def _run_offline_traces_single(self, trace_path):
         """ Runs Varanus Offline, taking a single trace and sending it to FDR"""
 
@@ -79,7 +124,7 @@ class Monitor(object):
     #    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
     # Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
     # Obvious bullshit
-    def _run_offline_traces(self, log_path):
+    def _run_offline_traces(self, log_path): # Deprecated
         system = OfflineInterface(log_path)
 
         trace_file = system.connect()

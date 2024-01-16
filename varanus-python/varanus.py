@@ -20,7 +20,7 @@ PORT = 5088
 argParser = argparse.ArgumentParser()
 argParser.add_argument("model", help="The location of the model used as the oracle.", default = "model/mascot-safety-system.csp")
 argParser.add_argument("map", help="The location of the event map", default = "event_map.json")
-argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online', 'sm-test'])
+argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online', 'sm-test', 'offline-test'])
 argParser.add_argument("-c", "--config", help="The location of the config file")
 argParser.add_argument("-n", "--name", help="The name of the check and therefore name of the log file")
 argParser.add_argument("--log_path", help="The path of the log dir")
@@ -30,7 +30,6 @@ argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the t
 args = argParser.parse_args()
 
 if args.config:
-
     config_path = args.config
     with open(config_path, 'r') as data:
         config = yaml.safe_load(data)
@@ -40,16 +39,27 @@ if args.config:
         ALPHABET = set(config['alphabet'])
     if 'main_process' in config:
         MAIN_PROCESS = config['main_process']
+    if 'model' in config:
+        CONF_MODEL = config['model']
+    if 'map' in config:
+        CONF_MAP = config['map']
+    if 'trace_file' in config:
+        TRACE_FILE = config['trace_file']
+    else:
+        TRACE_FILE = args.trace_file
 else:
     EXPLICIT_ALPHABET = False
     ALPHABET = None
     MAIN_PROCESS = None
+    CONF_MODEL = None
+    TRACE_FILE = args.trace_file
+
 
 MODEL = args.model
 MAP = args.map
 TYPE = args.type
 SPEED_CHECK = args.speed
-TRACE_FILE = args.trace_file
+
 if args.name:
     CHECK_NAME = args.name
 else:
@@ -58,12 +68,13 @@ if args.log_path:
     LOG_PATH = args.log_path + "/"
 else:
     LOG_PATH = "log/"
+
 #TODO check and warn for incompatible params
 
 ################
 #set to the name of the scenario
 logFileName = args.name
-log_level = logging.INFO
+log_level = logging.DEBUG
 
 if not os.path.exists("log"):
     os.mkdir("log")
@@ -97,6 +108,15 @@ def run(check_type):
             mon = Monitor(MODEL, MAP)
             print(MAIN_PROCESS)
             mon.run_state_machine_test(MAIN_PROCESS)
+        elif check_type == "offline-test": # temp for testing upgrade of offline mode
+            varanus_logger.info("+++ Running Offline Test +++")
+            t0 = time.time()
+            #EXPLICIT_ALPHABET = False
+            #ALPHABET = None
+            #MAIN_PROCESS = None
+            mon = Monitor(CONF_MODEL, CONF_MAP)
+            mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+
 
         #mon.run_online('127.0.0.1', 5044)
         #mon.run_online_websocket('127.0.0.1', 8080)

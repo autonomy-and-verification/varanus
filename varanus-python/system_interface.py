@@ -19,6 +19,8 @@ class SystemInterface(object):
     def connect(self):
         pass
 
+    # Perhaps there should be a 'next event' method?
+
     def close(self):
         pass
 

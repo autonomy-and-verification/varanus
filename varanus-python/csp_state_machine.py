@@ -169,6 +169,8 @@ class CSPStateMachine(object):
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
 
+        self.log("checking transition", transition_name)
+
         if self.current_state is None:
             self.current_state = self.initial_state
         if self.current_state.name == "accepting":
@@ -177,7 +179,7 @@ class CSPStateMachine(object):
         if self.current_state.has_terminate_transition:
             transition_name = Transition._TERMINATE
             self.log("terminal state bypass", "converting transition " + transition_name + " to " + Transition._TERMINATE)
-        transition = self.current_state.transition(transition_name)
+        transition = self.current_state.transit(transition_name)
         if transition is not None:
             self.current_state = transition.get_first_state()
         else:
