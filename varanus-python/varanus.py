@@ -30,6 +30,7 @@ argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the t
 args = argParser.parse_args()
 
 if args.config:
+    CONFIG_FILE = args.config
     config_path = args.config
     with open(config_path, 'r') as data:
         config = yaml.safe_load(data)
@@ -48,6 +49,7 @@ if args.config:
     else:
         TRACE_FILE = args.trace_file
 else:
+    CONFIG_FILE = None
     EXPLICIT_ALPHABET = False
     ALPHABET = None
     MAIN_PROCESS = None
@@ -97,15 +99,15 @@ def run(check_type):
 
         if check_type == "offline":
             t0 = time.time()
-            mon = Monitor(MODEL, MAP)
+            mon = Monitor(MODEL, MAP, CONFIG_FILE)
             mon._run_offline_traces_single(TRACE_FILE)
         elif check_type == "online":
             t0 = time.time()
-            mon = Monitor(MODEL, MAP)
+            mon = Monitor(MODEL, MAP, CONFIG_FILE)
             mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
         elif check_type == "sm-test": # This is temporary, for testing the state machine
             t0 = time.time()
-            mon = Monitor(MODEL, MAP)
+            mon = Monitor(MODEL, MAP, CONFIG_FILE)
             print(MAIN_PROCESS)
             mon.run_state_machine_test(MAIN_PROCESS)
         elif check_type == "offline-test": # temp for testing upgrade of offline mode
@@ -114,8 +116,9 @@ def run(check_type):
             #EXPLICIT_ALPHABET = False
             #ALPHABET = None
             #MAIN_PROCESS = None
+
             varanus_logger.debug(CONF_MAP)
-            mon = Monitor(CONF_MODEL, CONF_MAP)
+            mon = Monitor(CONF_MODEL, CONF_MAP, CONFIG_FILE)
             mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
 
 

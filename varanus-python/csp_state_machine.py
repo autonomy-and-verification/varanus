@@ -170,7 +170,8 @@ class CSPStateMachine(object):
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
 
-        self.log("checking transition", transition_name)
+
+        varanus_logger.info("In state " + self.current_state.name + " saw " + transition_name)
 
         if self.current_state is None:
             self.current_state = self.initial_state
@@ -185,35 +186,9 @@ class CSPStateMachine(object):
         if transition is not None:
             self.current_state = transition.get_first_state()
         else:
-            # if the alphabet is explicit
-            # we will assume that anything we have seen in the alphabet
-            # that we don't have a transition for is BAD
-            logmsg = "In state " + self.current_state.name + " saw " + transition_name
+            return None
 
-            if self.explicit_alphabet:
-
-                if transition_name not in self.alphabet: # this is the wrong condition
-                    self.log("UNEXPECTED TRANSITION", logmsg)
-                    self.log("Stated alphabet", "returning bad state i.e. None - saw bad event")
-
-                    return None
-                else:
-                    self.log("unexpected transition", logmsg)
-                    self.log("Stated alphabet", "returning bad state i.e. None - event not available in this state")
-                    return None
-
-            else:
-                if transition_name not in self.alphabet:
-                    self.log("UNEXPECTED TRANSITION", logmsg)
-                    self.log("Inferred alphabet", "returning bad state i.e. None - saw bad event")
-
-                    return None
-                else:
-                    self.log("UNEXPECTED TRANSITION", logmsg)
-                    self.log("Inferred alphabet", "returning current state i.e. ignoring event")
-                    return self.current_state
-
-        self.log("NORMAL TRANSITION", "In state " + self.current_state.name + " saw " + transition_name)
+        self.log("NORMAL TRANSITION", "Now in state " + self.current_state.name)
         return self.current_state
 
     def to_dictionary(self):

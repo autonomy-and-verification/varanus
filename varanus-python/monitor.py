@@ -9,6 +9,7 @@ import state_machine
 import json
 import time
 import logging
+import yaml
 
 # "MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
 # "model/mascot-safety-system.csp"
@@ -18,12 +19,27 @@ varanus_logger = logging.getLogger("varanus")
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, event_map_path):
+    def __init__(self, model_path, event_map_path, config_file):
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
         # TODO This will need to be fixed later. Possibly Monitor should be intantiated with an Event Mapper
         self.eventMapper = MascotEventAbstractor(event_map_path)
+        self.explicit_alphabet = False
+        self.alphabet = []
+        self.config_file = config_file
+        if config_file is not None:
+            self.load_alphabet_from_config(config_file)
+
+    def load_alphabet_from_config(self, config_fn):
+        """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
+
+        with open(config_fn, 'r') as data:
+            config = yaml.safe_load(data)
+
+            if 'alphabet' in config:
+                self.explicit_alphabet = True
+                self.alphabet = set(config['alphabet'])
 
     def new_fdr_session(self):
         assert (self.fdr != None)
@@ -34,10 +50,41 @@ class Monitor(object):
 
     def build_state_machine(self, main_process, alphabet=None):
         """Builds a CSPStateMachine object for the main_process with the given alphabet"""
-        config_file = "../sm-test/sm_test.yaml"
+
         dict_sm = (self.fdr.convert_to_dictionary(main_process))
-        process = CSPStateMachine(dict_sm, config_file)
+        process = CSPStateMachine(dict_sm, self.config_file)
         return process
+
+    def check_result(self, event, result):
+        # if the alphabet is explicit
+        # we will assume that anything we have seen in the alphabet
+        # that we don't have a transition for is BAD
+   
+        if result is None:
+            if self.explicit_alphabet:
+
+                if event not in self.alphabet:  # this is the wrong condition
+                    varanus_logger.info("UNEXPECTED TRANSITION")
+                    varanus_logger.info("Stated alphabet returning bad state i.e. None - saw bad event")
+
+                    return False
+                else:
+                    varanus_logger.info("unexpected transition:")
+                    varanus_logger.info("Stated alphabet returning bad state i.e. None - event not available in this state")
+                    return False
+
+            else:
+                if event not in self.alphabet:
+                    varanus_logger.info("UNEXPECTED TRANSITION: ")
+                    varanus_logger.info("Inferred alphabet returning bad state i.e. None - saw bad event")
+
+                    return False
+                else:
+                    varanus_logger.info("UNEXPECTED TRANSITION")
+                    varanus_logger.info("Inferred alphabet returning current state i.e. ignoring event")
+                    return True
+        else:
+            return True
 
     def _run_offline_state_machine(self, main_process, trace_path):
         """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
@@ -50,21 +97,21 @@ class Monitor(object):
         result = {}
 
         ## Extract the Traces and start the loop
-        ## This interface should be extracted out to the Offline Interface class
-        ## This should essentially be 'here is the trace path' and then 'while .has_event'
-        system = OfflineInterface(trace_path)
-        system.connect()
+        monitored_system = OfflineInterface(trace_path)
+        monitored_system.connect()
         trace = Trace()
 
-        while system.has_event():
+        while monitored_system.has_event():
 
-            event = system.next_event()
+            event = monitored_system.next_event()
+            print(event)
 
             if process.current_state.name not in result:
                 result[process.current_state.name] = []
             old_state = process.current_state.name
 
             resulting_state = process.transition(event)
+            self.check_result(event, resulting_state)
 
             if resulting_state is not None:
                 result[old_state].append((event, resulting_state.name))

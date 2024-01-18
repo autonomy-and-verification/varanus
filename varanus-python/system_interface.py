@@ -6,6 +6,7 @@ from rosmon_mascot_event_abstractor import *
 from mascot_event_abstractor import *
 import json
 import logging
+from collections import deque
 
 varanus_logger = logging.getLogger("varanus")
 
@@ -40,7 +41,7 @@ class OfflineInterface(SystemInterface):
         self._file_open = False
         #if event_map != None:
         #    self.EventAbs = EventAbstractor(event_map)
-        self.events = []
+        self.events = deque()
 
     def connect(self):
         try:
@@ -71,7 +72,7 @@ class OfflineInterface(SystemInterface):
     def next_event(self):
         if not self._file_open:
             self.connect()
-        return self.events.pop()
+        return self.events.popleft()
 
     def close(self):
         self.trace_file.close()
