@@ -59,7 +59,7 @@ class Monitor(object):
         # if the alphabet is explicit
         # we will assume that anything we have seen in the alphabet
         # that we don't have a transition for is BAD
-   
+
         if result is None:
             if self.explicit_alphabet:
 
@@ -104,20 +104,20 @@ class Monitor(object):
         while monitored_system.has_event():
 
             event = monitored_system.next_event()
-            print(event)
+            trace.add_event(Event(event))
 
             if process.current_state.name not in result:
                 result[process.current_state.name] = []
             old_state = process.current_state.name
 
             resulting_state = process.transition(event)
-            self.check_result(event, resulting_state)
 
-            if resulting_state is not None:
+
+            if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
             else:
                 result[old_state].append((event, resulting_state))
-                varanus_logger.error("System Violated the Specification")
+                varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 return result  # So far, return because a None means it's bad.
 
     # deprecated

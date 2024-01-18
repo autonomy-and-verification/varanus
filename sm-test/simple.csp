@@ -10,6 +10,14 @@ Proc3 = (b -> SKIP [] c -> SKIP)
 
 E(num) =  e.num -> SKIP
 
+assert Proc1 :[has trace]: <a, b>
+assert Proc1 :[has trace]: <a, b, c>
+assert Proc1 :[has trace]: <a, d, b, c>
+
 assert Proc2 :[has trace]: <a, b>
 assert Proc2 :[has trace]: <a, b, c>
 assert Proc2 :[has trace]: <a, d, b, c>
+
+assert Proc3 :[has trace]: <a, b>
+assert Proc3 :[has trace]: <a, b, c>
+assert Proc3 :[has trace]: <a, d, b, c>
