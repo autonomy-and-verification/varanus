@@ -1,5 +1,6 @@
-channel a, b, c
-channel d : {1,0}
+channel a, b, c, d
+channel e : {1,0}
+
 
 Proc1 = a -> b -> SKIP
 
@@ -7,4 +8,8 @@ Proc2 = a -> (b -> SKIP [] c -> SKIP)
 
 Proc3 = (b -> SKIP [] c -> SKIP)
 
-D(num) =  d.num -> SKIP
+E(num) =  e.num -> SKIP
+
+assert Proc2 :[has trace]: <a, b>
+assert Proc2 :[has trace]: <a, b, c>
+assert Proc2 :[has trace]: <a, d, b, c>

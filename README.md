@@ -1,4 +1,4 @@
-# Varanus 0.88.1
+# Varanus 0.88.2
 ### Matt Luckcuck
 ### Runtime Verification Toolchain using CSP and FDR
 
@@ -22,6 +22,8 @@ Varanus has been built and (only) tested on Ubuntu 19.10/20.04 using Python 2.7.
 ### Python
 
 Varanus is written using Python 2.7 (but compatibility with Python should only involve fixing some small syntax errors).
+
+* yaml package `pip install pyyaml` or `pip3 install pyyaml`
 
 ### FDR
 

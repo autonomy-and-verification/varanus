@@ -74,7 +74,7 @@ else:
 ################
 #set to the name of the scenario
 logFileName = args.name
-log_level = logging.DEBUG
+log_level = logging.INFO
 
 if not os.path.exists("log"):
     os.mkdir("log")
@@ -114,6 +114,7 @@ def run(check_type):
             #EXPLICIT_ALPHABET = False
             #ALPHABET = None
             #MAIN_PROCESS = None
+            varanus_logger.debug(CONF_MAP)
             mon = Monitor(CONF_MODEL, CONF_MAP)
             mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
 

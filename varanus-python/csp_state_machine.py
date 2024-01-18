@@ -1,12 +1,13 @@
 import yaml
-
+import logging
+varanus_logger = logging.getLogger("varanus")
 
 class State(object):
     """Represents one state in the Labelled Transition System"""
 
     def __init__(self, name):
         self.name = name
-        self.transitions = {}
+        self.transitions = {} # Dictionary: event_name, Transition
         self.has_terminate_transition = False
         # the alphabet is not given in a yaml file
         # so we assume that only the letters in the obj
@@ -46,7 +47,7 @@ class Transition(object):
             self.isTerminate = True
         # Name is the transition is the event that triggers it
         self.name = name
-        self.states = {} # Outgoing states, presumably
+        self.states = {} # Outgoing states, presumably, or the states that the transition belongs to??
         self.probabilities = {}
 
     def add_state(self, state):
@@ -63,7 +64,7 @@ class Transition(object):
         if self.isTerminate:
             return self._ACCEPTINGSTATE
         # just return the first state
-        return self.states.values()[0]
+        return self.states.values()[0] #ml Why the first state??
 
     def __str__(self):
         return self.name
@@ -133,7 +134,7 @@ class CSPStateMachine(object):
         if self.states is None:
             self.states = {}
         if state_name not in self.states:
-            self.states[state_name] = State(state_name)
+            self.states[state_name] = State(state_name) # So...states is a dictionary where the key is the name and the value is the State? Ok, so it's like an index
 
     def add_letter_to_alphabet(self, letter):
         """Adds the letter to this State Machine's alphabet"""
@@ -141,7 +142,7 @@ class CSPStateMachine(object):
             self.alphabet = set()
         if self.explicit_alphabet:
             if letter not in self.alphabet:
-                print('Alphabet defined explicitly but new alphabet found')
+                varanus_logger.info('Alphabet defined explicitly but new letter found')
         self.alphabet.add(letter)
 
     def add_transition_by_name(self, transition_name, source_name, destination_name):
@@ -173,33 +174,38 @@ class CSPStateMachine(object):
 
         if self.current_state is None:
             self.current_state = self.initial_state
-        if self.current_state.name == "accepting":
+        if self.current_state.name == "accepting": # maybe this should be 'terminal' state?
             return self.current_state
 
-        if self.current_state.has_terminate_transition:
-            transition_name = Transition._TERMINATE
-            self.log("terminal state bypass", "converting transition " + transition_name + " to " + Transition._TERMINATE)
-        transition = self.current_state.transit(transition_name)
+        ##if self.current_state.has_terminate_transition: #This is wrong....
+        ##    transition_name = Transition._TERMINATE
+        ##    self.log("terminal state bypass", "converting transition " + transition_name + " to " + Transition._TERMINATE)
+        transition = self.current_state.transit(transition_name) # WHAT IS THIS? This seems to return the transition... as in, 'transit(a)' gives me 'a'
+        print("+++ transition returned from  self.current_state.transit(transition_name) = " + str(transition))
         if transition is not None:
             self.current_state = transition.get_first_state()
         else:
             # if the alphabet is explicit
             # we will assume that anything we have seen in the alphabet
-            # that we dont have a transition for is BAD
+            # that we don't have a transition for is BAD
             logmsg = "In state " + self.current_state.name + " saw " + transition_name
 
             if self.explicit_alphabet:
 
-                if transition_name in self.alphabet:
+                if transition_name not in self.alphabet: # this is the wrong condition
                     self.log("UNEXPECTED TRANSITION", logmsg)
                     self.log("Stated alphabet", "returning bad state i.e. None - saw bad event")
 
                     return None
+                else:
+                    self.log("unexpected transition", logmsg)
+                    self.log("Stated alphabet", "returning bad state i.e. None - event not available in this state")
+                    return None
 
             else:
-                if transition_name in self.alphabet:
+                if transition_name not in self.alphabet:
                     self.log("UNEXPECTED TRANSITION", logmsg)
-                    self.log("Stated alphabet", "returning bad state i.e. None - saw bad event")
+                    self.log("Inferred alphabet", "returning bad state i.e. None - saw bad event")
 
                     return None
                 else:
@@ -207,11 +213,25 @@ class CSPStateMachine(object):
                     self.log("Inferred alphabet", "returning current state i.e. ignoring event")
                     return self.current_state
 
+        self.log("NORMAL TRANSITION", "In state " + self.current_state.name + " saw " + transition_name)
         return self.current_state
+
+    def to_dictionary(self):
+        state_dict = {}
+        for state in self.states:
+            events = []
+            for trans in state.transitions.keys:
+                events.append(trans.name)
+
+            state_dict[state.name] = events
+
+        return state_dict
 
     def start(self):
         """Starts the state machine. Sets the current state to be the initial state"""
         self.current_state = self.initial_state
+        self.log("explicit_alphabet", str(self.explicit_alphabet))
+
 
     def test_machine(self):
         """Simple test of the State Machine class, using simple.csp"""

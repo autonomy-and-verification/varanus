@@ -23,7 +23,9 @@ class Monitor(object):
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
+        #TODO This will need to be fixed later. Possibly Monitor should be intantiated with an Event Mapper
         self.eventMapper = MascotEventAbstractor(event_map_path)
+
 
     def new_fdr_session(self):
         assert (self.fdr != None)
@@ -32,22 +34,28 @@ class Monitor(object):
     def load_fdr_model(self, model_path):
         self.fdr.load_model(self.model_path)
 
+    def build_state_machine(self, main_process, alphabet=None):
+        """Builds a CSPStateMachine object for the main_process with the given alphabet"""
+        config_file = "../sm-test/sm_test.yaml"
+        dict_sm = (self.fdr.convert_to_dictionary(main_process))
+        process = CSPStateMachine(dict_sm, config_file)
+        return process
+
+
+
     def _run_offline_state_machine(self, main_process, trace_path):
         """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
         varanus_logger.info("+++ Running Offline -- Using State Machine +++")
 
-        ## Build the State Machine
+        process = self.build_state_machine(main_process)
 
-        config_file = "../sm-test/sm_test.yaml"
-        dict_sm = (self.fdr.convert_to_dictionary(main_process))
-        process = CSPStateMachine(dict_sm, config_file)
         process.start()
         #test_result = process.test_machine()
         result = {}
 
         ## Extract the Traces and start the loop
         ## This interface should be extracted out to the Offline Interface class
-        ## This should essentially be 'there is the trace path' and then 'while .has_event'
+        ## This should essentially be 'here is the trace path' and then 'while .has_event'
         system = OfflineInterface(trace_path)
 
         trace_file = system.connect()
@@ -73,6 +81,8 @@ class Monitor(object):
                 result[old_state].append((transition, resulting_state.name))
             else:
                 result[old_state].append((transition, resulting_state))
+                varanus_logger.error("System Violated the Specification")
+                return result # So far, return because a None means it's bad.
 
 
 

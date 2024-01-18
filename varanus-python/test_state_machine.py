@@ -24,3 +24,21 @@ if __name__ == "__main__":
     print(str(state_machine.states))
     test_result = state_machine.test_machine()
     print("result = " + str(test_result))
+
+    print()
+    print()
+    print("+++ Displaying CSP State Machine +++")
+    fdr.new_session()
+    fdr.load_model("../sm-test/simple.csp")
+    main_process = "a -> (b -> SKIP [] c -> SKIP)"
+    config_file = "../sm-test/sm_test.yaml"
+    state_machine = (fdr.convert_to_state_machine(main_process))
+
+    print(state_machine.states)
+
+    for state, v in state_machine.states.items():
+        print(state)
+        for t in v.transitions.values():
+            print("\t" + t.name)
+        print()
+

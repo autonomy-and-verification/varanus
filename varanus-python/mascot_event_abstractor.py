@@ -13,7 +13,8 @@ class MascotEventAbstractor(EventConverter):
     def __init__(self, event_map_path):
         super(MascotEventAbstractor, self).__init__()
         # event_map should be a json map path
-        self.event_map = json.load(open(event_map_path))
+        with open(event_map_path, "r") as event_map:
+            self.event_map = json.load(event_map)
         # TODO Defaults read in from file
         self. last_values = {"velocity": 0, "footswitch": False}
 

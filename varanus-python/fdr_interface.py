@@ -55,7 +55,7 @@ class FDRInterface(object):
         try:
             self.session.load_file(model_path)
 
-        except fdr.Error, e:
+        except fdr.Error as e:
             varanus_logger.error(e)
 
     def _make_assertion(self, trace):
