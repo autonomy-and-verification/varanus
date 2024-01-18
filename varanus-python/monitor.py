@@ -10,7 +10,6 @@ import json
 import time
 import logging
 
-
 # "MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
 # "model/mascot-safety-system.csp"
 varanus_logger = logging.getLogger("varanus")
@@ -23,9 +22,8 @@ class Monitor(object):
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
-        #TODO This will need to be fixed later. Possibly Monitor should be intantiated with an Event Mapper
+        # TODO This will need to be fixed later. Possibly Monitor should be intantiated with an Event Mapper
         self.eventMapper = MascotEventAbstractor(event_map_path)
-
 
     def new_fdr_session(self):
         assert (self.fdr != None)
@@ -41,8 +39,6 @@ class Monitor(object):
         process = CSPStateMachine(dict_sm, config_file)
         return process
 
-
-
     def _run_offline_state_machine(self, main_process, trace_path):
         """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
         varanus_logger.info("+++ Running Offline -- Using State Machine +++")
@@ -50,41 +46,32 @@ class Monitor(object):
         process = self.build_state_machine(main_process)
 
         process.start()
-        #test_result = process.test_machine()
+        # test_result = process.test_machine()
         result = {}
 
         ## Extract the Traces and start the loop
         ## This interface should be extracted out to the Offline Interface class
         ## This should essentially be 'here is the trace path' and then 'while .has_event'
         system = OfflineInterface(trace_path)
-
-        trace_file = system.connect()
+        system.connect()
         trace = Trace()
 
-        for json_line in trace_file:
-            if json_line == '\n':
-                continue
-            event_list = json.loads(json_line)
-            varanus_logger.debug("event_list = " +str(event_list))
-            ## Forgetting about data for a minute
-            parsed_event = Event(event_list['topic'])
-            transition = parsed_event.to_fdr()
-            varanus_logger.debug("transition string = " + transition)
+        while system.has_event():
+
+            event = system.next_event()
 
             if process.current_state.name not in result:
                 result[process.current_state.name] = []
             old_state = process.current_state.name
 
-            resulting_state = process.transition(transition)
+            resulting_state = process.transition(event)
 
             if resulting_state is not None:
-                result[old_state].append((transition, resulting_state.name))
+                result[old_state].append((event, resulting_state.name))
             else:
-                result[old_state].append((transition, resulting_state))
+                result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification")
-                return result # So far, return because a None means it's bad.
-
-
+                return result  # So far, return because a None means it's bad.
 
     # deprecated
     def _run_offline_traces_single(self, trace_path):
@@ -134,7 +121,7 @@ class Monitor(object):
     #    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
     # Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
     # Obvious bullshit
-    def _run_offline_traces(self, log_path): # Deprecated
+    def _run_offline_traces(self, log_path):  # Deprecated
         system = OfflineInterface(log_path)
 
         trace_file = system.connect()

@@ -1,8 +1,12 @@
 import socket
 from websocket_server import WebsocketServer
+from trace_representation import Event, Trace
 from mascot_event_abstractor import MascotEventAbstractor
+from rosmon_mascot_event_abstractor import *
+from mascot_event_abstractor import *
 import json
 import logging
+
 varanus_logger = logging.getLogger("varanus")
 
 """Communicates with the system being monitored and passes back its handle.
@@ -20,6 +24,9 @@ class SystemInterface(object):
         pass
 
     # Perhaps there should be a 'next event' method?
+    def next_event(self):
+        """Returns the next event from the system """
+        pass
 
     def close(self):
         pass
@@ -28,22 +35,52 @@ class SystemInterface(object):
 class OfflineInterface(SystemInterface):
     """ Interface to a file of traces."""
 
-    def __init__(self, trace_file_path, event_map = None):
+    def __init__(self, trace_file_path, event_map=None):
         self.trace_file_path = trace_file_path
-        if event_map != None:
-            self.EventAbs = EventAbstractor(event_map)
+        self._file_open = False
+        #if event_map != None:
+        #    self.EventAbs = EventAbstractor(event_map)
+        self.events = []
 
     def connect(self):
-        self.trace_file = open(self.trace_file_path)
-        return self.trace_file
+        try:
+            trace_file = open(self.trace_file_path)
+            self._file_open = True
+            for json_line in trace_file:
+                if json_line == '\n':
+                    continue
+                event_list = json.loads(json_line)
+                varanus_logger.debug("event_list = " + str(event_list))
+                ## Forgetting about data for the minute
+                parsed_event = Event(event_list['topic'])
+                event = parsed_event.to_fdr()
+                self.events.append(event)
+        except OSError:
+            varanus_logger.error("Trace Path not found during Offline Runtime Verificaition. trace_file_path=" + str(
+                self.trace_file_path))
+        return trace_file
+
+    def has_event(self):
+        if not self._file_open:
+            self.connect()
+        if not self.events:
+            return False
+        else:
+            return True
+
+    def next_event(self):
+        if not self._file_open:
+            self.connect()
+        return self.events.pop()
 
     def close(self):
         self.trace_file.close()
 
+
 class TCPInterface(SystemInterface):
     """Interface to a TCP connection."""
 
-    def __init__(self, IP, port, event_map = None):
+    def __init__(self, IP, port, event_map=None):
         self.IP = IP
         self.port = port
 
@@ -53,7 +90,7 @@ class TCPInterface(SystemInterface):
         s.listen(1)
 
         self.conn, addr = s.accept()
-        varanus_logger.debug("+++ Varanus Connection address: "+ str(addr))
+        varanus_logger.debug("+++ Varanus Connection address: " + str(addr))
         return self.conn
 
     def close(self):
@@ -73,14 +110,12 @@ class TCPInterface_Client(TCPInterface):
         self.varanus_socket.close()
 
 
-
 class WebSocketInterface(SystemInterface):
     """ Interface to a WebSocket Connection, runs a WebSocket Server """
 
     def __init__(self, message_callback, port, IP='127.0.0.1'):
         self.IP = IP
         self.port = (port)
-
 
         # init Websocket
         self.server = WebsocketServer(self.port, self.IP)
@@ -100,12 +135,12 @@ class WebSocketInterface(SystemInterface):
 
     def new_client(self, client, server):
         """Called for every client connecting (after handshake)"""
-        varanus_logger.info("+++ New ROS monitor connected and was given id: "+ client['id'] + " +++" )
+        varanus_logger.info("+++ New ROS monitor connected and was given id: " + client['id'] + " +++")
         # server.send_message_to_all("Hey all, a new client has joined us")
 
     def client_left(self, client, server):
         """ Called for every client disconnecting"""
-        varanus_logger.info("ROS monitor "+ client['id'] +" disconnected +++"  )
+        varanus_logger.info("ROS monitor " + client['id'] + " disconnected +++")
 
     def close(self):
         self.server.close()
