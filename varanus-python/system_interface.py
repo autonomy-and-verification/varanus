@@ -53,7 +53,7 @@ class OfflineInterface(SystemInterface):
                 event_list = json.loads(json_line)
                 varanus_logger.debug("event_list = " + str(event_list))
                 ## Forgetting about data for the minute
-                parsed_event = Event(event_list['topic'])
+                parsed_event = Event(event_list['topic'], [event_list["data"]])
                 event = parsed_event.to_fdr()
                 self.events.append(event)
         except OSError:

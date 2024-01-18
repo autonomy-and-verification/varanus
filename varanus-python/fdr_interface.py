@@ -125,6 +125,7 @@ class FDRInterface(object):
 
         self.build_state_machine(machine, state_machine, root)
 
+
         return state_machine
 
     def build_state_machine(self, csp_machine, state_machine, this_node):
@@ -132,6 +133,13 @@ class FDRInterface(object):
         with this_node and recurses."""
 
         transitions = csp_machine.transitions(this_node)
+        alpha = csp_machine.alphabet(False)
+        print("* alphabet from csp_machine = ")
+        for a in alpha:
+            print(self.session.uncompile_event(a))
+            state_machine.add_letter_to_alphabet(str(self.session.uncompile_event(a)))
+
+
         # machine_map = {}
         destinations = []
         print("Building State Machine")

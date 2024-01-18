@@ -51,8 +51,10 @@ class Monitor(object):
     def build_state_machine(self, main_process, alphabet=None):
         """Builds a CSPStateMachine object for the main_process with the given alphabet"""
 
-        dict_sm = (self.fdr.convert_to_dictionary(main_process))
-        process = CSPStateMachine(dict_sm, self.config_file)
+        print("! main process = " + str(main_process))
+        print("! model path = " + str(self.model_path))
+        #dict_sm = (self.fdr.convert_to_dictionary(main_process))
+        process = self.fdr.convert_to_state_machine(main_process) #CSPStateMachine(dict_sm, self.config_file)
         return process
 
     def check_result(self, event, result):
@@ -70,7 +72,8 @@ class Monitor(object):
                     return False
                 else:
                     varanus_logger.info("unexpected transition:")
-                    varanus_logger.info("Stated alphabet returning bad state i.e. None - event not available in this state")
+                    varanus_logger.info(
+                        "Stated alphabet returning bad state i.e. None - event not available in this state")
                     return False
 
             else:
@@ -111,7 +114,6 @@ class Monitor(object):
             old_state = process.current_state.name
 
             resulting_state = process.transition(event)
-
 
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))

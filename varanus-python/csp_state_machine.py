@@ -83,7 +83,7 @@ class CSPStateMachine(object):
         self.current_state = None
         self.initial_state = None
         self.explicit_alphabet = False
-        self.alphabet = None
+        self.alphabet = set()
 
         if config_fn is not None:
             self.load_alphabet_from_config(config_fn)
@@ -170,6 +170,9 @@ class CSPStateMachine(object):
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
 
+        print("$ alphabet = ")
+        for a in self.alphabet:
+            print(str(a) + " type is " + str(type(a)))
 
         varanus_logger.info("In state " + self.current_state.name + " saw " + transition_name)
 
