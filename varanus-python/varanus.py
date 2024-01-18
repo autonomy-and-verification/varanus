@@ -10,7 +10,7 @@ import yaml
 
 ################
 ###CONSTANTS###
-VERSION_NUM = '0.88.2'
+VERSION_NUM = '0.9.0'
 
 IP = '127.0.0.1'
 PORT = 5088
@@ -18,10 +18,10 @@ PORT = 5088
 
 ### Arguments###
 argParser = argparse.ArgumentParser()
-argParser.add_argument("model", help="The location of the model used as the oracle.", default = "model/mascot-safety-system.csp")
-argParser.add_argument("map", help="The location of the event map", default = "event_map.json")
 argParser.add_argument("type", help="The type of check to be performed", choices=['offline', 'online', 'sm-test', 'offline-test'])
-argParser.add_argument("-c", "--config", help="The location of the config file")
+argParser.add_argument("config", help="The location of the config file")
+argParser.add_argument("--model", help="The location of the model used as the oracle.", default = "model/mascot-safety-system.csp")
+argParser.add_argument("--map", help="The location of the event map", default = "event_map.json")
 argParser.add_argument("-n", "--name", help="The name of the check and therefore name of the log file")
 argParser.add_argument("--log_path", help="The path of the log dir")
 argParser.add_argument("-t", "--trace_file", help="The location of the trace file. Only used if type='offline'")
@@ -29,11 +29,11 @@ argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the t
 
 args = argParser.parse_args()
 
-if args.config:
-    CONFIG_FILE = args.config
-    config_path = args.config
-    with open(config_path, 'r') as data:
-        config = yaml.safe_load(data)
+
+CONFIG_FILE = args.config
+config_path = args.config
+with open(config_path, 'r') as data:
+    config = yaml.safe_load(data)
 
     if 'alphabet' in config:
         EXPLICIT_ALPHABET = False
@@ -44,17 +44,19 @@ if args.config:
         CONF_MODEL = config['model']
     if 'map' in config:
         CONF_MAP = config['map']
-    if 'trace_file' in config:
-        TRACE_FILE = config['trace_file']
-    else:
+    if args.trace_file:
         TRACE_FILE = args.trace_file
-else:
-    CONFIG_FILE = None
-    EXPLICIT_ALPHABET = False
-    ALPHABET = None
-    MAIN_PROCESS = None
-    CONF_MODEL = None
-    TRACE_FILE = args.trace_file
+    elif 'trace_file' in config:
+        TRACE_FILE = config['trace_file']
+
+    if 'name' in config:
+        CHECK_NAME = config['name']
+if args.name:
+    CHECK_NAME = args.name
+elif CHECK_NAME is None:
+    CHECK_NAME = "scenario x"
+
+
 
 
 MODEL = args.model
@@ -62,10 +64,7 @@ MAP = args.map
 TYPE = args.type
 SPEED_CHECK = args.speed
 
-if args.name:
-    CHECK_NAME = args.name
-else:
-    CHECK_NAME = "scenario x"
+
 if args.log_path:
     LOG_PATH = args.log_path + "/"
 else:
@@ -75,7 +74,7 @@ else:
 
 ################
 #set to the name of the scenario
-logFileName = args.name
+logFileName = CHECK_NAME
 log_level = logging.INFO
 
 if not os.path.exists("log"):
@@ -156,45 +155,47 @@ def log_speed(name, time, type):
     csv_write.writerow([ "Run" + str(run_num) , time ])
     output_file.close()
 
-print("+++++++++++++++++++++++")
-print("+++++++ VARANUS +++++++")
-print("++++ version " + str(VERSION_NUM) + " +++")
-print("++++ Matt Luckcuck ++++")
-print("+++++++++++++++++++++++")
-print("")
+
+if __name__ == "__main__":
+    print("+++++++++++++++++++++++")
+    print("+++++++ VARANUS +++++++")
+    print("++++ version " + str(VERSION_NUM) + " +++")
+    print("++++ Matt Luckcuck ++++")
+    print("+++++++++++++++++++++++")
+    print("")
 
 
 
-varanus_logger.debug("Varanus Running v" + str(VERSION_NUM))
+    varanus_logger.debug("Varanus Running v" + str(VERSION_NUM))
 
-varanus_logger.info("+++ Testing " + logFileName + " +++")
+    varanus_logger.info("+++ Testing " + logFileName + " +++")
 
 
 
-    #mon.run_offline_rosmon("../rosmon-test/rosmon-mascot-pass.json")
-    #mon._run_offline_traces("trace.json")
+        #mon.run_offline_rosmon("../rosmon-test/rosmon-mascot-pass.json")
+        #mon._run_offline_traces("trace.json")
 
-##NOW IN RUN
-#    if TYPE == "offline":
-#        t0 = time.time()
-#        mon = Monitor(MODEL, MAP)
-#        mon._run_offline_traces_single(TRACE_FILE)
-#    elif TYPE == "online":
-#        t0 = time.time()
-#        mon = Monitor(MODEL, MAP)
-#        mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
+    ##NOW IN RUN
+    #    if TYPE == "offline":
+    #        t0 = time.time()
+    #        mon = Monitor(MODEL, MAP)
+    #        mon._run_offline_traces_single(TRACE_FILE)
+    #    elif TYPE == "online":
+    #        t0 = time.time()
+    #        mon = Monitor(MODEL, MAP)
+    #        mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
 
-    #mon.run_online('127.0.0.1', 5044)
-    #mon.run_online_websocket('127.0.0.1', 8080)
-#    mon.close()
-#    t1 = time.time()
+        #mon.run_online('127.0.0.1', 5044)
+        #mon.run_online_websocket('127.0.0.1', 8080)
+    #    mon.close()
+    #    t1 = time.time()
 
-total = run(TYPE)
+    total = run(TYPE)
 
-varanus_logger.info("+++ Time: "+ str(total) +"s +++")
+    varanus_logger.info("+++ Time: "+ str(total) +"s +++")
 
-varanus_logger.debug("Varanus Finished")
+    varanus_logger.debug("Varanus Finished")
 
-if SPEED_CHECK == True:
+    if SPEED_CHECK == True:
 
-    log_speed(CHECK_NAME, total, TYPE)
+        log_speed(CHECK_NAME, total, TYPE)

@@ -1,4 +1,4 @@
-# Varanus 0.88.2
+# Varanus 0.9.0
 ### Matt Luckcuck
 ### Runtime Verification Toolchain using CSP and FDR
 
@@ -42,32 +42,37 @@ sudo apt-get install fdr
 To quote from the FDR website
 "All use of FDR require a license, however, you do **not** need to purchase a license if you are engaged in normal academic activity."
 
-An free academic license is available from the license dialogue, when starting FDR. License details can be found on the [FDR Licensing Webpage](https://cocotec.io/fdr/licensing.html)
+A free academic license is available from the license dialogue, when starting FDR. License details can be found on the [FDR Licensing Webpage](https://cocotec.io/fdr/licensing.html)
 
 
 ## Usage
 
-Varanus 0.88 is a terminal program within the `varanus/varanus-python` directory.
+Varanus is a terminal program within the `varanus/varanus-python` directory.
 
 ```bash
-usage: varanus.py [-h] [-s S] model map {offline,online}
+usage: varanus.py [-h] [--model MODEL] [--map MAP] [-n NAME]
+                  [--log_path LOG_PATH] [-t TRACE_FILE] [-s SPEED]
+                  {offline,online,sm-test,offline-test} config
 
 positional arguments:
-  model             The location of the model used as the oracle.
-  map               The location of the event map
-  {offline,online}  The type of check to be performed
+  {offline,online,sm-test,offline-test}
+                        The type of check to be performed
+  config                The location of the config file
 
 optional arguments:
-  -h, --help        show this help message and exit
-  -n NAME,
-    --name NAME     The name of the check and therefore name of the log file
-  -t TRACE_FILE,
-    --trace_file TRACE_FILE  
-                    The location of the trace file. Only used if type='offline'
+  -h, --help            show this help message and exit
+  --model MODEL         The location of the model used as the oracle.
+  --map MAP             The location of the event map
+  -n NAME, --name NAME  The name of the check and therefore name of the log
+                        file
+  --log_path LOG_PATH   The path of the log dir
+  -t TRACE_FILE, --trace_file TRACE_FILE
+                        The location of the trace file. Only used if
+                        type='offline'
   -s SPEED, --speed SPEED Run 10 timed run and produce the times and mean.).
 ```
 
-Varanus 0.88 requires that parameters for its operation be set from within `varanus.py`.
+In Varanus 0.9.0 the parameters can be set in the config file, and some can be overridden at the command line.
 
 * `logFileName` is the name of the file to which Varanus will log its run
 * The parameters passed to the `Monitor()` constructor are the location of the model's main file and a JSON file containing a map of events in the SUA to events in the model (if these are different)
