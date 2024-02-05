@@ -66,11 +66,13 @@ class OfflineInterface(SystemInterface):
                         "topic field.\nTrace file path: " + self.trace_file_path + "\n Aborting")
                     return False
 
-
+                # TODO Check if the event in the trace file matches that in the CSP file I was given. CSP State
+                #  Machine currently built from main process...so I'm not sure how this will work.
                 if event_list["data"] is not None:
                     parsed_event = Event(event_list['topic'], [event_list["data"]])
                 else:
                     parsed_event = Event(event_list["topic"])
+
                 event = parsed_event.to_fdr()
                 self.events.append(event)
 
@@ -80,6 +82,7 @@ class OfflineInterface(SystemInterface):
                 self.trace_file_path))
             return False
 
+        varanus_logger.info("Parsed trace file OK")
         return True # Connected ok
 
     def has_event(self):

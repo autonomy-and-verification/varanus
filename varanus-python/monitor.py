@@ -106,6 +106,7 @@ class Monitor(object):
             return
         trace = Trace()
 
+        varanus_logger.info("Checking trace file: " + trace_path)
         while monitored_system.has_event():
 
             event = monitored_system.next_event()
@@ -123,6 +124,9 @@ class Monitor(object):
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 return result  # So far, return because a None means it's bad.
+
+        varanus_logger.info("Trace file finished with no violations")
+        return result # this is not caught, not sure if I need to return anything
 
     # deprecated
     def _run_offline_traces_single(self, trace_path):
