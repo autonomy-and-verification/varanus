@@ -101,7 +101,9 @@ class Monitor(object):
 
         # Extract the Traces and start the loop
         monitored_system = OfflineInterface(trace_path)
-        monitored_system.connect()
+        isConnected = monitored_system.connect()
+        if not isConnected:
+            return
         trace = Trace()
 
         while monitored_system.has_event():

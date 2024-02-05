@@ -47,7 +47,9 @@ class OfflineInterface(SystemInterface):
         try:
             trace_file = open(self.trace_file_path)
             self._file_open = True
+            line_num = 0
             for json_line in trace_file:
+                line_num += 1
                 if json_line == '\n':
                     continue
                 event_list = json.loads(json_line)
@@ -60,14 +62,16 @@ class OfflineInterface(SystemInterface):
                     event = parsed_event.to_fdr()
                     self.events.append(event)
                 except KeyError as e:
-                    varanus_logger.error("An Event Object in the Trace File is Missing the Data Field.\n"
+                    varanus_logger.error("Event Object on Line " + str(line_num) + " in the Trace File is Missing the Data Field.\n"
                                          "Trace File Path: "+ self.trace_file_path +
-                                         "\n+++ If there is no data, use \"data\": null +++\n+++ Aborting +++")
-                    return trace_file
+                                         "\nIf there is no data, use \"data\": null\n Aborting")
+                    return False
         except OSError:
             varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
-        return trace_file
+            return False
+
+        return True # Connected ok
 
     def has_event(self):
         if not self._file_open:
