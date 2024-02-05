@@ -3,3 +3,4 @@ alphabet: [a,b,c]
 main_process: "a -> (b -> SKIP [] c -> SKIP)"
 model: "/home/matt/work/varanus/sm-test/simple.csp" # starts with / for global path
 map:   "/home/matt/work/varanus/sm-test/event_map.json"
+name: "simple_test"
