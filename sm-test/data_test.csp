@@ -1,0 +1,6 @@
+channel tick : Int
+channel e : {1,0}
+
+
+ticker = tick.1 -> tick.2 -> tick.3 -> SKIP
+
