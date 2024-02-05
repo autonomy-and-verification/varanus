@@ -44,6 +44,7 @@ class OfflineInterface(SystemInterface):
         self.events = deque()
 
     def connect(self):
+        varanus_logger.info("Parsing trace file at: " + self.trace_file_path)
         try:
             trace_file = open(self.trace_file_path)
             self._file_open = True
@@ -54,18 +55,26 @@ class OfflineInterface(SystemInterface):
                     continue
                 event_list = json.loads(json_line)
                 varanus_logger.debug("event_list = " + str(event_list))
-                try:
-                    if event_list["data"] is not None:
-                        parsed_event = Event(event_list['topic'], [event_list["data"]])
-                    else:
-                        parsed_event = Event(event_list["topic"])
+                if "data" not in event_list:
+                    varanus_logger.error(
+                        "Event object on line " + str(line_num) + " in the trace file is missing the data field.\n"
+                        "Trace file path: " + self.trace_file_path + "\nIf there is no data, use \"data\": null\n Aborting")
+                    return False
+
+                if "topic" not in event_list:
+                    varanus_logger.error("Event object on Line " + str(line_num) + " in the trace file is missing the "
+                        "topic field.\nTrace file path: " + self.trace_file_path + "\n Aborting")
+                    return False
+
+
+                if event_list["data"] is not None:
+                    parsed_event = Event(event_list['topic'], [event_list["data"]])
+                else:
+                    parsed_event = Event(event_list["topic"])
                     event = parsed_event.to_fdr()
                     self.events.append(event)
-                except KeyError as e:
-                    varanus_logger.error("Event Object on Line " + str(line_num) + " in the Trace File is Missing the Data Field.\n"
-                                         "Trace File Path: "+ self.trace_file_path +
-                                         "\nIf there is no data, use \"data\": null\n Aborting")
-                    return False
+
+
         except OSError:
             varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
