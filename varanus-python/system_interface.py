@@ -71,8 +71,8 @@ class OfflineInterface(SystemInterface):
                     parsed_event = Event(event_list['topic'], [event_list["data"]])
                 else:
                     parsed_event = Event(event_list["topic"])
-                    event = parsed_event.to_fdr()
-                    self.events.append(event)
+                event = parsed_event.to_fdr()
+                self.events.append(event)
 
 
         except OSError:
