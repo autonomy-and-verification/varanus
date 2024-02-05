@@ -29,7 +29,7 @@ argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the t
 
 args = argParser.parse_args()
 
-
+# TODO check and warn for unopenable filepaths
 CONFIG_FILE = args.config
 config_path = args.config
 with open(config_path, 'r') as data:
@@ -48,7 +48,6 @@ with open(config_path, 'r') as data:
         TRACE_FILE = args.trace_file
     elif 'trace_file' in config:
         TRACE_FILE = config['trace_file']
-
     if 'name' in config:
         CHECK_NAME = config['name']
 if args.name:

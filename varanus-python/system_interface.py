@@ -52,14 +52,20 @@ class OfflineInterface(SystemInterface):
                     continue
                 event_list = json.loads(json_line)
                 varanus_logger.debug("event_list = " + str(event_list))
-                if event_list["data"] is not None:
-                    parsed_event = Event(event_list['topic'], [event_list["data"]])
-                else:
-                    parsed_event = Event(event_list["topic"])
-                event = parsed_event.to_fdr()
-                self.events.append(event)
+                try:
+                    if event_list["data"] is not None:
+                        parsed_event = Event(event_list['topic'], [event_list["data"]])
+                    else:
+                        parsed_event = Event(event_list["topic"])
+                    event = parsed_event.to_fdr()
+                    self.events.append(event)
+                except KeyError as e:
+                    varanus_logger.error("An Event Object in the Trace File is Missing the Data Field.\n"
+                                         "Trace File Path: "+ self.trace_file_path +
+                                         "\n+++ If there is no data, use \"data\": null +++\n+++ Aborting +++")
+                    return trace_file
         except OSError:
-            varanus_logger.error("Trace Path not found during Offline Runtime Verificaition. trace_file_path=" + str(
+            varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
         return trace_file
 

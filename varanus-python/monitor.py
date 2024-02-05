@@ -99,7 +99,7 @@ class Monitor(object):
         # test_result = process.test_machine()
         result = {}
 
-        ## Extract the Traces and start the loop
+        # Extract the Traces and start the loop
         monitored_system = OfflineInterface(trace_path)
         monitored_system.connect()
         trace = Trace()
