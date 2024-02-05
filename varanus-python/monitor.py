@@ -23,7 +23,7 @@ class Monitor(object):
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
-        # TODO This will need to be fixed later. Possibly Monitor should be intantiated with an Event Mapper
+        # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
         self.eventMapper = MascotEventAbstractor(event_map_path)
         self.explicit_alphabet = False
         self.alphabet = []
