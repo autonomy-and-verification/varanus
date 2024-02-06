@@ -1,0 +1,7 @@
+---
+alphabet: [a,b,c]
+main_process: "RecurrA"
+model: "/home/matt/work/varanus/sm-test/simple.csp" # starts with / for global path
+#map:   "/home/matt/work/varanus/sm-test/event_map.json"
+trace_file: "/home/matt/work/varanus/sm-test/test-traces/scen1.json"
+name: "build_test"
