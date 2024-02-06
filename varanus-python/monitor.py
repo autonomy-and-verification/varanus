@@ -24,7 +24,7 @@ class Monitor(object):
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
         # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
-        #self.eventMapper = MascotEventAbstractor(event_map_path)
+        # self.eventMapper = MascotEventAbstractor(event_map_path)
         if event_map_path is None:
             self.event_map = None
         else:
@@ -59,15 +59,16 @@ class Monitor(object):
 
         print("! main process = " + str(main_process))
         print("! model path = " + str(self.model_path))
-        #dict_sm = (self.fdr.convert_to_dictionary(main_process))
-        process = self.fdr.convert_to_state_machine(main_process) #CSPStateMachine(dict_sm, self.config_file)
+        # dict_sm = (self.fdr.convert_to_dictionary(main_process))
+        process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)
         return process
 
     def check_result(self, event, result):
         # if the alphabet is explicit
         # we will assume that anything we have seen in the alphabet
         # that we don't have a transition for is BAD
-
+        print("check_result: " + str(event) + " and " + str(result))
+        print(str(self.alphabet))
         if result is None:
             if self.explicit_alphabet:
 
@@ -107,8 +108,8 @@ class Monitor(object):
 
         # Extract the Traces and start the loop
         monitored_system = OfflineInterface(trace_path, self.event_map)
-        isConnected = monitored_system.connect()
-        if not isConnected:
+        is_connected = monitored_system.connect()
+        if not is_connected:
             varanus_logger.error("Could not open trace_file at: " + trace_path)
             return
         trace = Trace()
@@ -125,20 +126,24 @@ class Monitor(object):
                 result[process.current_state.name] = []
             old_state = process.current_state.name
 
-            resulting_state = process.transition(event)
+            resulting_state = process.transition(event)  # This returns None if there is no available transition
+            print("resulting_state = " + str(resulting_state))
 
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
             else:
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
+                varanus_logger.error("This node expected the following events: " + str(
+                    process.get_outgoing_transitions()))  # TODO make this prettier
+                print(type(result))
+                print(str(result))
                 return result  # So far, return because a None means it's bad.
 
         varanus_logger.info("Trace file finished with no violations")
-        return result # this is not caught, not sure if I need to return anything
+        return result  # this is not caught, not sure if I need to return anything
 
-    # deprecated
-    def _run_offline_traces_single(self, trace_path):
+    def _run_offline_traces_single(self, trace_path):  # deprecated
         """ Runs Varanus Offline, taking a single trace and sending it to FDR"""
 
         varanus_logger.info("+++ Running Offline Traces Single +++")

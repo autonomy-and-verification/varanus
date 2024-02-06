@@ -1,8 +1,8 @@
 ---
-#alphabet: [system_init, speed, foot_pedal_pressed]
+alphabet: [system_init, speed, foot_pedal_pressed]
 main_process: "MASCOT_SAFETY_SYSTEM"
-#main_process: "SAFE_SPEED_MONITOR" # Crashes, max recursion
+#main_process: "SAFE_SPEED_MONITOR" 
 model: "/home/matt/work/varanus/mascot-model/mascot-safety-system.csp" #  
-map:   "/home/matt/work/varanus/rosmon-test/event_map.json" # This needs to be involved in the process now. 
+map:   "/home/matt/work/varanus/rosmon-test/event_map.json" 
 trace_file: "/home/matt/work/varanus/rosmon-test/rosmon-mascot-pass.json"
 name: "data_test"

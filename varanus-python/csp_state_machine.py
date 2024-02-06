@@ -166,7 +166,10 @@ class CSPStateMachine(object):
         """Log the msg to the screen"""
         classprefix = "CSPStateMachine: ".upper()
         print(classprefix + msgprefix.upper() + ": " + msg)
-
+    def get_outgoing_transitions(self):
+        """From the current state, return the outgoing transitions"""
+        assert (self.current_state is not None)
+        return self.current_state.transitions
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
 
