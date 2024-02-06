@@ -19,12 +19,18 @@ varanus_logger = logging.getLogger("varanus")
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, event_map_path, config_file):
+    def __init__(self, model_path, config_file, event_map_path=None):
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
         # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
-        self.eventMapper = MascotEventAbstractor(event_map_path)
+        #self.eventMapper = MascotEventAbstractor(event_map_path)
+        if event_map_path is None:
+            self.event_map = None
+        else:
+            with open(event_map_path, "r") as event_map:
+                self.event_map = json.load(event_map)
+
         self.explicit_alphabet = False
         self.alphabet = []
         self.config_file = config_file
@@ -100,16 +106,19 @@ class Monitor(object):
         result = {}
 
         # Extract the Traces and start the loop
-        monitored_system = OfflineInterface(trace_path)
+        monitored_system = OfflineInterface(trace_path, self.event_map)
         isConnected = monitored_system.connect()
         if not isConnected:
+            varanus_logger.error("Could not open trace_file at: " + trace_path)
             return
         trace = Trace()
 
         varanus_logger.info("Checking trace file: " + trace_path)
         while monitored_system.has_event():
+            varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
 
             event = monitored_system.next_event()
+            varanus_logger.debug("event = " + event)
             trace.add_event(Event(event))
 
             if process.current_state.name not in result:

@@ -74,7 +74,7 @@ else:
 ################
 #set to the name of the scenario
 logFileName = CHECK_NAME
-log_level = logging.INFO
+log_level = logging.DEBUG
 
 if not os.path.exists("log"):
     os.mkdir("log")
@@ -97,15 +97,15 @@ def run(check_type):
 
         if check_type == "offline":
             t0 = time.time()
-            mon = Monitor(MODEL, MAP, CONFIG_FILE)
+            mon = Monitor(MODEL, CONFIG_FILE, MAP)
             mon._run_offline_traces_single(TRACE_FILE)
         elif check_type == "online":
             t0 = time.time()
-            mon = Monitor(MODEL, MAP, CONFIG_FILE)
+            mon = Monitor(MODEL, CONFIG_FILE, MAP)
             mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
         elif check_type == "sm-test": # This is temporary, for testing the state machine
             t0 = time.time()
-            mon = Monitor(MODEL, MAP, CONFIG_FILE)
+            mon = Monitor(MODEL, CONFIG_FILE, MAP)
             print(MAIN_PROCESS)
             mon.run_state_machine_test(MAIN_PROCESS)
         elif check_type == "offline-test": # temp for testing upgrade of offline mode
@@ -116,7 +116,7 @@ def run(check_type):
             #MAIN_PROCESS = None
 
             varanus_logger.debug(CONF_MAP)
-            mon = Monitor(CONF_MODEL, CONF_MAP, CONFIG_FILE)
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP)
             mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
 
 

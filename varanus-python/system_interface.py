@@ -32,6 +32,17 @@ class SystemInterface(object):
     def close(self):
         pass
 
+    def _convert_event(self, event_name):
+        """Uses the event_map to convert the event name from the version in the trace to the CSP channel name it matches"""
+        assert(self.event_map is not None)
+        varanus_logger.debug("in _convert_event. event_map = " + str(self.event_map))
+        varanus_logger.debug("in _convert_event. event_name = " + str(event_name))
+
+        if event_name in self.event_map:
+            return self.event_map[event_name]
+        else:
+            return event_name
+
 
 class OfflineInterface(SystemInterface):
     """ Interface to a file of traces."""
@@ -39,8 +50,7 @@ class OfflineInterface(SystemInterface):
     def __init__(self, trace_file_path, event_map=None):
         self.trace_file_path = trace_file_path
         self._file_open = False
-        #if event_map != None:
-        #    self.EventAbs = EventAbstractor(event_map)
+        self.event_map = event_map
         self.events = deque()
 
     def connect(self):
@@ -68,10 +78,15 @@ class OfflineInterface(SystemInterface):
 
                 # TODO Check if the event in the trace file matches that in the CSP file I was given. CSP State
                 #  Machine currently built from main process...so I'm not sure how this will work.
-                if event_list["data"] is not None:
-                    parsed_event = Event(event_list['topic'], [event_list["data"]])
+                if self.event_map is not None:
+                    channel_name = self._convert_event(event_list['topic'])
                 else:
-                    parsed_event = Event(event_list["topic"])
+                    channel_name = event_list['topic']
+
+                if event_list["data"] is not None:
+                    parsed_event = Event(channel_name, [event_list["data"]])
+                else:
+                    parsed_event = Event(channel_name)
 
                 event = parsed_event.to_fdr()
                 self.events.append(event)
@@ -96,6 +111,7 @@ class OfflineInterface(SystemInterface):
     def next_event(self):
         if not self._file_open:
             self.connect()
+
         return self.events.popleft()
 
     def close(self):
