@@ -44,6 +44,8 @@ with open(config_path, 'r') as data:
         CONF_MODEL = config['model']
     if 'map' in config:
         CONF_MAP = config['map']
+    else:
+        CONF_MAP = None
     if args.trace_file:
         TRACE_FILE = args.trace_file
     elif 'trace_file' in config:

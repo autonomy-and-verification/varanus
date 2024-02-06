@@ -132,24 +132,33 @@ class FDRInterface(object):
         """Explores the csp_machine, building the states and transitions of the sate_machine as it goes. It starts
         with this_node and recurses."""
 
-        transitions = csp_machine.transitions(this_node)
+        # Get the alphabet
         alpha = csp_machine.alphabet(False)
         print("* alphabet from csp_machine = ")
         for a in alpha:
             print(self.session.uncompile_event(a))
             state_machine.add_letter_to_alphabet(str(self.session.uncompile_event(a)))
 
+        varanus_logger.info("Building CSP State Machine")
+        self.explore_states(csp_machine, [], state_machine, this_node)
 
-        # machine_map = {}
-        destinations = []
-        print("Building State Machine")
+        state_machine.initial_state = state_machine.states['0']  # Sets the state_machine's initial state
+        # Also, Python is a silly language; this should be preventable.
+
+        return state_machine
+
+    def explore_states(self, csp_machine, visited, state_machine, this_node):
+        visited.append(this_node)
+        transitions = csp_machine.transitions(this_node)
+        destinations_list = []
         for t in transitions:
             # Get the destination (node) of this transition and
             # if it's not already in the list of destination, add it.
             # destinations is the list we use to recurse on.
             destination = t.destination()
-            if destination not in destinations:
-                destinations.append(destination)
+
+            if destination not in visited:
+                destinations_list.append(destination)
 
             # String name of the next state (will be an integer)
             next_state = str(destination.hash_code())
@@ -162,16 +171,10 @@ class FDRInterface(object):
 
             # Add the (event, destination) pair to the state machine
             state_machine.add_transition_by_name(event, this_node_num, next_state)
-
         # Recurse for each destination of this_node
-        for d in destinations:
+        for d in destinations_list:
             print("Checking " + str(d))
-            self.build_state_machine(csp_machine, state_machine, d)
-
-        state_machine.initial_state = state_machine.states['0']  # Sets the state_machine's initial state
-        # Also, Python is a silly language; this should be preventable.
-
-        return state_machine
+            self.explore_states(csp_machine, visited, state_machine, d)
 
     def convert_to_dictionary(self, process):
         """

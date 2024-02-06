@@ -1,6 +1,6 @@
 ---
 alphabet: [a,b,c]
-main_process: "RecurrA"
+main_process: "LoopA"
 model: "/home/matt/work/varanus/sm-test/simple.csp" # starts with / for global path
 #map:   "/home/matt/work/varanus/sm-test/event_map.json"
 trace_file: "/home/matt/work/varanus/sm-test/test-traces/scen1.json"
