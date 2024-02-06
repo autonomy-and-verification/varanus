@@ -141,10 +141,13 @@ class FDRInterface(object):
 
         varanus_logger.info("Building CSP State Machine")
         self.explore_states(csp_machine, [], state_machine, this_node)
-
-        state_machine.initial_state = state_machine.states['0']  # Sets the state_machine's initial state
-        # Also, Python is a silly language; this should be preventable.
-
+        print("-")
+        print(len(state_machine.states))
+        print(str(state_machine.states))
+        print(str(this_node.hash_code()))
+        state_machine.initial_state = state_machine.states[str(this_node.hash_code())]  # Sets the state_machine's initial state
+        # Also, Python is a silly language; setting this internal variable should not be possible.
+        varanus_logger.info("CSP State Machine Built")
         return state_machine
 
     def explore_states(self, csp_machine, visited, state_machine, this_node):
@@ -175,6 +178,7 @@ class FDRInterface(object):
         for d in destinations_list:
             print("Checking " + str(d))
             self.explore_states(csp_machine, visited, state_machine, d)
+        varanus_logger.debug("explore_states returning...")
 
     def convert_to_dictionary(self, process):
         """
