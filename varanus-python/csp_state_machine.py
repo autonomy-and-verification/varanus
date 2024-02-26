@@ -47,11 +47,12 @@ class Transition(object):
             self.isTerminate = True
         # Name is the transition is the event that triggers it
         self.name = name
+        # TODO Is states only ever one item??
         self.states = {} # Outgoing states, presumably, or the states that the transition belongs to??
         self.probabilities = {}
 
     def add_state(self, state):
-        """adds the give state to this Transition's list of states"""
+        """adds the given state to this Transition's list of states"""
         if self.states is None:
             self.states = {}
             self.probabilities = {}
@@ -169,7 +170,17 @@ class CSPStateMachine(object):
     def get_outgoing_transitions(self):
         """From the current state, return the outgoing transitions"""
         assert (self.current_state is not None)
-        return self.current_state.transitions
+
+        outgoing_transitions = self.current_state.transitions
+        returned_transitions = []
+        for name, destination in outgoing_transitions.items():
+            returned_destinations = []
+            for destination_name in destination.states:
+                returned_destinations.append(destination_name)
+            returned_transition = (name, returned_destinations)
+            returned_transitions.append(returned_transition)
+
+        return returned_transitions
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
 

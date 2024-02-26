@@ -3,5 +3,5 @@ alphabet: [tick]
 main_process: "tick.1 -> tick.2 -> tick.3 -> SKIP"
 model: "/home/matt/work/varanus/sm-test/data_test.csp" # starts with / for global path
 map:   "/home/matt/work/varanus/sm-test/event_map.json"
-trace_file: "/home/matt/work/varanus/sm-test/test-traces/dataPass.json"
+trace_file: "/home/matt/work/varanus/sm-test/test-traces/dataFail1.json"
 name: "data_test"

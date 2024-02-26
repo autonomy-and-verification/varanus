@@ -135,7 +135,7 @@ class Monitor(object):
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
-                    process.get_outgoing_transitions()))  # TODO make this prettier
+                    process.get_outgoing_transitions()))  # TODO make this even prettier
                 print(type(result))
                 print(str(result))
                 return result  # So far, return because a None means it's bad.
