@@ -211,4 +211,4 @@ if __name__ == "__main__":
     varanus_logger.debug("Varanus Finished")
 
     if SPEED_CHECK == True:
-        log_speed(CHECK_NAME, total, TYPE)
+        log_speed(CHECK_NAME, times['total'], TYPE)
