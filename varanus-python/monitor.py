@@ -20,6 +20,7 @@ class Monitor(object):
     """The main class of the program, controls the process """
 
     def __init__(self, model_path, config_file, event_map_path=None):
+        self.process = None
         self.fdr = FDRInterface()
         self.model_path = model_path
         self.fdr.load_model(self.model_path)
@@ -48,7 +49,7 @@ class Monitor(object):
                 self.alphabet = set(config['alphabet'])
 
     def new_fdr_session(self):
-        assert (self.fdr != None)
+        assert (self.fdr is not None)
         self.fdr.new_session()
 
     def load_fdr_model(self, model_path):
@@ -60,8 +61,7 @@ class Monitor(object):
         print("! main process = " + str(main_process))
         print("! model path = " + str(self.model_path))
         # dict_sm = (self.fdr.convert_to_dictionary(main_process))
-        process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)
-        return process
+        self.process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)
 
     def check_result(self, event, result):
         # if the alphabet is explicit
@@ -99,10 +99,9 @@ class Monitor(object):
     def _run_offline_state_machine(self, main_process, trace_path):
         """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
         varanus_logger.info("+++ Running Offline -- Using State Machine +++")
+        assert (self.process is not None)
 
-        process = self.build_state_machine(main_process)
-
-        process.start()
+        self.process.start()
         # test_result = process.test_machine()
         result = {}
 
@@ -122,11 +121,11 @@ class Monitor(object):
             varanus_logger.debug("event = " + event)
             trace.add_event(Event(event))
 
-            if process.current_state.name not in result:
-                result[process.current_state.name] = []
-            old_state = process.current_state.name
+            if self.process.current_state.name not in result:
+                result[self.process.current_state.name] = []
+            old_state = self.process.current_state.name
 
-            resulting_state = process.transition(event)  # This returns None if there is no available transition
+            resulting_state = self.process.transition(event)  # This returns None if there is no available transition
             print("resulting_state = " + str(resulting_state))
 
             if self.check_result(event, resulting_state):
@@ -135,7 +134,7 @@ class Monitor(object):
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
-                    process.get_outgoing_transitions()))  # TODO make this even prettier
+                    self.process.get_outgoing_transitions()))  # TODO make this even prettier
                 print(type(result))
                 print(str(result))
                 return result  # So far, return because a None means it's bad.
