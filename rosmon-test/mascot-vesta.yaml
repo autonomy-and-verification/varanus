@@ -1,8 +1,8 @@
 ---
 alphabet: [system_init, speed, footswitch]
-main_process: "SAFE_SPEED_MONITOR" 
+main_process: "MASCOT_SAFETY_SYSTEM" 
 model: "/home/matt/Work/varanus/mascot-model/mascot-safety-system.csp" #  
 map:   "/home/matt/Work/varanus/rosmon-test/event_map.json" 
 trace_file: "/home/matt/Work/varanus/rosmon-test/rosmon-mascot-pass.json"
 name: "data_test"
-common_alphabet: [system_init, speed, footswitch]
+common_alphabet: [system_init, speed, footswitch, speed_ok]

@@ -208,10 +208,15 @@ if __name__ == "__main__":
 
     times = run(TYPE)
 
+    print("")
+    print("")
+    # TODO make this print more clearly if the monitor found an error or not
+
     if 'build' in times and 'check' in times:
         varanus_logger.info("+++ Build Time: " + str(times['build']) + "s +++")
         varanus_logger.info("+++ Check Time: " + str(times['check']) + "s +++")
     varanus_logger.info("+++ Total Time: " + str(times['total']) + "s +++")
+
 
     varanus_logger.debug("Varanus Finished")
 

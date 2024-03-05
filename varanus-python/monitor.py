@@ -78,7 +78,7 @@ class Monitor(object):
                 if i < length:
                     to_hide += ", "
                 i += 1
-            main_process = main_process + "\diff(Events, {|"+ to_hide +"|})"
+            main_process = str(main_process + "\diff(Events, {|"+ to_hide +"|})")
             # TODO this should now check for...divergence? and? determinism?
 
         self.process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)

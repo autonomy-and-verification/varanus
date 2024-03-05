@@ -114,6 +114,10 @@ class FDRInterface(object):
 
     def convert_to_state_machine(self, process):
         """ Makes a state machine object from the process"""
+        assert(type(process) is str)
+
+        print("ctsm's copy of main process name = " + process)
+        print (type(process))
 
         # This evaluates a process (say, the trace)
         LTS = self.session.evaluate_process(process, fdr.SemanticModel_Traces, None)
