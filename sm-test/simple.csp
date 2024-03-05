@@ -31,4 +31,9 @@ assert Proc3 :[has trace]: <a, b, c>
 assert Proc3 :[has trace]: <a, d, b, c>
 
 ALPHABET_TEST = (a -> hidden -> c -> SKIP) [] (b -> c -> SKIP)
+ALPHABET_TEST2 = (a -> hidden -> hidden -> c -> SKIP) [] (b -> c -> SKIP)
 
+assert ALPHABET_TEST :[divergence free]:
+assert ALPHABET_TEST :[deterministic]:
+assert ALPHABET_TEST\diff(Events, {|a, b, c|}) :[divergence free]:
+assert ALPHABET_TEST\diff(Events, {|a, b, c|}) :[deterministic]:

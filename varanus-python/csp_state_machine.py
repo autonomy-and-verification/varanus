@@ -92,6 +92,8 @@ class CSPStateMachine(object):
     Each Transitions has a list of outgoing states.
     """
 
+    _TAU_DEPTH = 5
+
     def __init__(self, sm_dictionary=None, config_fn=None):
         self.states = {}
         self.current_state = None
@@ -199,6 +201,7 @@ class CSPStateMachine(object):
 
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
+        varanus_logger.debug("Transition method. Current State = " + self.current_state.name + " and transition_name = " + transition_name)
         print(transition_name)
         print("$ alphabet = ")
         for a in self.alphabet:
@@ -221,11 +224,19 @@ class CSPStateMachine(object):
         print(self.current_state.name)
         print(str(self.current_state.transitions))
         if transition is not None:
+            varanus_logger.debug("Transition good, moving to next state")
             self.current_state = transition.get_first_state()
         elif self.current_state.has_tau:
-            self.explore_taus(transition_name)
+            transition = self.explore_taus(transition_name)
+            if transition is not None:
+                varanus_logger.debug("Transition good, after exploring taus")
+                self.current_state = transition.get_first_state()
+            else:
+                varanus_logger.debug("Transition bad, after exploring taus")
+                return None # Still couldn't find a valid transition
         else:
-            return None
+            varanus_logger.debug("Transition bad, abort")
+            return None # Could not find a transition
 
         self.log("NORMAL TRANSITION", "Now in state " + self.current_state.name)
         return self.current_state
@@ -266,13 +277,29 @@ class CSPStateMachine(object):
         return result
 
     def explore_taus(self, transition_name):
-        """Explores (currently one) tau transition from the current state to see if the event can be found in the next state"""
-        varanus_logger.debug("explore_taus called in state: " + str(self.current_state))
+        """Explores tau transitions (to _TAU_DEPTH) from the current state to see if the event can be found in the next state
+        Returns """
+        varanus_logger.debug("explore_taus called in state: " + str(self.current_state) + " looking for state that has " + transition_name)
         assert(self.current_state is not None)
         assert(self.current_state.has_tau)
 
-        tau_transition = self.current_state.transitions[Transition._TAU]
-        destination = tau_transition.get_first_state()
+        next_current_state = None
+        depth = 0
+        state_to_check = self.current_state
+        while depth <= self._TAU_DEPTH:
+            tau_transition = state_to_check.transitions[Transition._TAU]
+            destination = tau_transition.get_first_state()
+            print(str(tau_transition))
+
+            next_current_state = destination.transit(transition_name)
+            if next_current_state is not None:
+                return next_current_state
+            else:
+                state_to_check = destination
+                depth += 1
+
+
+
 
 
 
