@@ -1,3 +1,4 @@
+# coding=utf-8
 import time
 from monitor import *
 import logging
@@ -126,7 +127,10 @@ def run(check_type):
         # MAIN_PROCESS = None
 
         varanus_logger.debug(CONF_MAP)
-        mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP)
+        if CONF_MAP is not None:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP)
+        else:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE)
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)

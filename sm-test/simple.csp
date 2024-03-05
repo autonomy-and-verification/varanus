@@ -1,4 +1,5 @@
 channel a, b, c, d
+channel hidden
 channel e : {1,0}
 
 
@@ -28,3 +29,6 @@ assert Proc2 :[has trace]: <a, d, b, c>
 assert Proc3 :[has trace]: <a, b>
 assert Proc3 :[has trace]: <a, b, c>
 assert Proc3 :[has trace]: <a, d, b, c>
+
+ALPHABET_TEST = (a -> hidden -> c -> SKIP) [] (b -> c -> SKIP)
+

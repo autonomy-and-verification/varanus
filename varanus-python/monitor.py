@@ -70,7 +70,7 @@ class Monitor(object):
             print(length)
             for event in common_alphabet:
                 # TODO this is a copy of what's in SystemInterface.convert_event() which is a method...ordinarily I'd make it static, but that doesn't seem to be a thing in Python...
-                if event in self.event_map:
+                if self.event_map is not None and event in self.event_map:
                     to_hide += self.event_map[event]
                 else:
                     to_hide += event

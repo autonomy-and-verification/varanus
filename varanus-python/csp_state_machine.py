@@ -1,17 +1,20 @@
+# coding=utf-8
 import yaml
 import logging
+
 varanus_logger = logging.getLogger("varanus")
+
 
 class State(object):
     """Represents one state in the Labelled Transition System"""
 
     def __init__(self, name):
         self.name = name
-        self.transitions = {} # Dictionary: event_name, Transition
+        self.transitions = {}  # Dictionary: event_name, Transition
         self.has_terminate_transition = False
+        self.has_tau = False
         # the alphabet is not given in a yaml file
-        # so we assume that only the letters in the obj
-        # are the alphabet
+        # so we assume that only the letters in the obj are the alphabet
 
     def add_transition(self, transition):
         """Adds a Transition object to this State's list of transitions"""
@@ -21,6 +24,9 @@ class State(object):
         self.transitions[transition.name] = transition
         if transition.isTerminate:
             self.has_terminate_transition = True
+
+        if transition.isTau:
+            self.has_tau = True
 
     def transit(self, transition_name):
         """Returns the Transition named transition_name if it is in this State's transition list, or None if it does
@@ -39,16 +45,24 @@ class Transition(object):
     """
     _TERMINATE = '\xe2\x9c\x93'
     """this is FDR's terminate transition, tick; if we see this we just go to the next state"""
+
+    _TAU = '\xcf\x84'
+    """The tau character."""
+
     _ACCEPTINGSTATE = State('accepting')
 
     def __init__(self, name):
         self.isTerminate = False
+        self.isTau = False
         if name == self._TERMINATE:
             self.isTerminate = True
+
+        if name == self._TAU: # Python is a silly language. This used to use "is" but that fails.
+            self.isTau = True
         # Name is the transition is the event that triggers it
         self.name = name
         # TODO Is states only ever one item??
-        self.states = {} # Outgoing states, presumably, or the states that the transition belongs to??
+        self.states = {}  # Outgoing states, presumably, or the states that the transition belongs to??
         self.probabilities = {}
 
     def add_state(self, state):
@@ -58,6 +72,7 @@ class Transition(object):
             self.probabilities = {}
 
         self.states[state.name] = state
+        # TODO Might need to make tau map to a list of destinations
         self.probabilities[state.name] = 1.0
 
     def get_first_state(self):
@@ -65,12 +80,10 @@ class Transition(object):
         if self.isTerminate:
             return self._ACCEPTINGSTATE
         # just return the first state
-        return self.states.values()[0] #ml Why the first state??
+        return self.states.values()[0]  # ml Why the first state??
 
     def __str__(self):
         return self.name
-
-
 
 class CSPStateMachine(object):
     """
@@ -135,7 +148,8 @@ class CSPStateMachine(object):
         if self.states is None:
             self.states = {}
         if state_name not in self.states:
-            self.states[state_name] = State(state_name) # So...states is a dictionary where the key is the name and the value is the State? Ok, so it's like an index
+            self.states[state_name] = State(
+                state_name)  # So...states is a dictionary where the key is the name and the value is the State? Ok, so it's like an index
 
     def add_letter_to_alphabet(self, letter):
         """Adds the letter to this State Machine's alphabet"""
@@ -167,6 +181,7 @@ class CSPStateMachine(object):
         """Log the msg to the screen"""
         classprefix = "CSPStateMachine: ".upper()
         print(classprefix + msgprefix.upper() + ": " + msg)
+
     def get_outgoing_transitions(self):
         """From the current state, return the outgoing transitions"""
         assert (self.current_state is not None)
@@ -181,9 +196,10 @@ class CSPStateMachine(object):
             returned_transitions.append(returned_transition)
 
         return returned_transitions
+
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
-
+        print(transition_name)
         print("$ alphabet = ")
         for a in self.alphabet:
             print(str(a) + " type is " + str(type(a)))
@@ -192,16 +208,22 @@ class CSPStateMachine(object):
 
         if self.current_state is None:
             self.current_state = self.initial_state
-        if self.current_state.name == "accepting": # maybe this should be 'terminal' state?
+        if self.current_state.name == "accepting":  # maybe this should be 'terminal' state?
             return self.current_state
 
         ##if self.current_state.has_terminate_transition: #This is wrong....
         ##    transition_name = Transition._TERMINATE
         ##    self.log("terminal state bypass", "converting transition " + transition_name + " to " + Transition._TERMINATE)
-        transition = self.current_state.transit(transition_name) # WHAT IS THIS? This seems to return the transition... as in, 'transit(a)' gives me 'a'
+        transition = self.current_state.transit(
+            transition_name)  # WHAT IS THIS? This seems to return the transition... as in, 'transit(a)' gives me 'a'
         print("+++ transition returned from  self.current_state.transit(transition_name) = " + str(transition))
+        print(self.current_state.has_tau)
+        print(self.current_state.name)
+        print(str(self.current_state.transitions))
         if transition is not None:
             self.current_state = transition.get_first_state()
+        elif self.current_state.has_tau:
+            self.explore_taus(transition_name)
         else:
             return None
 
@@ -224,7 +246,6 @@ class CSPStateMachine(object):
         self.current_state = self.initial_state
         self.log("explicit_alphabet", str(self.explicit_alphabet))
 
-
     def test_machine(self):
         """Simple test of the State Machine class, using simple.csp"""
         result = {}
@@ -243,3 +264,17 @@ class CSPStateMachine(object):
                 result[old_state].append((transition, resulting_state))
 
         return result
+
+    def explore_taus(self, transition_name):
+        """Explores (currently one) tau transition from the current state to see if the event can be found in the next state"""
+        varanus_logger.debug("explore_taus called in state: " + str(self.current_state))
+        assert(self.current_state is not None)
+        assert(self.current_state.has_tau)
+
+        tau_transition = self.current_state.transitions[Transition._TAU]
+        destination = tau_transition.get_first_state()
+
+
+
+
+

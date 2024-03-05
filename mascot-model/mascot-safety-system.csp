@@ -77,9 +77,9 @@ assert MASCOT_SAFETY_SYSTEM :[deadlock free]
 assert MASCOT_SAFETY_SYSTEM :[divergence free]
 assert MASCOT_SAFETY_SYSTEM :[deterministic]
 
-assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[deadlock free]
-assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[divergence free]
-assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[deterministic]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[deadlock free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[divergence free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[deterministic]
 
 
 
