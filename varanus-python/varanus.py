@@ -55,6 +55,8 @@ with open(config_path, 'r') as data:
         TRACE_FILE = config['trace_file']
     if 'name' in config:
         CHECK_NAME = config['name']
+    if 'common_alphabet' in config:
+        COMMON_ALPHA = config['common_alphabet']
 if args.name:
     CHECK_NAME = args.name
 elif CHECK_NAME is None:
@@ -126,9 +128,12 @@ def run(check_type):
         varanus_logger.debug(CONF_MAP)
         mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP)
         build_start = time.time()
-        mon.build_state_machine(MAIN_PROCESS)
+        if COMMON_ALPHA:
+            mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
+        else:
+            mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
-        print(MAIN_PROCESS)
+
         check_start = time.time()
         mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
         check_end = time.time()

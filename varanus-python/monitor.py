@@ -55,12 +55,32 @@ class Monitor(object):
     def load_fdr_model(self, model_path):
         self.fdr.load_model(self.model_path)
 
-    def build_state_machine(self, main_process, alphabet=None):
-        """Builds a CSPStateMachine object for the main_process with the given alphabet"""
-
+    def build_state_machine(self, main_process, common_alphabet=None):
+        """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
+        events to hide in the main_process"""
+        assert(common_alphabet is None or type(common_alphabet) is list)
         print("! main process = " + str(main_process))
         print("! model path = " + str(self.model_path))
-        # dict_sm = (self.fdr.convert_to_dictionary(main_process))
+        print("! common_alphabet = " + str(common_alphabet))
+
+        if common_alphabet is not None:
+            to_hide = ""
+            length = len(common_alphabet)
+            i = 1
+            print(length)
+            for event in common_alphabet:
+                # TODO this is a copy of what's in SystemInterface.convert_event() which is a method...ordinarily I'd make it static, but that doesn't seem to be a thing in Python...
+                if event in self.event_map:
+                    to_hide += self.event_map[event]
+                else:
+                    to_hide += event
+
+                if i < length:
+                    to_hide += ", "
+                i += 1
+            main_process = main_process + "\diff(Events, {|"+ to_hide +"|})"
+            # TODO this should now check for...divergence? and? determinism?
+
         self.process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)
 
     def check_result(self, event, result):

@@ -77,6 +77,12 @@ assert MASCOT_SAFETY_SYSTEM :[deadlock free]
 assert MASCOT_SAFETY_SYSTEM :[divergence free]
 assert MASCOT_SAFETY_SYSTEM :[deterministic]
 
-include "safety-properties.csp"
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[deadlock free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[divergence free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed|}) :[deterministic]
+
+
+
+--include "safety-properties.csp"
 --include "monitorTest.csp"
-include "scenarios.csp"
+--include "scenarios.csp"

@@ -32,7 +32,7 @@ class SystemInterface(object):
     def close(self):
         pass
 
-    def _convert_event(self, event_name):
+    def convert_event(self, event_name):
         """Uses the event_map to convert the event name from the version in the trace to the CSP channel name it matches"""
         assert(self.event_map is not None)
         varanus_logger.debug("in _convert_event. event_map = " + str(self.event_map))
@@ -79,7 +79,7 @@ class OfflineInterface(SystemInterface):
                 # TODO Check if the event in the trace file matches that in the CSP file I was given. CSP State
                 #  Machine currently built from main process...so I'm not sure how this will work.
                 if self.event_map is not None:
-                    channel_name = self._convert_event(event_list['topic'])
+                    channel_name = self.convert_event(event_list['topic'])
                 else:
                     channel_name = event_list['topic']
 

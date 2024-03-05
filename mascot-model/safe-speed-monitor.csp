@@ -85,3 +85,8 @@ SAFE_SPEED_MONITOR =
   assert SAFE_SPEED_MONITOR :[deadlock free]
   assert SAFE_SPEED_MONITOR :[divergence free]
   assert SAFE_SPEED_MONITOR :[deterministic]
+
+
+assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[deadlock free]
+  assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[divergence free]
+  assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[deterministic]
