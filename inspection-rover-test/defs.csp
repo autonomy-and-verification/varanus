@@ -1,0 +1,26 @@
+nametype coord = {0..2}
+nametype waypointID = {0..2}
+datatype radiation_category = Red | Orange | Green
+nametype sensor_value = {0, 50, 120, 150, 250, 300}
+
+channel sensors : sensor_value
+channel position : coord.coord
+channel at : coord.coord
+channel move : coord.coord
+channel inspect : waypointID
+channel radiation_level : radiation_category
+channel inspectedCall : waypointID
+channel inspectedRet : Bool
+channel wayPcall : coord.coord
+channel wayPTrue : waypointID
+channel wayPFalse
+
+
+waypoint_inverse (0) = 0.0
+waypoint_inverse (1) = 1.1
+waypoint_inverse (2) = 2.2
+
+waypoint(0,0) = 0
+waypoint(1,1) = 1
+waypoint(2,2) = 2
+waypoint(_,_) = -1

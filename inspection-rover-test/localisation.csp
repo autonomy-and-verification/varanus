@@ -1,0 +1,6 @@
+-- The node outputs a unique (x , y) coordinate that is the robot’s estimated position
+
+include "defs.csp"
+
+-- inputs, because we're abstracting the position values.
+local_guar = position?x?y -> local_guar

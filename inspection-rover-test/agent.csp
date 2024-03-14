@@ -1,0 +1,118 @@
+--Assume:The Radiation Status that it receives is either red, orange, or green
+
+--Guarantee A: If the Robot is at waypoint i and it has inspected that waypoint and the radition level was not dangerous, then it will move to the next waypoint or to the original waypoint (the exit) if there is no next waypoint.
+
+-- Guarantee B: And, if the Robot is at waypoint i and it has not been inspected, then the Robot will inspect it.
+
+-- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
+
+include "defs.csp"
+
+AgentChan = {|get_at, get_rad, at, radiation_level, wayPcall, wayPTrue, wayPFalse, inspect, inspectedCall, 
+	inspectedRet, move|}
+
+channel get_at: coord.coord
+channel get_rad : radiation_category
+
+
+
+nav_handler(x,y) =
+	at?new_x?new_y -> nav_handler(new_x,new_y)
+	[]
+	get_at!x!y -> nav_handler(x,y)
+	
+rad_handler(rad_level) = 
+	radiation_level?new_rad_level -> rad_handler(new_rad_level)
+	[]
+	get_rad!rad_level -> rad_handler(rad_level)
+
+waypoint_handler = 
+	wayPcall?x?y ->
+	if waypoint(x,y) == -1 then 
+		wayPFalse-> waypoint_handler
+	else 
+		wayPTrue.waypoint(x,y) -> waypoint_handler
+
+move_to_door = move.0.0 -> RUN(diff(Events,{|get_at, get_rad|}))
+
+move_to_next(current_waypoint) = 
+	if member(current_waypoint + 1, waypointID) then 
+		move.waypoint_inverse(current_waypoint + 1) -> SKIP
+	else
+		move_to_door
+						
+	
+-- Guar A
+agent_guarA = ((waypoint_handler ||| nav_handler(0,0) ||| rad_handler(Green)) [|{| wayPcall, wayPFalse, wayPTrue, get_at, get_rad |}|] agent_guarA1)\{|get_at, get_rad|}
+
+agent_guarA1 = get_at?x?y -> wayPcall.x.y -> 
+(
+	wayPTrue?i -> inspect.i -> get_rad.Green -> agent_guarA2(i)
+	[]
+	wayPFalse -> agent_guarA1	
+)
+
+
+agent_guarA2(i) = 
+move_to_next(i); agent_guarA1
+
+
+assert agent_guarA :[deadlock free]
+assert agent_guarA :[divergence free]
+assert agent_guarA :[deterministic]
+
+
+
+-- Guar B
+
+agent_guarB = ((waypoint_handler ||| nav_handler(0,0) ||| rad_handler(Green)) [|{| wayPcall, wayPFalse, wayPTrue, get_at, get_rad |}|] agent_guarB1)\{|get_at, get_rad|}
+
+agent_guarB1 = get_at?x?y -> wayPcall.x.y -> 
+(
+	wayPTrue?i -> inspectedCall!i -> agent_guarB2(i)
+	[]
+	wayPFalse -> agent_guarB1	
+) 
+
+
+agent_guarB2(i) = 
+( 
+	inspectedRet?true -> RUN(diff(Events, {| get_rad, get_at|}))  
+	[]
+	inspectedRet?false -> inspect.i -> RUN(diff(Events, {| get_rad, get_at|}))
+)
+
+
+assert agent_guarB :[deadlock free]
+assert agent_guarB :[divergence free]
+assert agent_guarB :[deterministic]
+
+
+-- Guar C
+
+agent_guarC = (rad_handler(Green) [|{| get_rad |}|] agent_guarC1)\{|get_rad|}
+
+agent_guarC1 = 
+inspect?_ -> 
+(get_rad?radLevel:{Orange, Red} -> move_to_door
+[]
+get_rad?radLevel:{Green} -> RUN(diff(Events, {| get_rad, get_at|}))
+)
+
+assert agent_guarC :[deadlock free]
+assert agent_guarC :[divergence free]
+assert agent_guarC :[deterministic]
+
+
+other_events = ([] e: diff(Events,AgentChan) @ e-> other_events)
+
+
+agent_guar = 
+	((agent_guarA1 [|{|wayPcall, wayPTrue, wayPFalse, get_at, get_rad, inspect|}|] (agent_guarB1 [|{|inspect,get_rad|}|] agent_guarC1) ) 
+		[|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
+	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler )  )
+	||| other_events
+
+assert agent_guar :[deadlock free]
+assert agent_guar :[divergence free]
+assert agent_guar :[deterministic]

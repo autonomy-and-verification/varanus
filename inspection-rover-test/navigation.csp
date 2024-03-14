@@ -1,0 +1,21 @@
+--Assume: There is a unique (x , y) coordinate position that represents the Robot’s estimated position
+
+--Guarantee: If the Robot is told to move to (x , y) and the Localisation node says that the Robot is at (x , y); then Navigation will conclude that it is at (x , y)
+
+include "defs.csp"
+
+channel get_pos : coord.coord
+
+nav_guar = (localisation_handler(0,0) [|{|get_pos|}|] nav_guar1)\{|get_pos|}
+
+localisation_handler(x,y) =
+	position?new_x?new_y -> localisation_handler(new_x, new_y)
+	[]
+	get_pos!x!y -> localisation_handler(x,y)
+	
+nav_guar1 = move?x?y -> get_pos?a?b ->
+	if a == x and b == y then
+		at.x.y -> RUN(Events)
+	else
+		RUN(Events)\{|at|}
+
