@@ -3,11 +3,14 @@
 --Guarantee: If the command received was to inspect waypoint i, then eventually waypoint i will be 
 -- inspected; and the radiation at waypoint i will be categorised as either green, orange, or red
 
-include "defs.csp"
+--include "defs.csp"
+
+radiation_inputs = {|sensors, inspect|}
+radiation_outputs = {| radiation_level, inspectedCall, inspectedRet |}
 
 channel add_inspected : waypointID
 
-rm_guar = inspect?i -> 
+rm_guar = (inspect?i -> 
 			(
 				sensors?reading:({0, 50}) -> radiation_level!Green -> add_inspected!i -> RUN(Events)
 				[]
@@ -18,6 +21,7 @@ rm_guar = inspect?i ->
 			)
 		[|{|add_inspected|}|]
 		inspected_handler({})
+		) \{|add_inspected|}
 
 inspected_handler(inspected_waypoints) =
 add_inspected?i -> inspected_handler(union(inspected_waypoints, {i}) )

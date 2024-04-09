@@ -2,7 +2,10 @@
 
 --Guarantee: If the Robot is told to move to (x , y) and the Localisation node says that the Robot is at (x , y); then Navigation will conclude that it is at (x , y)
 
-include "defs.csp"
+--include "defs.csp"
+
+navigation_inputs = {|position, move|}
+navigation_outputs = {| at |}
 
 channel get_pos : coord.coord
 
@@ -13,9 +16,15 @@ localisation_handler(x,y) =
 	[]
 	get_pos!x!y -> localisation_handler(x,y)
 	
-nav_guar1 = move?x?y -> get_pos?a?b ->
-	if a == x and b == y then
-		at.x.y -> RUN(Events)
-	else
-		RUN(Events)\{|at|}
+nav_guar1 = move?x?y -> nav_guar2(x, y)
+
+nav_guar2(x, y) = 
+	get_pos?a?b ->
+		if a == x and b == y then
+			at.x.y -> 
+			--RUN(Events)
+			nav_guar1
+		else
+			--RUN(Events)\{|at|}		
+			nav_guar2(x, y)
 

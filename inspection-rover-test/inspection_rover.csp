@@ -1,0 +1,28 @@
+-- Overall inspeaction rover process
+include "defs.csp"
+include "agent.csp"
+include "localisation.csp" 
+include "navigation.csp"
+include "radiation_monitor.csp"
+
+local_nav_interface = {| position |}
+
+nav_agent_interface = {| at |}
+agent_nav_interface = {| position, move |}
+
+agent_rad_interface = {| inspect |}
+rad_agent_interface = {| radiation_level, inspectedCall, inspectedRet  |}
+
+rover = (  nav_guar [| union(nav_agent_interface, agent_nav_interface) |] agent_guar  )
+
+--(	(local_guar [| local_nav_interface |] nav_guar)	) 
+			--		[ union(navigation_outputs, navigation_inputs) || union(agent_outputs, agent_inputs) ] agent_guar) 
+			--		[ union(agent_outputs, agent_inputs) || union(radiation_inputs, radiation_outputs) ] rm_guar
+
+
+
+
+
+assert rover :[deadlock free]
+assert rover :[divergence free]
+assert rover :[deterministic]

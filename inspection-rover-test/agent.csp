@@ -6,10 +6,14 @@
 
 -- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
 
-include "defs.csp"
+--include "defs.csp"
 
 AgentChan = {|get_at, get_rad, at, radiation_level, wayPcall, wayPTrue, wayPFalse, inspect, inspectedCall, 
 	inspectedRet, move|}
+
+agent_inputs = {| at, radiation_level, wayPcall, wayPTrue, wayPFalse, inspectedCall, 
+	inspectedRet |}
+agent_outputs = {| move, inspect |}
 
 channel get_at: coord.coord
 channel get_rad : radiation_category
@@ -108,10 +112,11 @@ other_events = ([] e: diff(Events,AgentChan) @ e-> other_events)
 
 
 agent_guar = 
-	((agent_guarA1 [|{|wayPcall, wayPTrue, wayPFalse, get_at, get_rad, inspect|}|] (agent_guarB1 [|{|inspect,get_rad|}|] agent_guarC1) ) 
-		[|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
-	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler )  )
-	||| other_events
+	--(
+	(agent_guarA1 [|{|wayPcall, wayPTrue, wayPFalse, get_at, get_rad|}|] (agent_guarB1 [|{|get_rad|}|] agent_guarC1) ) 
+		--[|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
+	--(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler )  )
+	--||| other_events
 
 assert agent_guar :[deadlock free]
 assert agent_guar :[divergence free]
