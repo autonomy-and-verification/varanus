@@ -116,3 +116,6 @@ ln -s /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0 \
 
 ```
 modified from [Stack Exchange](https://askubuntu.com/questions/427884/libpython2-6-so-1-0-doesnt-exist), which adds a link from the missing `libpython2.6.so.1.0` to the existing `libpython2.7.so.1.0` file.
+
+**BUT** obviously this assumes you have libpython2.7.so.1.0 already installed.
+

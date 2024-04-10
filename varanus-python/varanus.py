@@ -98,6 +98,9 @@ fileHandler.setFormatter(formatter)
 
 varanus_logger.addHandler(fileHandler)
 
+def preprocess():
+    varanus_logger.info("Preprocessing...")
+    pass
 
 def run(check_type):
     times = {}
@@ -180,6 +183,9 @@ def log_speed(name, time, type):
     output_file.close()
 
 
+
+
+
 if __name__ == "__main__":
     print("+++++++++++++++++++++++")
     print("+++++++ VARANUS +++++++")
@@ -192,23 +198,7 @@ if __name__ == "__main__":
 
     varanus_logger.info("+++ Testing " + logFileName + " +++")
 
-    # mon.run_offline_rosmon("../rosmon-test/rosmon-mascot-pass.json")
-    # mon._run_offline_traces("trace.json")
-
-    ##NOW IN RUN
-    #    if TYPE == "offline":
-    #        t0 = time.time()
-    #        mon = Monitor(MODEL, MAP)
-    #        mon._run_offline_traces_single(TRACE_FILE)
-    #    elif TYPE == "online":
-    #        t0 = time.time()
-    #        mon = Monitor(MODEL, MAP)
-    #        mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
-
-    # mon.run_online('127.0.0.1', 5044)
-    # mon.run_online_websocket('127.0.0.1', 8080)
-    #    mon.close()
-    #    t1 = time.time()
+    preprocess()
 
     times = run(TYPE)
 
