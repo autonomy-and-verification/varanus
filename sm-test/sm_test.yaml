@@ -1,7 +1,8 @@
 ---
 alphabet: [a,b,c]
+common_alphabet: [a,b,c]
 main_process: "Proc2"
-model: "simple.csp" # starts with / for global path
-map:   "./event_map.json"
+model: "simple.csp" 
+map:   "event_map.json"
 trace_file: "test-traces/scen1.json"
 name: "simple_test"

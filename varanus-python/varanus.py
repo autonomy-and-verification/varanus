@@ -56,7 +56,7 @@ with open(config_path, 'r') as data:
     if args.trace_file:
         TRACE_FILE = args.trace_file
     elif 'trace_file' in config:
-        TRACE_FILE = config['trace_file']
+        TRACE_FILE = config_path_prefix + config['trace_file']
     if 'name' in config:
         CHECK_NAME = config['name']
     if 'common_alphabet' in config:
