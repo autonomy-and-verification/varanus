@@ -475,3 +475,22 @@ class Monitor(object):
         print("Testing Scenario 3...")
         for event in scenario3_events:
             self.process.transition(event)
+
+    def check_monitorable(self, main_process, model_alpha=set(), system_alpha=set()):
+        varanus_logger.info("+++ checking that "+ main_process + " is monitorable with given alphabets +++")
+
+        if model_alpha == system_alpha:
+            varanus_logger.debug("Alphabets match")
+            pass # this is fine, they match
+        elif system_alpha > model_alpha:
+            varanus_logger.debug("system_alpha bigger: " + str(system_alpha - model_alpha))
+            pass # probably do something more elegent here
+        elif model_alpha > system_alpha:
+            varanus_logger.debug("model_alpha bigger: " + str(system_alpha - model_alpha))
+            #Now we check for non-determinism in the process (model) if we hide the extra events
+            extra_events = model_alpha - system_alpha # set minus
+            self.fdr.check_determinism(main_process, extra_events)
+        else:
+            varanus_logger.debug("oops?")
+
+

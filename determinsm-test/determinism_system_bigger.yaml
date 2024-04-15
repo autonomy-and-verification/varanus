@@ -1,7 +1,8 @@
 ---
-alphabet: [a,b, c]
+alphabet: [a,b]
+common_alphabet: [a,b,c]
 main_process: "Proc1"
-model: "determinsim.csp" #  
+model: "determinism.csp" 
 map:   "event_map.json" 
 trace_file: "test-traces/scen2.json"
 name: "determinism_test-pass"

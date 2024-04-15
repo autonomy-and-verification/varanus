@@ -146,9 +146,15 @@ def run(check_type):
             mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
 
-        check_start = time.time()
-        mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
-        check_end = time.time()
+        continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
+
+        if continue_monitoring:
+            check_start = time.time()
+            mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+            check_end = time.time()
+        else:
+            check_start = time.time()
+            check_end = time.time()
 
         times['build'] = build_end - build_start
         times['check'] = check_end - check_start
