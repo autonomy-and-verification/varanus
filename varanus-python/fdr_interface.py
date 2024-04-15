@@ -149,7 +149,10 @@ class FDRInterface(object):
         print(len(state_machine.states))
         print(str(state_machine.states))
         print(str(this_node.hash_code()))
-        state_machine.initial_state = state_machine.states[str(this_node.hash_code())]  # Sets the state_machine's initial state
+        state_machine.set_initial_state(str(this_node.hash_code()))  # Sets the state_machine's initial state
+        #state_machine.current_state = state_machine.initial_state()
+        print("+++ state_machine.initial_state = " + str(state_machine.initial_state))
+        print("+++ state_machine.current_state = " + str(state_machine.current_state))
         # Also, Python is a silly language; setting this internal variable should not be possible.
         varanus_logger.info("CSP State Machine Built")
         return state_machine

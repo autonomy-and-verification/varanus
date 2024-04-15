@@ -140,10 +140,11 @@ class CSPStateMachine(object):
                 self.explicit_alphabet = True
                 self.alphabet = set(config['alphabet'])
 
-    def initial_state(self, state_name):
+    def set_initial_state(self, state_name):
         """Makes state_name the initial state"""
         if state_name in self.states:
             self.initial_state = self.states[state_name]
+            self.current_state = self.initial_state
 
     def add_state(self, state_name):
         """Adds a state called state_name to the State Machine's list of states"""
@@ -201,7 +202,7 @@ class CSPStateMachine(object):
 
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
-        varanus_logger.debug("Transition method. Current State = " + self.current_state.name + " and transition_name = " + transition_name)
+        varanus_logger.debug("Transition method. Current State = " + str(self.current_state) + " and transition_name = " + transition_name)
         print(transition_name)
         print("$ alphabet = ")
         for a in self.alphabet:
