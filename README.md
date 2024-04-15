@@ -102,6 +102,10 @@ In Varanus 0.9.0 the parameters can be set in the config file, and some can be o
 
 ## Troubleshooting
 
+Here are some troubleshooting tips for problems with Varanus itself.
+
+If you have problems installing or running **FDR4** please check the [FDR Troubleshooting](docs/fdr-troubleshooting.md) document.
+
 ## ImportError: libpython2.6.so.1.0: cannot open shared object file: No such file or directory
 
 **Found with Python 2.7.18 and FDR 4.2.7**
