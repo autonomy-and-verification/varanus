@@ -108,14 +108,22 @@ In Varanus 0.9.0 the parameters can be set in the config file, and some can be o
 
 If you try to run `Varanus` and get `ImportError: libpython2.6.so.1.0: cannot open shared object file: No such file or directory` this is because FDR's API is trying to use Python 2.6 and the library isn't available.
 
-With Python 2.7.18 I have used the following workaround
+Here, the workaround uses the Python 2.7 version of this library, aliasing it to the Python 2.6 version.
+
+Make sure that you have `libpython2.7.so.1.0` installed (it should be at `/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0`). If you do not, then you should be able to install it using:
 
 ```bash
-ln -s /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0 \
+sudo apt install python2.7-dev
+```
+
+When you are sure the library is installed, run the following:
+
+```bash
+sudo ln -s /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0 \
 /usr/lib/x86_64-linux-gnu/libpython2.6.so.1.0
 
 ```
-modified from [Stack Exchange](https://askubuntu.com/questions/427884/libpython2-6-so-1-0-doesnt-exist), which adds a link from the missing `libpython2.6.so.1.0` to the existing `libpython2.7.so.1.0` file.
+which is modified from [Stack Exchange](https://askubuntu.com/questions/427884/libpython2-6-so-1-0-doesnt-exist), which adds a link from the missing `libpython2.6.so.1.0` to the existing `libpython2.7.so.1.0` file.
 
-**BUT** obviously this assumes you have libpython2.7.so.1.0 already installed.
+
 
