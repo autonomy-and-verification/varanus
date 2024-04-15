@@ -11,7 +11,7 @@ import yaml
 
 ################
 ###CONSTANTS###
-VERSION_NUM = '0.9.1'
+VERSION_NUM = '0.9.2'
 
 IP = '127.0.0.1'
 PORT = 5088
