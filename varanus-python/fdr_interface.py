@@ -114,10 +114,6 @@ class FDRInterface(object):
 
     def convert_to_state_machine(self, process):
         """ Makes a state machine object from the process"""
-        assert(type(process) is str)
-
-        print("ctsm's copy of main process name = " + process)
-        print (type(process))
 
         # This evaluates a process (say, the trace)
         LTS = self.session.evaluate_process(process, fdr.SemanticModel_Traces, None)
@@ -149,10 +145,11 @@ class FDRInterface(object):
         print(len(state_machine.states))
         print(str(state_machine.states))
         print(str(this_node.hash_code()))
-        state_machine.set_initial_state(str(this_node.hash_code()))  # Sets the state_machine's initial state
-        #state_machine.current_state = state_machine.initial_state()
-        print("+++ state_machine.initial_state = " + str(state_machine.initial_state))
-        print("+++ state_machine.current_state = " + str(state_machine.current_state))
+        print(type(state_machine.states[str(this_node.hash_code())]))
+        print("-")
+        state_machine.set_initial_state(str(this_node.hash_code()))  # Sets the state_machine's initial and current state
+        print("initial = " + str(type(state_machine.initial_state)))
+        print("current =" + str(type(state_machine.current_state)))
         # Also, Python is a silly language; setting this internal variable should not be possible.
         varanus_logger.info("CSP State Machine Built")
         return state_machine

@@ -457,8 +457,8 @@ class Monitor(object):
         dict_sm = (state_machine.make_simple_state_machine(main_process, fdr_interface=self.fdr))
         # this is a dictionary where the key is the node number
         # the value is a list of tuples (transition, dest)
-
-        CSPsm = CSPStateMachine(dict_sm)
+        self.process.start()
+        #CSPsm = CSPStateMachine(dict_sm)
 
         scenario1_events = ["a", "b"]
         scenario2_events = ["a", "c", "b"]
@@ -466,12 +466,12 @@ class Monitor(object):
 
         print("Testing Scenario 1...")
         for event in scenario1_events:
-            CSPsm.transition(event)
+            self.process.transition(event)
 
         print("Testing Scenario 2...")
         for event in scenario2_events:
-            CSPsm.transition(event)
+            self.process.transition(event)
 
         print("Testing Scenario 3...")
         for event in scenario3_events:
-            CSPsm.transition(event)
+            self.process.transition(event)
