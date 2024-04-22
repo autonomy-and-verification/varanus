@@ -1,7 +1,8 @@
 ---
 alphabet: [a,b,c]
-main_process: "a -> (b -> SKIP [] c -> SKIP)"
-model: "/home/matt/work/varanus/sm-test/simple.csp" # starts with / for global path
-map:   "/home/matt/work/varanus/sm-test/event_map.json"
-trace_file: "/home/matt/work/varanus/sm-test/test-traces/scen1.json"
+common_alphabet: [a,b,c]
+main_process: "Proc2"
+model: "simple.csp" 
+map:   "event_map.json"
+trace_file: "test-traces/scen1.json"
 name: "simple_test"

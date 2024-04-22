@@ -1,0 +1,44 @@
+channel a, b, c, d
+channel hidden
+channel e : {1,0}
+
+
+Proc1 = a -> b -> SKIP
+
+Proc2 = a -> (b -> SKIP [] c -> SKIP)
+
+Proc3 = (b -> SKIP [] c -> SKIP)
+
+assert Proc1 :[deterministic]:
+assert Proc2 :[deterministic]:
+assert Proc2\{|c|} :[deterministic]:
+
+
+RecurrA = a -> RecurrB
+RecurrB = b -> RecurrA
+
+LoopA = a -> LoopB
+LoopB = b -> LoopC
+LoopC = c -> LoopA
+
+E(num) =  e.num -> SKIP
+
+assert Proc1 :[has trace]: <a, b>
+assert Proc1 :[has trace]: <a, b, c>
+assert Proc1 :[has trace]: <a, d, b, c>
+
+assert Proc2 :[has trace]: <a, b>
+assert Proc2 :[has trace]: <a, b, c>
+assert Proc2 :[has trace]: <a, d, b, c>
+
+assert Proc3 :[has trace]: <a, b>
+assert Proc3 :[has trace]: <a, b, c>
+assert Proc3 :[has trace]: <a, d, b, c>
+
+ALPHABET_TEST = (a -> hidden -> c -> SKIP) [] (b -> c -> SKIP)
+ALPHABET_TEST2 = (a -> hidden -> hidden -> c -> SKIP) [] (b -> c -> SKIP)
+
+assert ALPHABET_TEST :[divergence free]:
+assert ALPHABET_TEST :[deterministic]:
+assert ALPHABET_TEST\diff(Events, {|a, b, c|}) :[divergence free]:
+assert ALPHABET_TEST\diff(Events, {|a, b, c|}) :[deterministic]:

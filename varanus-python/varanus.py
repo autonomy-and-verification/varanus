@@ -11,7 +11,7 @@ import yaml
 
 ################
 ###CONSTANTS###
-VERSION_NUM = '0.9.1'
+VERSION_NUM = '0.9.2'
 
 IP = '127.0.0.1'
 PORT = 5088
@@ -34,8 +34,11 @@ argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the t
 args = argParser.parse_args()
 
 # TODO check and warn for unopenable filepaths
+# TODO Tidy this mess up
 CONFIG_FILE = args.config
 config_path = args.config
+config_path_prefix = os.path.dirname(config_path) +"/"
+print("path prefix = " + config_path_prefix)
 with open(config_path, 'r') as data:
     config = yaml.safe_load(data)
 
@@ -45,15 +48,15 @@ with open(config_path, 'r') as data:
     if 'main_process' in config:
         MAIN_PROCESS = config['main_process']
     if 'model' in config:
-        CONF_MODEL = config['model']
+        CONF_MODEL = config_path_prefix + config['model']
     if 'map' in config:
-        CONF_MAP = config['map']
+        CONF_MAP = config_path_prefix + config['map']
     else:
         CONF_MAP = None
     if args.trace_file:
         TRACE_FILE = args.trace_file
     elif 'trace_file' in config:
-        TRACE_FILE = config['trace_file']
+        TRACE_FILE = config_path_prefix + config['trace_file']
     if 'name' in config:
         CHECK_NAME = config['name']
     if 'common_alphabet' in config:
@@ -64,7 +67,7 @@ elif CHECK_NAME is None:
     CHECK_NAME = "scenario x"
 
 MODEL = args.model
-MAP = args.map
+MAP = config_path_prefix + args.map
 TYPE = args.type
 SPEED_CHECK = args.speed
 
@@ -98,6 +101,10 @@ fileHandler.setFormatter(formatter)
 
 varanus_logger.addHandler(fileHandler)
 
+def preprocess():
+    varanus_logger.info("Preprocessing...")
+    varanus_logger.info("Preprocessing: pass")
+    pass
 
 def run(check_type):
     times = {}
@@ -110,12 +117,13 @@ def run(check_type):
         mon = Monitor(MODEL, CONFIG_FILE, MAP)
         mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
     elif check_type == "sm-test":  # This is temporary, for testing the state machine
+        print("main process = " + MAIN_PROCESS)
         t0 = time.time()
-        mon = Monitor(MODEL, CONFIG_FILE, MAP)
+        mon = Monitor(CONF_MODEL, CONFIG_FILE, MAP)
         build_start = time.time()
-        mon.build_state_machine()
+        mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
-        print(MAIN_PROCESS)
+
         check_start = time.time()
         mon.run_state_machine_test(MAIN_PROCESS)
         check_end = time.time()
@@ -138,9 +146,15 @@ def run(check_type):
             mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
 
-        check_start = time.time()
-        mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
-        check_end = time.time()
+        continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
+
+        if continue_monitoring:
+            check_start = time.time()
+            mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+            check_end = time.time()
+        else:
+            check_start = time.time()
+            check_end = time.time()
 
         times['build'] = build_end - build_start
         times['check'] = check_end - check_start
@@ -180,6 +194,9 @@ def log_speed(name, time, type):
     output_file.close()
 
 
+
+
+
 if __name__ == "__main__":
     print("+++++++++++++++++++++++")
     print("+++++++ VARANUS +++++++")
@@ -192,23 +209,7 @@ if __name__ == "__main__":
 
     varanus_logger.info("+++ Testing " + logFileName + " +++")
 
-    # mon.run_offline_rosmon("../rosmon-test/rosmon-mascot-pass.json")
-    # mon._run_offline_traces("trace.json")
-
-    ##NOW IN RUN
-    #    if TYPE == "offline":
-    #        t0 = time.time()
-    #        mon = Monitor(MODEL, MAP)
-    #        mon._run_offline_traces_single(TRACE_FILE)
-    #    elif TYPE == "online":
-    #        t0 = time.time()
-    #        mon = Monitor(MODEL, MAP)
-    #        mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
-
-    # mon.run_online('127.0.0.1', 5044)
-    # mon.run_online_websocket('127.0.0.1', 8080)
-    #    mon.close()
-    #    t1 = time.time()
+    preprocess()
 
     times = run(TYPE)
 

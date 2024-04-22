@@ -140,18 +140,23 @@ class CSPStateMachine(object):
                 self.explicit_alphabet = True
                 self.alphabet = set(config['alphabet'])
 
-    def initial_state(self, state_name):
+    def set_initial_state(self, state_name):
         """Makes state_name the initial state"""
+        print("state_name type = " + str(type(state_name)))
+        print(type(self.states.keys()[0]))
+        assert(isinstance(state_name, str))
+
         if state_name in self.states:
             self.initial_state = self.states[state_name]
+            self.current_state = self.initial_state
+
 
     def add_state(self, state_name):
         """Adds a state called state_name to the State Machine's list of states"""
         if self.states is None:
             self.states = {}
         if state_name not in self.states:
-            self.states[state_name] = State(
-                state_name)  # So...states is a dictionary where the key is the name and the value is the State? Ok, so it's like an index
+            self.states[state_name] = State(state_name)  # So...states is a dictionary where the key is the name and the value is the State? Ok, so it's like an index
 
     def add_letter_to_alphabet(self, letter):
         """Adds the letter to this State Machine's alphabet"""

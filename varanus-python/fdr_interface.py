@@ -83,6 +83,40 @@ class FDRInterface(object):
 
         return assert_check
 
+    def _run_assertion(self, assertion_string):
+        """ Runs the given assertion in the existing FDR session
+        """
+        varanus_logger.debug("+++ running assertion: " + assertion_string)
+        assert (self.session is not None)
+
+        parsed_assert = self.session.parse_assertion(assertion_string)
+        assertion = parsed_assert.result()
+        assertion.execute(None)
+
+        return assertion
+
+    def check_determinism(self, process, events_to_hide):
+        """ Checks if the given process is deterministic after hiding the given events
+        """
+        assert(isinstance(process, str))
+        assert(isinstance(events_to_hide, set))
+
+        events_list = ",".join(events_to_hide)
+
+        assertion_string =  process + "\{|" + events_list + "|} :[deterministic]:"
+
+        assertion = self._run_assertion(assertion_string)
+
+        if assertion.passed():
+            varanus_logger.info("+++ " + process + " is monitorable, continuing +++")
+            return True
+        else:
+            varanus_logger.error("+++ " + process + " is not monitorable, while hiding " +  events_list + " ABORTING +++")
+            return False
+
+
+
+
     def check_trace(self, trace):
         """ parses the trace and executes it in the current session.
             returns True if the assertion passed or
@@ -93,11 +127,7 @@ class FDRInterface(object):
         assertion_string = self._make_assertion(trace)
         varanus_logger.debug("assertion_string: " + assertion_string)
 
-        parsed_assert = self.session.parse_assertion(assertion_string)
-
-        assertion = parsed_assert.result()
-
-        assertion.execute(None)
+        assertion = self._run_assertion(assertion_string)
 
         if assertion.passed():
             varanus_logger.info("+++ " + assertion.to_string() + " Passed +++")
@@ -114,10 +144,6 @@ class FDRInterface(object):
 
     def convert_to_state_machine(self, process):
         """ Makes a state machine object from the process"""
-        assert(type(process) is str)
-
-        print("ctsm's copy of main process name = " + process)
-        print (type(process))
 
         # This evaluates a process (say, the trace)
         LTS = self.session.evaluate_process(process, fdr.SemanticModel_Traces, None)
@@ -149,7 +175,11 @@ class FDRInterface(object):
         print(len(state_machine.states))
         print(str(state_machine.states))
         print(str(this_node.hash_code()))
-        state_machine.initial_state = state_machine.states[str(this_node.hash_code())]  # Sets the state_machine's initial state
+        print(type(state_machine.states[str(this_node.hash_code())]))
+        print("-")
+        state_machine.set_initial_state(str(this_node.hash_code()))  # Sets the state_machine's initial and current state
+        print("initial = " + str(type(state_machine.initial_state)))
+        print("current =" + str(type(state_machine.current_state)))
         # Also, Python is a silly language; setting this internal variable should not be possible.
         varanus_logger.info("CSP State Machine Built")
         return state_machine
