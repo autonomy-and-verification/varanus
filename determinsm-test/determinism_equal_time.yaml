@@ -1,0 +1,8 @@
+---
+alphabet: [a,b]
+common_alphabet: [a,b]
+main_process: "LoopA"
+model: "determinism.csp"  
+map:   "event_map.json" 
+trace_file: "test-traces/scen4.json"
+name: "determinism_test-time"
