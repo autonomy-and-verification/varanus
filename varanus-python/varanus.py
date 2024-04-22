@@ -65,6 +65,8 @@ with open(config_path, 'r') as data:
     if 'mode' in config:
         MODE = config['mode'] # strict or permissive
         # TODO Check the mode is valid
+    else:
+        MODE = "permissive"
 if args.name:
     CHECK_NAME = args.name
 elif CHECK_NAME is None:
