@@ -35,6 +35,7 @@ args = argParser.parse_args()
 
 # TODO check and warn for unopenable filepaths
 # TODO Tidy this mess up
+# TODO I think the way to handle the file paths is to take them as relative to where the file is and convert to absolute. Maybe?
 CONFIG_FILE = args.config
 config_path = args.config
 config_path_prefix = os.path.dirname(config_path) +"/"
@@ -61,6 +62,9 @@ with open(config_path, 'r') as data:
         CHECK_NAME = config['name']
     if 'common_alphabet' in config:
         COMMON_ALPHA = config['common_alphabet']
+    if 'mode' in config:
+        MODE = config['mode'] # strict or permissive
+        # TODO Check the mode is valid
 if args.name:
     CHECK_NAME = args.name
 elif CHECK_NAME is None:
@@ -136,9 +140,9 @@ def run(check_type):
 
         varanus_logger.debug(CONF_MAP)
         if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP)
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
         else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE)
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
@@ -149,10 +153,12 @@ def run(check_type):
         continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
 
         if continue_monitoring:
+            varanus_logger.error("+++ starting monitoring against" + MAIN_PROCESS + " +++")
             check_start = time.time()
-            mon._run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+            mon.run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
             check_end = time.time()
         else:
+            varanus_logger.error("+++ " + MAIN_PROCESS + " is not monitorable ABORTING +++")
             check_start = time.time()
             check_end = time.time()
 

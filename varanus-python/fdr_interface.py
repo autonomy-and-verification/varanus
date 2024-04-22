@@ -111,7 +111,7 @@ class FDRInterface(object):
             varanus_logger.info("+++ " + process + " is monitorable, continuing +++")
             return True
         else:
-            varanus_logger.error("+++ " + process + " is not monitorable, while hiding " +  events_list + " ABORTING +++")
+            varanus_logger.error("+++ " + process + " is not monitorable, while hiding " +  events_list + "+++")
             return False
 
 
@@ -142,7 +142,7 @@ class FDRInterface(object):
 
             return False
 
-    def convert_to_state_machine(self, process):
+    def convert_to_state_machine(self, process, state_machine):
         """ Makes a state machine object from the process"""
 
         # This evaluates a process (say, the trace)
@@ -151,12 +151,8 @@ class FDRInterface(object):
         # The result of the evaluate_process call is a state machine
         machine = LTS.result()
         root = machine.root_node()
-        state_machine = CSPStateMachine()
 
-        self.build_state_machine(machine, state_machine, root)
-
-
-        return state_machine
+        return self.build_state_machine(machine, state_machine, root)
 
     def build_state_machine(self, csp_machine, state_machine, this_node):
         """Explores the csp_machine, building the states and transitions of the sate_machine as it goes. It starts
