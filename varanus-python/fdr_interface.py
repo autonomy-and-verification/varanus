@@ -207,8 +207,42 @@ class FDRInterface(object):
         # Recurse for each destination of this_node
         for d in destinations_list:
             print("Checking " + str(d))
-            self.explore_states(csp_machine, visited, state_machine, d)
+            assert(visited is not [])
+            print(str(visited))
+            print(this_node in visited)
+            #assert(False)
+            visited += self.explore_states(csp_machine, visited, state_machine, d)
+
         varanus_logger.debug("explore_states returning...")
+        return visited
+
+    def explore_states2(self, csp_machine, visited, state_machine, this_node):
+        assert(this_node.hash_code() not in visited)
+        visited.append(this_node.hash_code())
+        transitions = csp_machine.transitions(this_node)
+        print("In node " + str(this_node.hash_code()))
+        for t in transitions:
+            destination = t.destination()
+            print("\tfound node " + str(destination.hash_code()))
+            next_state = str(destination.hash_code())
+            event = str(self.session.uncompile_event(t.event()))
+
+            # String name of this state (again, will be an integer)
+            this_node_num = str(this_node.hash_code())
+            # Add the (event, destination) pair to the state machine
+            state_machine.add_transition_by_name(event, this_node_num, next_state)
+
+            print("visited = " + str(visited))
+            print(destination.hash_code())
+            print(type(destination.hash_code()))
+            if destination.hash_code() not in visited:
+                print("\texploring node " + str(destination.hash_code()))
+                visited += self.explore_states2(csp_machine, visited, state_machine, destination)
+
+        return visited
+
+
+
 
     def convert_to_dictionary(self, process):
         """

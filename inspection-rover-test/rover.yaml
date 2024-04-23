@@ -1,0 +1,8 @@
+---
+alphabet: [sensors, position, at, move, inspect, radiation_level, inspectedCall, inspectedRet, wayPcall, wayPTrue, wayPFalse]
+common_alphabet: [position, wayPcall, wayPTrue, inspectedCall, inspectedRet, inspect, move]
+main_process: "rover"
+model: "inspection_rover.csp"   
+trace_file: "rover1.json"
+name: "rover_test"
+mode: "strict"

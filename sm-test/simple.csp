@@ -16,6 +16,8 @@ LoopA = a -> LoopB
 LoopB = b -> LoopC
 LoopC = c -> LoopA
 
+LoopHide = LoopA \{|b|}
+
 E(num) =  e.num -> SKIP
 
 assert Proc1 :[has trace]: <a, b>
