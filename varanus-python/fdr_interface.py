@@ -210,7 +210,7 @@ class FDRInterface(object):
             state_machine.add_letter_to_alphabet(str(self.session.uncompile_event(a)))
 
         varanus_logger.info("Building CSP State Machine")
-        self.explore_states(csp_machine, [], state_machine, this_node)
+        self.explore_states2(csp_machine, [], state_machine, this_node)
         print("-")
         print(len(state_machine.states))
         print(str(state_machine.states))
