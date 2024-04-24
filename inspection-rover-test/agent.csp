@@ -21,7 +21,7 @@ channel get_rad : radiation_category
 
 -- HANDLERS
 -- nav and rad store inputs from other nodes
-
+ 
 nav_handler(x,y) =
 	at?new_x?new_y -> nav_handler(new_x,new_y)
 	[]
@@ -132,10 +132,14 @@ assert agent_guar :[divergence free]
 assert agent_guar :[deterministic]
 
 AGENT_BEHAVIOUR =
+get_at?x?y -> AGENT_BEHAVIOUR'(x, y)
+
+
+AGENT_BEHAVIOUR'(x, y) =
 (
 move?x?y -> AGENT_BEHAVIOUR
 []
-get_at?x?y -> wayPcall.x.y -> 
+ wayPcall.x.y -> 
 (
 	-- at waypoint i
 	wayPTrue?i -> inspectedCall!i ->   
@@ -155,9 +159,16 @@ get_at?x?y -> wayPcall.x.y ->
 AGENT = 
 AGENT_BEHAVIOUR
 [|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
-	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler )  
+	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler ) 
+	
+AGENT_HIDE = AGENT\{|get_rad, get_at|}
 
 
 assert AGENT :[deadlock free]
 assert AGENT :[divergence free]
 assert AGENT :[deterministic]
+
+
+assert AGENT_HIDE :[deadlock free]
+assert AGENT_HIDE :[divergence free]
+assert AGENT_HIDE :[deterministic]
