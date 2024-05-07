@@ -39,7 +39,7 @@ args = argParser.parse_args()
 CONFIG_FILE = args.config
 config_path = args.config
 config_path_prefix = os.path.dirname(config_path) +"/"
-print("path prefix = " + config_path_prefix)
+varanus_logger.debug("path prefix = " + config_path_prefix)
 with open(config_path, 'r') as data:
     config = yaml.safe_load(data)
 
@@ -58,6 +58,15 @@ with open(config_path, 'r') as data:
         TRACE_FILE = args.trace_file
     elif 'trace_file' in config:
         TRACE_FILE = config_path_prefix + config['trace_file']
+    else:
+        if args.type == "offline" or args.type == "offline-test":
+            # TODO Make this occur at the right point so that I don't have to repeat the header!!
+            print("+++++++ VARANUS +++++++")
+            print("++++ version " + str(VERSION_NUM) + " +++")
+            print("++++ Matt Luckcuck ++++")
+            varanus_logger.error("No Trace File given. Trace File is required for offline Runtime Verification.")
+            quit()
+
     if 'name' in config:
         CHECK_NAME = config['name']
     if 'common_alphabet' in config:
