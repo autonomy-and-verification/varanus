@@ -5,6 +5,7 @@ from rosmon_mascot_event_abstractor import *
 from mascot_event_abstractor import *
 from trace_representation import Event, Trace
 from csp_state_machine import CSPStateMachine
+from time_store import Time_Store
 import state_machine
 import json
 import time
@@ -14,6 +15,7 @@ import yaml
 # "MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
 # "model/mascot-safety-system.csp"
 varanus_logger = logging.getLogger("varanus")
+varanus_times = Time_Store()
 
 
 class Monitor(object):
@@ -131,11 +133,13 @@ class Monitor(object):
             varanus_logger.error("Could not open trace_file at: " + trace_path)
             return
         trace = Trace()
-
+        transition_times = []
+        number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
         while monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
-
+            number_of_events += 1
+            transition_start = time.time()
             event = monitored_system.next_event()
             varanus_logger.debug("event = " + event)
             trace.add_event(Event(event))
@@ -145,7 +149,7 @@ class Monitor(object):
             old_state = self.process.current_state.name
 
             resulting_state = self.process.transition(event)  # This returns None if there is no available transition
-            print("resulting_state = " + str(resulting_state))
+            varanus_logger.debug("resulting_state = " + str(resulting_state))
 
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
@@ -154,11 +158,16 @@ class Monitor(object):
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
                     self.process.get_outgoing_transitions()))  # TODO make this even prettier
-                print(type(result))
-                print(str(result))
-                return result  # So far, return because a None means it's bad.
+                #return result  # So far, return because a None means it's bad.
+                break
 
+            transition_end = time.time()
+            transition_times.append(transition_end-transition_start)
+
+        print("! TRANSITION TIMES + " + str(transition_times))
         varanus_logger.info("Trace file finished with no violations")
+        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times) )
+        varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
     def _run_offline_traces_single(self, trace_path):  # deprecated

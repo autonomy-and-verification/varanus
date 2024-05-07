@@ -1,6 +1,7 @@
 # coding=utf-8
 import time
 from monitor import *
+from time_store import Time_Store
 import logging
 import argparse
 import os
@@ -116,13 +117,15 @@ fileHandler.setFormatter(formatter)
 
 varanus_logger.addHandler(fileHandler)
 
+varanus_times = Time_Store()
+
 def preprocess():
     varanus_logger.info("Preprocessing...")
     varanus_logger.info("Preprocessing: pass")
     pass
 
 def run(check_type):
-    times = {}
+
     if check_type == "offline":
         t0 = time.time()
         mon = Monitor(MODEL, CONFIG_FILE, MAP)
@@ -173,17 +176,17 @@ def run(check_type):
             check_start = time.time()
             check_end = time.time()
 
-        times['build'] = build_end - build_start
-        times['check'] = check_end - check_start
+        varanus_times.add_time("build", build_end - build_start)
+        varanus_times.add_time("check", check_end - check_start)
 
     # mon.run_online('127.0.0.1', 5044)
     # mon.run_online_websocket('127.0.0.1', 8080)
     mon.close()
     end_time = time.time()
 
-    times['total'] = end_time - t0
+    varanus_times.add_time("total", end_time - t0)
 
-    return times
+    #return times # probably not needed anymore
 
 
 def log_speed(name, time, type):
@@ -228,16 +231,19 @@ if __name__ == "__main__":
 
     preprocess()
 
-    times = run(TYPE)
+    run(TYPE)
 
     print("")
     print("")
     # TODO make this print more clearly if the monitor found an error or not
-
+    times = varanus_times.times
+    extra_info = varanus_times.extras
     if 'build' in times and 'check' in times:
-        varanus_logger.info("+++ Build Time: " + str(times['build']) + "s +++")
-        varanus_logger.info("+++ Check Time: " + str(times['check']) + "s +++")
-    varanus_logger.info("+++ Total Time: " + str(times['total']) + "s +++")
+        varanus_logger.info("+++ Build Time: \t\t\t" + str(times['build']) + "s +++")
+        varanus_logger.info("+++ Check Time: \t\t\t" + str(times['check']) + "s +++")
+    if "avg_transition" in times:
+        varanus_logger.info("+++ Average Transition Time: \t" + str(times["avg_transition"]) +"s ("+ str(extra_info["num_events"]) +" events) +++")
+    varanus_logger.info("+++ Total Time: \t\t\t" + str(times['total']) + "s +++")
 
 
     varanus_logger.debug("Varanus Finished")
