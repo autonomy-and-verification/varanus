@@ -9,7 +9,7 @@ navigation_outputs = {| at |}
 
 channel get_pos : coord.coord
 
-nav_guar = (localisation_handler(0,0) [|{|get_pos|}|] nav_guar1)\{|get_pos|}
+nav_guar = (localisation_handler(0,0) [|{|get_pos|}|] nav_guar1)--\{|get_pos|}
 
 localisation_handler(x,y) =
 	position?new_x?new_y -> localisation_handler(new_x, new_y)
@@ -28,3 +28,8 @@ nav_guar2(x, y) =
 			--RUN(Events)\{|at|}		
 			nav_guar2(x, y)
 
+NAVIGATION = nav_guar--\{|get_pos|}
+
+assert NAVIGATION :[deadlock free]
+assert NAVIGATION :[divergence free]
+assert NAVIGATION :[deterministic]
