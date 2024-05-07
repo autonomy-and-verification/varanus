@@ -21,7 +21,7 @@ PORT = 5088
 ### Arguments###
 argParser = argparse.ArgumentParser()
 argParser.add_argument("type", help="The type of check to be performed",
-                       choices=['offline', 'online', 'sm-test', 'offline-test'])
+                       choices=['offline', 'online', 'sm-test', 'offline-test', 'stress_test'])
 argParser.add_argument("config", help="The location of the config file")
 argParser.add_argument("--model", help="The location of the model used as the oracle.",
                        default="model/mascot-safety-system.csp")
@@ -145,6 +145,41 @@ def run(check_type):
         check_start = time.time()
         mon.run_state_machine_test(MAIN_PROCESS)
         check_end = time.time()
+    elif check_type == "stress_test":
+        varanus_logger.info("+++ Running Stress Test +++")
+        stress_events = config["stress_events"]
+        stress_reps = config["stress_repetitions"]
+        varanus_logger.info("Events: " + str(stress_events))
+        varanus_logger.info("Repetitions: " + str(stress_reps))
+
+        t0 = time.time()
+        if CONF_MAP is not None:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
+        else:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        build_start = time.time()
+        if COMMON_ALPHA:
+            mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
+        else:
+            mon.build_state_machine(MAIN_PROCESS)
+        build_end = time.time()
+
+        continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
+
+        if continue_monitoring:
+            varanus_logger.error("+++ starting monitoring against" + MAIN_PROCESS + " +++")
+            check_start = time.time()
+            mon.run_offline_stress_test(MAIN_PROCESS, stress_events, stress_reps)
+            check_end = time.time()
+        else:
+            varanus_logger.error("+++ " + MAIN_PROCESS + " is not monitorable ABORTING +++")
+            check_start = time.time()
+            check_end = time.time()
+
+        varanus_times.add_time("build", build_end - build_start)
+        varanus_times.add_time("check", check_end - check_start)
+
+
     elif check_type == "offline-test":  # temp for testing upgrade of offline mode
         varanus_logger.info("+++ Running Offline Test +++")
         t0 = time.time()

@@ -1,3 +1,5 @@
+import random
+
 from fdr_interface import FDRInterface
 from system_interface import *
 from event_converter import *
@@ -167,6 +169,64 @@ class Monitor(object):
         print("! TRANSITION TIMES + " + str(transition_times))
         varanus_logger.info("Trace file finished with no violations")
         varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times) )
+        varanus_times.add_extra_information("num_events", len(transition_times))
+        return result  # this is not caught, not sure if I need to return anything
+
+    def run_offline_stress_test(self, MAIN_PROCESS, events, repetitions):
+        """ Runs an offline stress test on Varanus, checking a random selection from events for the given number of repetitions"""
+        varanus_logger.info("+++ Running Offline -- Using State Machine +++")
+        assert (self.process is not None)
+        assert (events is not None)
+        assert (events is not [])
+        self.process.start()
+        # test_result = process.test_machine()
+        result = {}
+
+        # Extract the Traces and start the loop
+       # monitored_system = OfflineInterface(trace_path, self.event_map)
+       # is_connected = monitored_system.connect()
+       # if not is_connected:
+       #     varanus_logger.error("Could not open trace_file at: " + trace_path)
+       #     return
+        trace = Trace()
+        transition_times = []
+        number_of_events = 0
+        #varanus_logger.info("Checking trace file: " + trace_path)
+        for i in range(repetitions):
+            varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
+            number_of_events += 1
+            transition_start = time.time()
+            if len(events) > 1:
+                index = random.randint(0, len(events))
+            else:
+                index = 0
+            event =  events[index] #monitored_system.next_event()
+            varanus_logger.debug("event = " + event)
+            trace.add_event(Event(event))
+
+            if self.process.current_state.name not in result:
+                result[self.process.current_state.name] = []
+            old_state = self.process.current_state.name
+
+            resulting_state = self.process.transition(event)  # This returns None if there is no available transition
+            varanus_logger.debug("resulting_state = " + str(resulting_state))
+
+            if self.check_result(event, resulting_state):
+                result[old_state].append((event, resulting_state.name))
+            else:
+                result[old_state].append((event, resulting_state))
+                varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
+                varanus_logger.error("This node expected the following events: " + str(
+                    self.process.get_outgoing_transitions()))  # TODO make this even prettier
+                # return result  # So far, return because a None means it's bad.
+                break
+
+            transition_end = time.time()
+            transition_times.append(transition_end - transition_start)
+
+        print("! TRANSITION TIMES + " + str(transition_times))
+        varanus_logger.info("Trace file finished with no violations")
+        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times))
         varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
@@ -501,5 +561,7 @@ class Monitor(object):
             return self.fdr.check_determinism(main_process, extra_events)
         else:
             varanus_logger.debug("oops?")
+
+
 
 
