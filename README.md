@@ -2,18 +2,16 @@
 ### Matt Luckcuck
 ### Runtime Verification Toolchain using CSP and FDR
 
-Varanus is a Runtime Verification (RV) toolchain for checking a program is obeying its specification. The specification must be written in Communicating Sequential Processes (CSP) and is assumed to parse correctly. Varanus listens to the events produced by a System Under Analysis (SUA), and checks that these events are a valid trace of the CSP model using [FDR](https://cocotec.io/fdr/) (the CSP model checker).
+Varanus is a Runtime Verification (RV) toolchain for checking a program is obeying its specification. The specification must be written in Communicating Sequential Processes (CSP) and is assumed to parse correctly. Varanus listens to the events produced by a System Under Analysis (SUA), and checks that these events form a valid trace for the CSP specification.
 
-### Papers
 
-Varanus is an academic tool and therefore has been described in papers, which are also available in the 'papers' directory.
-
-* _Monitoring Robotic Systems using CSP: From Safety Designs to Safety Monitors_, Matt Luckcuck, (Under Review) [arXiv](https://arxiv.org/abs/2007.03522)
- - Information about how to run the MASCOT example presented in the paper can be found in `varanus/mascot-test/README.md`
 
 ## The Name
 
-Varanus is the genus of [Monitor Lizards](https://en.wikipedia.org/wiki/Monitor_lizard)
+I chose the name _Varanus_ for two reasons:
+
+1. Varanus is the genus of [Monitor Lizards](https://en.wikipedia.org/wiki/Monitor_lizard)
+2. I have a poor sense of humour.
 
 ## Prerequisites
 
@@ -28,7 +26,7 @@ is not compatible with Python 3.
 
 ### FDR
 
-Varanus assumes a pre-existing installation of [FDR4](https://cocotec.io/fdr/).
+Varanus assumes a pre-existing installation of [FDR4](https://cocotec.io/fdr/). This used to parse the CSP and check for monitorability. 
 
 From the [FDR](https://cocotec.io/fdr/) website (accessed: 2020-07-08), install using:
 ```bash
@@ -49,6 +47,13 @@ A free academic license is available from the license dialogue, when starting FD
 ## Usage
 
 Varanus is a terminal program within the `varanus/varanus-python` directory.
+
+The basic usage is to run `varanus.py` passing a parameter that indicates either `online` or `offline` Runtime Verification, and a parameter that is the filepath of a `config` file (which, in turn, will point Varanus at the CSP model and System Under Analysis).
+
+The basic workflow is:
+    \* Write a CSP specification for the System Under Analysis
+    \* Build the config file to point Varanus at the System Under Analysis and the CSP  specification (and some other parameters)
+    \* Run Varanus on the config file, telling it if it should do online or offline RV (if it's offline then the 'system' it is monitoring will be a trace file, also written separately.)
 
 ```bash
 usage: varanus.py [-h] [--model MODEL] [--map MAP] [-n NAME]
@@ -73,13 +78,72 @@ optional arguments:
   -s SPEED, --speed SPEED Run 10 timed run and produce the times and mean.).
 ```
 
-In Varanus 0.9.0 the parameters can be set in the config file, and some can be overridden at the command line.
+Since Varanus 0.9.0 the parameters can be set in the config file, and some can be overridden at the command line.
 
 * `logFileName` is the name of the file to which Varanus will log its run
 * The parameters passed to the `Monitor()` constructor are the location of the model's main file and a JSON file containing a map of events in the SUA to events in the model (if these are different)
 * `_run_offline_traces_single()` performs offline RV, it takes the file path to a JSON file containing the trace to be checked. This method checks the whole trace in one go.
 * `run_online_traces_accumulate()`performs online RV, it takes the IP address and port number of a socket connection as parameters. This method checks traces incrementally, adding each event it receives to the trace and checking it. This method assumes there is a socket connection for it communicate with (in the MASCOT example, this is `varanus/mascot-test/dummy_mascot_socket.py`)
  - Adding the `timeRun=True` parameter to this method will collect timing information for each run.
+
+### Config File
+
+The config file sets the following parameters:
+
+* `alphabet`: the alphabet of the CSP process used as the monitor oracle
+* `common_alphabet`: the alphabet of the System Under Analysis
+* `model`: the filepath (relative to the config file) of the CSP model
+* `main_process`: the name of the CSP process used as the oracle, which should exist in the `model`. For quick tests, this can be a simple CSP process written directly in to the parameter (e.g. `main_process: a -> b -> SKIP`) but the channels used have to exist in `model`.
+* `name`: the name of the check or test being performed, this is used in the names of the log files
+* `mode` (optional): there are two modes "strict", where Varanus will abort if an event from the System Under Analysis is not available in the current state of the model; and "permissive", where Varanus will ignore events from the System Under Analysis that are not available in the current state of the model (it will stay in the current state).
+* `trace_file` (optional): the trace that Varanus should check against the model. This is only used for offline Runtime Verification.
+
+### Quick Check
+
+As a quick check that Varanus is installed correctly, you can enter the `varanus` root directly and run `python varanus-python/varanus.py offline-test rosmon-test/hibye.yaml` (assuming your `python` command points to Python 2.x) to run a very simple check on a simple process. If all is well, you should see `INFO:varanus:Trace file finished with no violations` at the end of the output to the terminal. 
+
+Lets look at the config file we've just checked:
+
+```yaml
+---
+alphabet: [hello, goodbye]
+common_alphabet: [hello,goodbye]
+main_process: "HI_BYE"
+model: "hi_bye.csp"   
+trace_file: "hello_goodbye.json"
+name: "hi_bye_test"
+mode: "strict"
+```
+
+This is pointing Varanus at the `hi_bye.csp` file (`model`) and making it check the `main_process`, `HI_BYE`, against the `trace_file`, `hello_goodbye.json`.
+
+The trace file is very simple, it only contains two events:
+
+``` json
+{"topic": "hello", "data": null, "time" : 0}
+{"topic": "goodbye", "data": null, "time" : 1}
+```
+
+Here, `hello_goodbye.json` is telling us that the System Under Analysis said "hello" and then "goodbye". Varanus has checked that the `HI_BYE` process specifies that this is acceptable behaviour.
+
+Now lets look at the `HI_BYE` process itself:
+
+```
+channel hello, goodbye
+
+HI = (hello -> HI [] goodbye -> SKIP)
+BYE = goodbye -> SKIP
+
+HI_BYE = HI [|{|goodbye|}|] BYE
+```
+
+This CSP specification introduces two `channels`, `hello` and `goodbye`. We can see that the `HI_BYE` process is defined by the parallel composition of the `HI` and `BYE` processes, where they must synchronise on the `goodbye` channel (meaning that they must perform `goodbye` at the same time). 
+
+`HI` will allow any number of `hello` events, because it will recurse after performing `hello`, but if it performs `goodbye` then it will terminate. the `BYE` process is much simpler, it will just perform `goodbye`. 
+
+This means that the trace in `hello_goodbye.json` is valid, because `HI_BYE` can perform one `hello` followed by one `goodbye` event. 
+
+
 
 ## Generic Components
 

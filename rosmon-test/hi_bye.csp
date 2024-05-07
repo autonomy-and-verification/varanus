@@ -2,7 +2,7 @@ channel hello, goodbye
 
 HI = (hello -> HI [] goodbye -> SKIP)
 BYE = goodbye -> SKIP
-HI_BYE = P [|{|goodbye|}|] Q
+HI_BYE = HI [|{|goodbye|}|] BYE
 
 assert HI_BYE; RUN(Events) :[deadlock free]:
 assert HI_BYE :[deterministic]:
