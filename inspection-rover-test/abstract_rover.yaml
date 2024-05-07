@@ -1,6 +1,6 @@
 ---
-alphabet: [inspect, radiation_level, mission_complete, mission_abort, move]
-common_alphabet: [inspect, radiation_level, mission_complete, mission_abort, move]
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start, move]
+common_alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start,  move]
 main_process: "ROVER_SYSTEM"
 model: "abstract_rover.csp" 
 trace_file: "abs_rover1.json" #should pass, radiation=green. Should be slow

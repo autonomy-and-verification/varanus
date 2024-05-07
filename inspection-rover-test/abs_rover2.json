@@ -1,3 +1,4 @@
+{"topic": "mission_start", "data": null, "time" : 0}
 {"topic": "move", "data": "0", "time" : 0}
 {"topic": "inspect", "data": "0", "time" : 1}
 {"topic": "radiation_level", "data": "Red", "time" : 3}

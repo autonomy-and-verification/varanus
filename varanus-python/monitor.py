@@ -23,25 +23,26 @@ varanus_times = Time_Store()
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, config_file, event_map_path=None, mode=None):
-        self.process = None
-        self.fdr = FDRInterface()
-        self.model_path = model_path
-        self.fdr.load_model(self.model_path)
-        # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
-        # self.eventMapper = MascotEventAbstractor(event_map_path)
+    def __init__(self, model_path, config_file, event_map_path=None, mode=None, old_version=False):
+        self.mode = mode
+        self.old_version = old_version
         if event_map_path is None:
             self.event_map = None
         else:
             with open(event_map_path, "r") as event_map:
                 self.event_map = json.load(event_map)
 
+        self.process = None
+        self.fdr = FDRInterface()
+        self.model_path = model_path
+        self.load_fdr_model(self.model_path)
+        # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
+        # self.eventMapper = MascotEventAbstractor(event_map_path)
         self.explicit_alphabet = False
         self.alphabet = []
         self.config_file = config_file
         if config_file is not None:
             self.load_alphabet_from_config(config_file)
-        self.mode = mode
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -58,7 +59,13 @@ class Monitor(object):
         self.fdr.new_session()
 
     def load_fdr_model(self, model_path):
-        self.fdr.load_model(self.model_path)
+        if self.old_version:
+            build_start = time.time()
+            self.fdr.load_model(model_path)
+            build_end = time.time()
+            varanus_times.add_time("build", build_end - build_start)
+        else:
+            self.fdr.load_model(model_path)
 
     def build_state_machine(self, main_process, common_alphabet=None, mode=None):
         """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
@@ -138,6 +145,7 @@ class Monitor(object):
         transition_times = []
         number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
+        passed = True
         while monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
             number_of_events += 1
@@ -155,20 +163,27 @@ class Monitor(object):
 
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
+                transition_end = time.time()
+                transition_times.append(transition_end - transition_start)
             else:
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
                     self.process.get_outgoing_transitions()))  # TODO make this even prettier
                 #return result  # So far, return because a None means it's bad.
+                transition_end = time.time()
+                transition_times.append(transition_end - transition_start)
+                passed = False
                 break
 
             transition_end = time.time()
             transition_times.append(transition_end-transition_start)
 
-        print("! TRANSITION TIMES + " + str(transition_times))
-        varanus_logger.info("Trace file finished with no violations")
-        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times) )
+        print("! TRANSITION TIMES = " + str(transition_times))
+        if passed:
+            varanus_logger.info("Trace file finished with no violations")
+
+        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times))
         varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
@@ -230,24 +245,17 @@ class Monitor(object):
         varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
-    def _run_offline_traces_single(self, trace_path):  # deprecated
+    def _run_offline_traces_single(self, main_process, trace_path):  # deprecated
         """ Runs Varanus Offline, taking a single trace and sending it to FDR"""
 
         varanus_logger.info("+++ Running Offline Traces Single +++")
 
         system = OfflineInterface(trace_path)
-        trace_file = system.connect()
+        system.connect()
         trace = Trace()
 
-        # Take a single line
-        trace_line = trace_file.read()
-        # parse to list
-        event_list = json.loads(trace_line)
-        varanus_logger.debug("event_list:" + str(event_list))
-
-        # build trace from list
-        for event in event_list:
-            event = str(event)
+        while system.has_event():
+            event = str(system.next_event())
             if event.find(".") == -1:
                 channel, params = event, None
                 new_event = Event(channel, params)
@@ -261,7 +269,7 @@ class Monitor(object):
 
         # throw at FDR
         print("before check_trace")
-        result = self.fdr.check_trace(trace)
+        result = self.fdr.check_trace(main_process, trace)
         varanus_logger.debug("result: " + str(result))
 
         if not result:
@@ -269,50 +277,6 @@ class Monitor(object):
             return result
 
         return result
-
-    # This Doesn't Work As Expected.
-    # Takes last event from each line and accumulates
-    # so we get a failure:
-    # MASCOT_SAFETY_SYSTEM
-    #    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
-    # Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
-    # Obvious bullshit
-    def _run_offline_traces(self, log_path):  # Deprecated
-        system = OfflineInterface(log_path)
-
-        trace_file = system.connect()
-        trace = Trace()
-
-        for json_line in trace_file:
-            if json_line == '\n':
-                continue
-            varanus_logger.debug("json_line:" + json_line)
-            # No convert_to_internal here because it's for a file of traces
-            event_list = json.loads(json_line)
-            varanus_logger.debug("event_list" + str(event_list))
-            last_event = event_list[-1]
-            varanus_logger.debug("last_event" + last_event)
-
-            if last_event.find(".") == -1:
-                channel, params = last_event, None
-                event = Event(channel, params)
-                trace.add_event(event)
-            else:
-                channel, params = last_event.split(".", 1)
-                event = Event(channel, params)
-                trace.add_event(event)
-
-            varanus_logger.debug("trace: " + str(trace) + "and type: " + type(trace))
-
-            result = self.fdr.check_trace(trace)
-            varanus_logger.debug("result: " + result)
-
-            if not result:
-                system.close()
-                return result
-
-        return result
-
     def run_offline_rosmon(self, log_path):
         system = OfflineInterface(log_path)
 
@@ -359,6 +323,39 @@ class Monitor(object):
             if not result:
                 system.close()
                 return result
+
+        return result
+
+    def _run_offline_traces_interate(self, main_process, log_path):
+
+        varanus_logger.info("+++ Running Offline Traces Iterate +++")
+
+        system = OfflineInterface(log_path)
+        system.connect()
+        trace = Trace()
+        result = {}
+        check_start = time.time()
+        while system.has_event():
+
+            event = str(system.next_event())
+            if event.find(".") == -1:
+                channel, params = event, None
+                new_event = Event(channel, params)
+                trace.add_event(new_event)
+            else:
+                channel, params = event.split(".", 1)
+                new_event = Event(channel, params)
+                trace.add_event(new_event)
+
+            result = self.fdr.check_trace(main_process, trace)
+            varanus_logger.debug("result: " + str(result))
+
+            if not result:
+                system.close()
+                return result
+            ###############
+        check_end = time.time()
+        varanus_times.add_time("check", check_end - check_start)
 
         return result
 
