@@ -93,8 +93,11 @@ class CSPStateMachine(object):
     """
 
     _TAU_DEPTH = 5
+    # TODO make the below constants useful
+    STRICT_MODE = "strict"
+    PERMISSIVE_MODE = "permissive"
 
-    def __init__(self, sm_dictionary=None, config_fn=None):
+    def __init__(self, sm_dictionary=None, config_fn=None, mode=None):
         self.states = {}
         self.current_state = None
         self.initial_state = None
@@ -110,6 +113,9 @@ class CSPStateMachine(object):
             self.load_from_dictionary(sm_dictionary)
         else:
             sm_dictionary = None
+
+        self.mode = mode
+        # strict or permissive
 
     def load_from_dictionary(self, sm_dictionary):
         """
@@ -228,6 +234,7 @@ class CSPStateMachine(object):
         print(self.current_state.has_tau)
         print(self.current_state.name)
         print(str(self.current_state.transitions))
+        print("mode = " + str(self.mode))
         if transition is not None:
             varanus_logger.debug("Transition good, moving to next state")
             self.current_state = transition.get_first_state()
@@ -239,9 +246,13 @@ class CSPStateMachine(object):
             else:
                 varanus_logger.debug("Transition bad, after exploring taus")
                 return None # Still couldn't find a valid transition
-        else:
-            varanus_logger.debug("Transition bad, abort")
+        elif self.mode == "strict" : # other situations that could cause this?
+            varanus_logger.debug("Transition bad (probably no transition with that name) abort")
             return None # Could not find a transition
+        elif self.mode == "permissive":
+            # Ignore the event from SUA that is not in the model
+            varanus_logger.debug("Saw " + transition_name + " which is not in model alphabet, but mode is permissive, so ignoring")
+            return self.current_state
 
         self.log("NORMAL TRANSITION", "Now in state " + self.current_state.name)
         return self.current_state

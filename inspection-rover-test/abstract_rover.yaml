@@ -1,0 +1,11 @@
+---
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, move]
+common_alphabet: [inspect, radiation_level, mission_complete, mission_abort, move]
+main_process: "ROVER(0, {})"
+model: "abstract_rover.csp"   
+trace_file: "abs_rover2.json"
+name: "abstract_rover_test"
+mode: "strict"
+
+
+

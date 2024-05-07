@@ -22,7 +22,6 @@ rover =
 	)
 	[| union(agent_rad_interface, rad_agent_interface) |]
 	RAD_MON
-
 )
 
 assert rover :[deadlock free]
@@ -34,3 +33,5 @@ rover_hide = rover\{|get_pos, get_at, get_rad, add_inspected|} -- Hiding these m
 assert rover_hide :[deadlock free]
 assert rover_hide :[divergence free]
 assert rover_hide :[deterministic]
+
+assert rover_hide :[has trace]: <position.0.0, wayPcall.0.0, wayPTrue.0, inspectedCall.0, inspectedRet.false, inspect.0, move.1.1>

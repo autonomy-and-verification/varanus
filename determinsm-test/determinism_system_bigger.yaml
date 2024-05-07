@@ -1,6 +1,7 @@
 ---
 alphabet: [a,b]
 common_alphabet: [a,b,c]
+mode: "permissive"
 main_process: "Proc1"
 model: "determinism.csp" 
 map:   "event_map.json" 

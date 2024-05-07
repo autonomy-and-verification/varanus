@@ -15,6 +15,8 @@ channel wayPcall : coord.coord
 channel wayPTrue : waypointID
 channel wayPFalse
 
+channel move_wp : waypointID
+channel is_inspected: waypointID
 
 waypoint_inverse (0) = 0.0
 waypoint_inverse (1) = 1.1

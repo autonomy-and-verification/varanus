@@ -19,7 +19,7 @@ varanus_logger = logging.getLogger("varanus")
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, config_file, event_map_path=None):
+    def __init__(self, model_path, config_file, event_map_path=None, mode=None):
         self.process = None
         self.fdr = FDRInterface()
         self.model_path = model_path
@@ -37,6 +37,7 @@ class Monitor(object):
         self.config_file = config_file
         if config_file is not None:
             self.load_alphabet_from_config(config_file)
+        self.mode = mode
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -55,7 +56,7 @@ class Monitor(object):
     def load_fdr_model(self, model_path):
         self.fdr.load_model(self.model_path)
 
-    def build_state_machine(self, main_process, common_alphabet=None):
+    def build_state_machine(self, main_process, common_alphabet=None, mode=None):
         """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
         events to hide in the main_process"""
         assert(common_alphabet is None or type(common_alphabet) is list)
@@ -79,9 +80,9 @@ class Monitor(object):
                     to_hide += ", "
                 i += 1
             main_process = str(main_process + "\diff(Events, {|"+ to_hide +"|})")
-            # TODO this should now check for...divergence? and? determinism?
 
-        self.process = self.fdr.convert_to_state_machine(main_process)  # CSPStateMachine(dict_sm, self.config_file)
+        csp_sm = CSPStateMachine(mode=self.mode)
+        self.process = self.fdr.convert_to_state_machine(main_process, csp_sm)  # CSPStateMachine(dict_sm, self.config_file)
 
     def check_result(self, event, result):
         # if the alphabet is explicit
@@ -116,7 +117,7 @@ class Monitor(object):
         else:
             return True
 
-    def _run_offline_state_machine(self, main_process, trace_path):
+    def run_offline_state_machine(self, main_process, trace_path):
         """ Runs Varanus offline, on a file of traces, using the State Machine representation of the CSP Process"""
         varanus_logger.info("+++ Running Offline -- Using State Machine +++")
         assert (self.process is not None)
@@ -477,19 +478,20 @@ class Monitor(object):
             self.process.transition(event)
 
     def check_monitorable(self, main_process, model_alpha=set(), system_alpha=set()):
+        """Checks if the main_process is monitorable given the alphabet of the model and system under analysis"""
         varanus_logger.info("+++ checking that "+ main_process + " is monitorable with given alphabets +++")
 
         if model_alpha == system_alpha:
             varanus_logger.debug("Alphabets match")
-            pass # this is fine, they match
+            return True # this is fine, they match
         elif system_alpha > model_alpha:
             varanus_logger.debug("system_alpha bigger: " + str(system_alpha - model_alpha))
-            pass # probably do something more elegent here
+            return True # probably do something more elegent here
         elif model_alpha > system_alpha:
             varanus_logger.debug("model_alpha bigger: " + str(system_alpha - model_alpha))
             #Now we check for non-determinism in the process (model) if we hide the extra events
             extra_events = model_alpha - system_alpha # set minus
-            self.fdr.check_determinism(main_process, extra_events)
+            return self.fdr.check_determinism(main_process, extra_events)
         else:
             varanus_logger.debug("oops?")
 

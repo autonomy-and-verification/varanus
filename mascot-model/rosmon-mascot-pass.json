@@ -1,0 +1,14 @@
+{"topic": "system_init", "data": null, "time" : 0}
+
+{"topic": "velocity", "data": 100, "time" : 1}
+{"topic": "speed_ok", "data": null, "time" : 2}
+{"topic": "footswitch", "data": "true", "time" : 3}
+
+{"topic": "velocity", "data": 500, "time" : 4}
+{"topic": "speed_ok", "data": null, "time" : 5}
+
+{"topic": "velocity", "data": 750, "time" : 6}
+{"topic": "speed_ok", "data": null, "time" : 7}
+
+{"topic": "velocity", "data": 1000, "time" : 8}
+{"topic": "speed_ok", "data": null, "time" : 9}
