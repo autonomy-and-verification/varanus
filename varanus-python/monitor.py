@@ -60,15 +60,13 @@ class Monitor(object):
         """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
         events to hide in the main_process"""
         assert(common_alphabet is None or type(common_alphabet) is list)
-        print("! main process = " + str(main_process))
-        print("! model path = " + str(self.model_path))
-        print("! common_alphabet = " + str(common_alphabet))
+        varanus_logger.info("Building CSP State Machine. Please Wait")
 
         if common_alphabet is not None:
             to_hide = ""
             length = len(common_alphabet)
             i = 1
-            print(length)
+
             for event in common_alphabet:
                 # TODO this is a copy of what's in SystemInterface.convert_event() which is a method...ordinarily I'd make it static, but that doesn't seem to be a thing in Python...
                 if self.event_map is not None and event in self.event_map:
