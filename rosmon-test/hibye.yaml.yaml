@@ -1,0 +1,11 @@
+---
+alphabet: [hello, goodbye]
+common_alphabet: [hello,goodbye]
+main_process: "HI_BYE"
+model: "hi_bye.csp"   
+trace_file: "hello_goodbye.json"
+name: "hi_bye_test"
+mode: "strict"
+
+
+
