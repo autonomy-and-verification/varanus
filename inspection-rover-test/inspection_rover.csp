@@ -1,0 +1,37 @@
+-- Overall inspeaction rover process
+include "defs.csp"
+include "agent.csp"
+include "localisation.csp" 
+include "navigation.csp"
+include "radiation_monitor.csp"
+
+local_nav_interface = {| position |}
+
+nav_agent_interface = {| at |}
+agent_nav_interface = {| move |}
+
+agent_rad_interface = {| inspect |}
+rad_agent_interface = {| radiation_level, inspectedCall, inspectedRet  |}
+
+rover = 
+(
+	(
+		LOCALISATION
+			[| local_nav_interface |]
+		(  NAVIGATION [| union(nav_agent_interface, agent_nav_interface) |] AGENT  )
+	)
+	[| union(agent_rad_interface, rad_agent_interface) |]
+	RAD_MON
+)
+
+assert rover :[deadlock free]
+assert rover :[divergence free]
+assert rover :[deterministic]
+
+rover_hide = rover\{|get_pos, get_at, get_rad, add_inspected|} -- Hiding these makes rover non-deterministic and divergent
+
+assert rover_hide :[deadlock free]
+assert rover_hide :[divergence free]
+assert rover_hide :[deterministic]
+
+assert rover_hide :[has trace]: <position.0.0, wayPcall.0.0, wayPTrue.0, inspectedCall.0, inspectedRet.false, inspect.0, move.1.1>

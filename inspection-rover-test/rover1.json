@@ -1,0 +1,8 @@
+{"topic": "position", "data": "0.0", "time" : 0}
+{"topic": "wayPcall", "data": "0.0", "time" : 1}
+{"topic": "wayPTrue", "data": "0", "time" : 3}
+{"topic": "inspectedCall", "data": "0", "time" : 4}
+{"topic": "inspectedRet", "data": "false", "time" : 5}
+{"topic": "inspect", "data": "0", "time" : 6}
+{"topic": "move", "data": "1.1", "time" : 7}
+

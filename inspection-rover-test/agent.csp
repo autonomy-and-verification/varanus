@@ -6,16 +6,22 @@
 
 -- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
 
-include "defs.csp"
+--include "defs.csp"
 
 AgentChan = {|get_at, get_rad, at, radiation_level, wayPcall, wayPTrue, wayPFalse, inspect, inspectedCall, 
 	inspectedRet, move|}
+
+agent_inputs = {| at, radiation_level, wayPcall, wayPTrue, wayPFalse, inspectedCall, 
+	inspectedRet |}
+agent_outputs = {| move, inspect |}
 
 channel get_at: coord.coord
 channel get_rad : radiation_category
 
 
-
+-- HANDLERS
+-- nav and rad store inputs from other nodes
+ 
 nav_handler(x,y) =
 	at?new_x?new_y -> nav_handler(new_x,new_y)
 	[]
@@ -26,14 +32,18 @@ rad_handler(rad_level) =
 	[]
 	get_rad!rad_level -> rad_handler(rad_level)
 
+-- Checks if the x and y are really a way point, usinf defs::waypoint()
 waypoint_handler = 
 	wayPcall?x?y ->
 	if waypoint(x,y) == -1 then 
 		wayPFalse-> waypoint_handler
 	else 
 		wayPTrue.waypoint(x,y) -> waypoint_handler
+------------------------------------------------------
 
-move_to_door = move.0.0 -> RUN(diff(Events,{|get_at, get_rad|}))
+
+move_to_door = move.0.0 -> SKIP
+--RUN(diff(Events,{|get_at, get_rad|}))
 
 move_to_next(current_waypoint) = 
 	if member(current_waypoint + 1, waypointID) then 
@@ -77,9 +87,11 @@ agent_guarB1 = get_at?x?y -> wayPcall.x.y ->
 
 agent_guarB2(i) = 
 ( 
-	inspectedRet?true -> RUN(diff(Events, {| get_rad, get_at|}))  
+	inspectedRet?true -> agent_guarB1
+	--RUN(diff(Events, {| get_rad, get_at|}))  
 	[]
-	inspectedRet?false -> inspect.i -> RUN(diff(Events, {| get_rad, get_at|}))
+	inspectedRet?false -> inspect.i -> agent_guarB1
+	--RUN(diff(Events, {| get_rad, get_at|}))
 )
 
 
@@ -96,7 +108,8 @@ agent_guarC1 =
 inspect?_ -> 
 (get_rad?radLevel:{Orange, Red} -> move_to_door
 []
-get_rad?radLevel:{Green} -> RUN(diff(Events, {| get_rad, get_at|}))
+get_rad?radLevel:{Green} -> agent_guarC1
+--RUN(diff(Events, {| get_rad, get_at|}))
 )
 
 assert agent_guarC :[deadlock free]
@@ -108,11 +121,54 @@ other_events = ([] e: diff(Events,AgentChan) @ e-> other_events)
 
 
 agent_guar = 
-	((agent_guarA1 [|{|wayPcall, wayPTrue, wayPFalse, get_at, get_rad, inspect|}|] (agent_guarB1 [|{|inspect,get_rad|}|] agent_guarC1) ) 
+	(
+	( (agent_guarA1 ||| agent_guarB1) [|{|inspect|}|] agent_guarC1 ) 
 		[|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
 	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler )  )
-	||| other_events
+	--||| other_events
 
 assert agent_guar :[deadlock free]
 assert agent_guar :[divergence free]
 assert agent_guar :[deterministic]
+
+AGENT_BEHAVIOUR =
+get_at?x?y -> AGENT_BEHAVIOUR'(x, y)
+
+
+AGENT_BEHAVIOUR'(x, y) =
+(
+move?x?y -> AGENT_BEHAVIOUR
+[]
+ wayPcall.x.y -> 
+(
+	-- at waypoint i
+	wayPTrue?i -> inspectedCall!i ->   
+		(inspectedRet?true -> AGENT_BEHAVIOUR 
+		[] 
+		inspectedRet?false -> inspect.i -> 
+			(get_rad?radLevel:{Orange, Red} -> move_to_door
+			[]
+			get_rad?radLevel:{Green} -> move_to_next(i); AGENT_BEHAVIOUR
+			)
+	[]
+	wayPFalse -> AGENT_BEHAVIOUR
+	)
+)
+)
+
+AGENT = 
+AGENT_BEHAVIOUR
+[|{|get_rad, get_at, wayPcall, wayPTrue, wayPFalse|}|] 
+	(nav_handler(0,0) ||| rad_handler(Green) ||| waypoint_handler ) 
+	
+AGENT_HIDE = AGENT\{|get_rad, get_at|}
+
+
+assert AGENT :[deadlock free]
+assert AGENT :[divergence free]
+assert AGENT :[deterministic]
+
+
+assert AGENT_HIDE :[deadlock free]
+assert AGENT_HIDE :[divergence free]
+assert AGENT_HIDE :[deterministic]

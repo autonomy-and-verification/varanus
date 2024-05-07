@@ -1,0 +1,8 @@
+---
+alphabet: [a,  c]
+common_alphabet: [a, b, c]
+
+main_process: "LoopHide"
+model: "simple.csp" 
+trace_file: "test-traces/scen2.json"
+name: "loop_test"

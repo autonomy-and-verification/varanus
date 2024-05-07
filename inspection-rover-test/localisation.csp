@@ -1,6 +1,15 @@
 -- The node outputs a unique (x , y) coordinate that is the robot’s estimated position
 
-include "defs.csp"
+-- include "defs.csp"
+
+localisation_outputs = {|position|}
 
 -- inputs, because we're abstracting the position values.
 local_guar = position?x?y -> local_guar
+
+LOCALISATION = local_guar
+
+
+assert LOCALISATION :[deadlock free]
+assert LOCALISATION :[divergence free]
+assert LOCALISATION :[deterministic]

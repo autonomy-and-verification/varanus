@@ -1,0 +1,11 @@
+{"topic": "move", "data": "0", "time" : 0}
+{"topic": "inspect", "data": "0", "time" : 1}
+{"topic": "radiation_level", "data": "Green", "time" : 3}
+{"topic": "move", "data": "2", "time" : 4}
+{"topic": "inspect", "data": "2", "time" : 5}
+{"topic": "radiation_level", "data": "Green", "time" : 6}
+{"topic": "move", "data": "1", "time" : 7}
+{"topic": "inspect", "data": "1", "time" : 8}
+{"topic": "radiation_level", "data": "Green", "time" : 9}
+{"topic": "mission_complete", "data": null, "time" : 7}
+{"topic": "move", "data": "0", "time" : 7}
