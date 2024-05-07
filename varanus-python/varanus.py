@@ -128,8 +128,8 @@ def run(check_type):
 
     if check_type == "offline":
         t0 = time.time()
-        mon = Monitor(MODEL, CONFIG_FILE, MAP)
-        mon._run_offline_traces_single(TRACE_FILE)
+        mon = Monitor(CONF_MODEL, CONFIG_FILE, MAP)
+        mon._run_offline_traces_interate(MAIN_PROCESS, TRACE_FILE)
     elif check_type == "online":
         t0 = time.time()
         mon = Monitor(MODEL, CONFIG_FILE, MAP)

@@ -230,24 +230,17 @@ class Monitor(object):
         varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
-    def _run_offline_traces_single(self, trace_path):  # deprecated
+    def _run_offline_traces_single(self, main_process, trace_path):  # deprecated
         """ Runs Varanus Offline, taking a single trace and sending it to FDR"""
 
         varanus_logger.info("+++ Running Offline Traces Single +++")
 
         system = OfflineInterface(trace_path)
-        trace_file = system.connect()
+        system.connect()
         trace = Trace()
 
-        # Take a single line
-        trace_line = trace_file.read()
-        # parse to list
-        event_list = json.loads(trace_line)
-        varanus_logger.debug("event_list:" + str(event_list))
-
-        # build trace from list
-        for event in event_list:
-            event = str(event)
+        while system.has_event():
+            event = str(system.next_event())
             if event.find(".") == -1:
                 channel, params = event, None
                 new_event = Event(channel, params)
@@ -261,7 +254,7 @@ class Monitor(object):
 
         # throw at FDR
         print("before check_trace")
-        result = self.fdr.check_trace(trace)
+        result = self.fdr.check_trace(main_process, trace)
         varanus_logger.debug("result: " + str(result))
 
         if not result:
@@ -269,50 +262,6 @@ class Monitor(object):
             return result
 
         return result
-
-    # This Doesn't Work As Expected.
-    # Takes last event from each line and accumulates
-    # so we get a failure:
-    # MASCOT_SAFETY_SYSTEM
-    #    :[has trace]: <system_init, speed.1250, protective_stop, speed_ok> Failed
-    # Counterexample type: minimal acceptance refusing {safe_stop_cat1, }
-    # Obvious bullshit
-    def _run_offline_traces(self, log_path):  # Deprecated
-        system = OfflineInterface(log_path)
-
-        trace_file = system.connect()
-        trace = Trace()
-
-        for json_line in trace_file:
-            if json_line == '\n':
-                continue
-            varanus_logger.debug("json_line:" + json_line)
-            # No convert_to_internal here because it's for a file of traces
-            event_list = json.loads(json_line)
-            varanus_logger.debug("event_list" + str(event_list))
-            last_event = event_list[-1]
-            varanus_logger.debug("last_event" + last_event)
-
-            if last_event.find(".") == -1:
-                channel, params = last_event, None
-                event = Event(channel, params)
-                trace.add_event(event)
-            else:
-                channel, params = last_event.split(".", 1)
-                event = Event(channel, params)
-                trace.add_event(event)
-
-            varanus_logger.debug("trace: " + str(trace) + "and type: " + type(trace))
-
-            result = self.fdr.check_trace(trace)
-            varanus_logger.debug("result: " + result)
-
-            if not result:
-                system.close()
-                return result
-
-        return result
-
     def run_offline_rosmon(self, log_path):
         system = OfflineInterface(log_path)
 
@@ -359,6 +308,38 @@ class Monitor(object):
             if not result:
                 system.close()
                 return result
+
+        return result
+
+    def _run_offline_traces_interate(self, main_process, log_path):
+
+        varanus_logger.info("+++ Running Offline Traces Iterate +++")
+
+        system = OfflineInterface(log_path)
+        system.connect()
+        trace = Trace()
+        result = {}
+        while system.has_event():
+
+            event = str(system.next_event())
+            if event.find(".") == -1:
+                channel, params = event, None
+                new_event = Event(channel, params)
+                trace.add_event(new_event)
+            else:
+                channel, params = event.split(".", 1)
+                new_event = Event(channel, params)
+                trace.add_event(new_event)
+
+            result = self.fdr.check_trace(main_process, trace)
+            varanus_logger.debug("result: " + str(result))
+
+            if not result:
+                system.close()
+                return result
+            ###############
+
+
 
         return result
 

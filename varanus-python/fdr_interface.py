@@ -58,9 +58,9 @@ class FDRInterface(object):
         except fdr.Error as e:
             varanus_logger.error(e)
 
-    def _make_assertion(self, trace):
+    def _make_assertion(self, main_process, trace):
         # generate assert and dump it into the model
-        assert_start = "MASCOT_SAFETY_SYSTEM  :[has trace]: <"
+        assert_start = main_process + "  :[has trace]: <"
         assert_end = ">"
 
         varanus_logger.debug("type of trace: " + str(type(trace)))
@@ -117,14 +117,14 @@ class FDRInterface(object):
 
 
 
-    def check_trace(self, trace):
+    def check_trace(self, main_process, trace):
         """ parses the trace and executes it in the current session.
             returns True if the assertion passed or
             False if the assertion fails """
 
         assert (self.session is not None)
 
-        assertion_string = self._make_assertion(trace)
+        assertion_string = self._make_assertion(main_process, trace)
         varanus_logger.debug("assertion_string: " + assertion_string)
 
         assertion = self._run_assertion(assertion_string)
