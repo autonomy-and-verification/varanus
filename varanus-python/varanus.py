@@ -128,7 +128,7 @@ def run(check_type):
 
     if check_type == "offline":
         t0 = time.time()
-        mon = Monitor(CONF_MODEL, CONFIG_FILE, MAP)
+        mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, old_version=True)
         mon._run_offline_traces_interate(MAIN_PROCESS, TRACE_FILE)
     elif check_type == "online":
         t0 = time.time()
@@ -267,6 +267,8 @@ if __name__ == "__main__":
     preprocess()
 
     run(TYPE)
+
+    print(varanus_times.times)
 
     print("")
     print("")

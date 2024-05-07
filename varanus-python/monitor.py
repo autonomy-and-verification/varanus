@@ -23,25 +23,26 @@ varanus_times = Time_Store()
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, config_file, event_map_path=None, mode=None):
-        self.process = None
-        self.fdr = FDRInterface()
-        self.model_path = model_path
-        self.fdr.load_model(self.model_path)
-        # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
-        # self.eventMapper = MascotEventAbstractor(event_map_path)
+    def __init__(self, model_path, config_file, event_map_path=None, mode=None, old_version=False):
+        self.mode = mode
+        self.old_version = old_version
         if event_map_path is None:
             self.event_map = None
         else:
             with open(event_map_path, "r") as event_map:
                 self.event_map = json.load(event_map)
 
+        self.process = None
+        self.fdr = FDRInterface()
+        self.model_path = model_path
+        self.load_fdr_model(self.model_path)
+        # TODO This will need to be fixed later. Possibly Monitor should be instantiated with an Event Mapper
+        # self.eventMapper = MascotEventAbstractor(event_map_path)
         self.explicit_alphabet = False
         self.alphabet = []
         self.config_file = config_file
         if config_file is not None:
             self.load_alphabet_from_config(config_file)
-        self.mode = mode
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -58,7 +59,13 @@ class Monitor(object):
         self.fdr.new_session()
 
     def load_fdr_model(self, model_path):
-        self.fdr.load_model(self.model_path)
+        if self.old_version:
+            build_start = time.time()
+            self.fdr.load_model(model_path)
+            build_end = time.time()
+            varanus_times.add_time("build", build_end - build_start)
+        else:
+            self.fdr.load_model(model_path)
 
     def build_state_machine(self, main_process, common_alphabet=None, mode=None):
         """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
@@ -138,6 +145,7 @@ class Monitor(object):
         transition_times = []
         number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
+        passed = True
         while monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
             number_of_events += 1
@@ -155,20 +163,27 @@ class Monitor(object):
 
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
+                transition_end = time.time()
+                transition_times.append(transition_end - transition_start)
             else:
                 result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
                     self.process.get_outgoing_transitions()))  # TODO make this even prettier
                 #return result  # So far, return because a None means it's bad.
+                transition_end = time.time()
+                transition_times.append(transition_end - transition_start)
+                passed = False
                 break
 
             transition_end = time.time()
             transition_times.append(transition_end-transition_start)
 
-        print("! TRANSITION TIMES + " + str(transition_times))
-        varanus_logger.info("Trace file finished with no violations")
-        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times) )
+        print("! TRANSITION TIMES = " + str(transition_times))
+        if passed:
+            varanus_logger.info("Trace file finished with no violations")
+
+        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times))
         varanus_times.add_extra_information("num_events", len(transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
@@ -319,6 +334,7 @@ class Monitor(object):
         system.connect()
         trace = Trace()
         result = {}
+        check_start = time.time()
         while system.has_event():
 
             event = str(system.next_event())
@@ -338,8 +354,8 @@ class Monitor(object):
                 system.close()
                 return result
             ###############
-
-
+        check_end = time.time()
+        varanus_times.add_time("check", check_end - check_start)
 
         return result
 
