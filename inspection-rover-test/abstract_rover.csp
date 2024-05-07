@@ -32,10 +32,23 @@ MOVE_TO_NEXT(current_waypoint, inspected) =
 	else
 		MOVE_TO_DOOR
 
+-- This top-level process allows the mission to restart
+ROVER_SYSTEM =
+mission_start ->
+ROVER(0, {}) ; ROVER_SYSTEM
 
-
+--Check Single Rover Run
 assert ROVER(0, {}); RUN(Events) :[deadlock free]
 assert ROVER(0, {}) :[divergence free]
 assert ROVER(0, {}) :[deterministic]
 
 
+--Check Repeated Rover Runs
+assert ROVER_SYSTEM :[deadlock free]
+assert ROVER_SYSTEM :[divergence free]
+assert ROVER_SYSTEM :[deterministic]
+
+--Check Hiding
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[divergence free]
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deterministic]
