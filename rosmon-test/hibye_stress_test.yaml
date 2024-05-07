@@ -1,0 +1,12 @@
+---
+alphabet: [hello, goodbye]
+common_alphabet: [hello,goodbye]
+stress_events: [hello]
+stress_repetitions: 100000
+main_process: "HI_BYE"
+model: "hi_bye.csp"   
+name: "hi_bye_stress_test"
+mode: "strict"
+
+
+
