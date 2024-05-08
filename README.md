@@ -86,6 +86,12 @@ Since Varanus 0.9.0 the parameters can be set in the config file, and some can b
 * `run_online_traces_accumulate()`performs online RV, it takes the IP address and port number of a socket connection as parameters. This method checks traces incrementally, adding each event it receives to the trace and checking it. This method assumes there is a socket connection for it communicate with (in the MASCOT example, this is `varanus/mascot-test/dummy_mascot_socket.py`)
  - Adding the `timeRun=True` parameter to this method will collect timing information for each run.
 
+### First Time Run
+
+When running Varanus for the first time, you will receive a message saying that FDR requires a licence. As mentioned above, "All use of FDR require a license, however, you do not need to purchase a license if you are engaged in normal academic activity." But a free academic license is available from the license dialogue, when starting FDR.
+
+Run `sudo fdr4` to start FDR, select the academic licence and add your name and an email address, to register for the licence. If this works, FDR will open, but you can close this and continue to use Varanus.
+
 ### Config File
 
 The config file sets the following parameters:
@@ -171,6 +177,33 @@ Here are some troubleshooting tips for problems with Varanus itself.
 
 If you have problems installing or running **FDR4** please check the [FDR Troubleshooting](docs/fdr-troubleshooting.md) document.
 
+## Cannot Install FDR: Depends: libpng12-0 but it is not installable
+
+Using the instructions from: https://www.linuxuprising.com/2018/05/fix-libpng12-0-missing-in-ubuntu-1804.html
+
+The instructions below work for **Ubuntu 22.10, 22.04, 21.10 or 20.04** (for 18.04, check https://www.linuxuprising.com/2018/05/fix-libpng12-0-missing-in-ubuntu-1804.html )
+
+```
+sudo add-apt-repository ppa:linuxuprising/libpng12
+sudo apt update
+sudo apt install libpng12-0
+```
+
+## Cannot run FDR: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+
+It seems this can just be installed: `sudo apt-get install libtinfo5`
+
+## Cannot run FDR: Could not connect to FDR licensing server; please check your internet connection
+
+This error happens on the License Application dialogue, when trying to validate the license.
+Some Linux distributions have moved the TLS certificate store, and FDR cannot find it, so it can't connect. FDR 4.2.7 says it fixes an issue with not being able to connect to the licensing server, but this error still sometimes appears.
+
+The fix that seems to work is to copy the TLS certificates to the location that FDR is expecting them to be at:
+```
+sudo mkdir -p /etc/pki/tls/certs/
+sudo cp /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
+```
+
 ## ImportError: libpython2.6.so.1.0: cannot open shared object file: No such file or directory
 
 **Found with Python 2.7.18 and FDR 4.2.7**
@@ -193,6 +226,10 @@ sudo ln -s /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0 \
 
 ```
 which is modified from [Stack Exchange](https://askubuntu.com/questions/427884/libpython2-6-so-1-0-doesnt-exist), which adds a link from the missing `libpython2.6.so.1.0` to the existing `libpython2.7.so.1.0` file.
+
+
+
+
 
 
 
