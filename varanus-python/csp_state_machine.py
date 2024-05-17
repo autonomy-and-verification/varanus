@@ -293,11 +293,11 @@ class CSPStateMachine(object):
         return result
 
     def explore_taus(self, transition_name):
-        """Explores tau transitions (to _TAU_DEPTH) from the current state to see if the event can be found in the next state
+        """Explores tau transitions (to _TAU_DEPTH) from the current state to see if the event can be found in subsequent states
         Returns """
         varanus_logger.debug("explore_taus called in state: " + str(self.current_state) + " looking for state that has " + transition_name)
-        assert(self.current_state is not None)
-        assert(self.current_state.has_tau)
+        assert (self.current_state is not None)
+        assert (self.current_state.has_tau)
 
         next_current_state = None
         depth = 0
@@ -313,11 +313,3 @@ class CSPStateMachine(object):
             else:
                 state_to_check = destination
                 depth += 1
-
-
-
-
-
-
-
-

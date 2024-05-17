@@ -183,9 +183,6 @@ def run(check_type):
     elif check_type == "offline-test":  # temp for testing upgrade of offline mode
         varanus_logger.info("+++ Running Offline Test +++")
         t0 = time.time()
-        # EXPLICIT_ALPHABET = False
-        # ALPHABET = None
-        # MAIN_PROCESS = None
 
         varanus_logger.debug(CONF_MAP)
         if CONF_MAP is not None:

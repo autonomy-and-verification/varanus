@@ -67,7 +67,7 @@ class Monitor(object):
         else:
             self.fdr.load_model(model_path)
 
-    def build_state_machine(self, main_process, common_alphabet=None, mode=None):
+    def build_state_machine(self, main_process, common_alphabet=None):
         """Builds a CSPStateMachine object for the main_process. If common_alphabet is set, it should be a list of
         events to hide in the main_process"""
         assert(common_alphabet is None or type(common_alphabet) is list)
