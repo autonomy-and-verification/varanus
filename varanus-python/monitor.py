@@ -212,7 +212,7 @@ class Monitor(object):
             number_of_events += 1
             transition_start = time.time()
             if len(events) > 1:
-                index = random.randint(0, len(events))
+                index = random.randint(0, len(events)-1)
             else:
                 index = 0
             event =  events[index] #monitored_system.next_event()

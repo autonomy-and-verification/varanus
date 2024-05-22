@@ -1,0 +1,12 @@
+---
+alphabet: [a, b, c, d, e]
+common_alphabet: [a, b, c, d, e]
+stress_events: [a, b, c, d, e]
+stress_repetitions: 100000
+main_process: "WCST"
+model: "wcst_5.csp"   
+name: "wcst_stress_test"
+mode: "strict"
+
+
+

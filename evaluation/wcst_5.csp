@@ -1,0 +1,66 @@
+-- Manually building a Worst-Case State Machine (WCST)
+channel a, b, c, d, e
+
+
+ProcA = 
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+
+
+ProcB =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+ 
+ProcC =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+
+ProcD =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+
+ProcE =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+
+
+WCST = ProcA -- Main Process, starts the recursion in ProcA
+
+assert WCST; RUN(Events) :[deadlock free]:
+assert WCST :[deterministic]:
+assert WCST :[divergence free]:

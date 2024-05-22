@@ -1,0 +1,223 @@
+-- Manually building a Worst-Case State Machine (WCST)
+-- Now with 10 events and 10 states
+channel a, b, c, d, e
+channel f, g, h, i, j
+
+
+ProcA = 
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+
+ProcB =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+ 
+ProcC =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcD =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcE =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcF =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcG =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcH =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcI =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+ProcJ =
+a -> ProcA
+[]
+b -> ProcB
+[]
+c -> ProcC
+[]
+d -> ProcD
+[]
+e -> ProcE
+[]
+f -> ProcF
+[]
+g -> ProcG
+[]
+h -> ProcH
+[]
+i -> ProcI
+[]
+j -> ProcJ
+
+
+WCST = ProcA -- Main Process, starts the recursion in ProcA
+
+assert WCST; RUN(Events) :[deadlock free]:
+assert WCST :[deterministic]:
+assert WCST :[divergence free]:
