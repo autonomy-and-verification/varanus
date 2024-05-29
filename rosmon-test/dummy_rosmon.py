@@ -11,7 +11,7 @@ import json
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = "5088"
-FILE = "scenarios/scenario1.json"
+FILE = "hello_goodbye.json"
 
 def main(argv):
     websocket.enableTrace(True)

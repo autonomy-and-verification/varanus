@@ -168,7 +168,7 @@ class WebSocketInterface(SystemInterface):
         varanus_logger.info("+++ WebSocket Server Initialised +++")
 
     def send(self, message):
-        varanus_logger.info("+++ Sending ", message, " +++")
+        varanus_logger.info("+++ Sending ", str(message), " +++")
         self.ws.send(message)
 
     def connect(self):
@@ -176,12 +176,12 @@ class WebSocketInterface(SystemInterface):
 
     def new_client(self, client, server):
         """Called for every client connecting (after handshake)"""
-        varanus_logger.info("+++ New ROS monitor connected and was given id: " + client['id'] + " +++")
+        varanus_logger.info("+++ New ROS monitor connected and was given id: " + str(client['id']) + " +++")
         # server.send_message_to_all("Hey all, a new client has joined us")
 
     def client_left(self, client, server):
         """ Called for every client disconnecting"""
-        varanus_logger.info("ROS monitor " + client['id'] + " disconnected +++")
+        varanus_logger.info("ROS monitor " + str(client['id']) + " disconnected +++")
 
     def close(self):
         self.server.close()
