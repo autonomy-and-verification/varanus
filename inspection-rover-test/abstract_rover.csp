@@ -1,4 +1,4 @@
--- Abstract inspeaction rover
+-- Abstract inspection rover
 
 --Guarantee A: If the Robot is at waypoint i and it has inspected that waypoint and the radition level was not dangerous, then it will move to the next waypoint or to the original waypoint (the exit) if there is no next waypoint.
 
