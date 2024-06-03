@@ -22,7 +22,8 @@ Varanus has been built and (only) tested on Ubuntu 19.10/20.04 using Python 2.7.
 Varanus is written using Python 2.7 because it uses FDR4 to parse and compile CSP specifications, and FDR4's Python interface 
 is not compatible with Python 3.
 
-* yaml package `pip install pyyaml` or `pip3 install pyyaml`
+* yaml package `pip install pyyaml` or `pip2 install pyyaml`
+* websocket package `pip install websocket-client` or  `pip2 install websocket-client`
 
 ### FDR
 

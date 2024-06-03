@@ -18,7 +18,8 @@ system's underlying connection  """
 class SystemInterface(object):
     """Interface for all system interfaces"""
 
-    def __init__(self):
+    def __init__(self, event_map =None):
+        self.event_map = event_map
         pass
 
     def connect(self):
@@ -43,11 +44,40 @@ class SystemInterface(object):
         else:
             return event_name
 
+    def parse_ROSMon_event(self, json_line):
+        """Decodes a ROSMon event from the json"""
+        assert(type(json_line) is str)
+
+        event_list = json.loads(json_line)
+        varanus_logger.debug("event_list = " + str(event_list))
+        if "data" not in event_list:
+            raise ValueError("Event is missing data field.")
+        if "topic" not in event_list:
+            raise ValueError("Event is missing topic field.")
+
+        # TODO Check if the event in the trace file matches that in the CSP file I was given. CSP State
+        #  Machine currently built from main process...so I'm not sure how this will work.
+        if self.event_map is not None:
+            channel_name = self.convert_event(event_list['topic'])
+        else:
+            channel_name = event_list['topic']
+
+        if event_list["data"] is not None:
+            parsed_event = Event(channel_name, [event_list["data"]])
+        else:
+            parsed_event = Event(channel_name)
+
+        return parsed_event.to_fdr()
+
+
+
+
 
 class OfflineInterface(SystemInterface):
     """ Interface to a file of traces."""
 
     def __init__(self, trace_file_path, event_map=None):
+        SystemInterface.__init__(self) # Python is a silly language. I have to manually make inheritance work...
         self.trace_file_path = trace_file_path
         self._file_open = False
         self.event_map = event_map
@@ -63,35 +93,13 @@ class OfflineInterface(SystemInterface):
                 line_num += 1
                 if json_line == '\n':
                     continue
-                event_list = json.loads(json_line)
-                varanus_logger.debug("event_list = " + str(event_list))
-                if "data" not in event_list:
-                    varanus_logger.error(
-                        "Event object on line " + str(line_num) + " in the trace file is missing the data field.\n"
-                        "Trace file path: " + self.trace_file_path + "\nIf there is no data, use \"data\": null\n Aborting")
+                try:
+                    event = self.parse_ROSMon_event(json_line)
+                    self.events.append(event)
+                except ValueError as e:
+                    varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
+                    varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
                     return False
-
-                if "topic" not in event_list:
-                    varanus_logger.error("Event object on Line " + str(line_num) + " in the trace file is missing the "
-                        "topic field.\nTrace file path: " + self.trace_file_path + "\n Aborting")
-                    return False
-
-                # TODO Check if the event in the trace file matches that in the CSP file I was given. CSP State
-                #  Machine currently built from main process...so I'm not sure how this will work.
-                if self.event_map is not None:
-                    channel_name = self.convert_event(event_list['topic'])
-                else:
-                    channel_name = event_list['topic']
-
-                if event_list["data"] is not None:
-                    parsed_event = Event(channel_name, [event_list["data"]])
-                else:
-                    parsed_event = Event(channel_name)
-
-                event = parsed_event.to_fdr()
-                self.events.append(event)
-
-
         except OSError:
             varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
@@ -154,15 +162,17 @@ class TCPInterface_Client(TCPInterface):
 class WebSocketInterface(SystemInterface):
     """ Interface to a WebSocket Connection, runs a WebSocket Server """
 
-    def __init__(self, message_callback, port, IP='127.0.0.1'):
+    def __init__(self, port, IP='127.0.0.1'):
+        SystemInterface.__init__(self) # Python is a silly language
         self.IP = IP
         self.port = (port)
+        self.message_callback = self.websockect_check_event
 
         # init Websocket
         self.server = WebsocketServer(self.port, self.IP)
         self.server.set_fn_new_client(self.new_client)
         self.server.set_fn_client_left(self.client_left)
-        self.server.set_fn_message_received(message_callback)
+        self.server.set_fn_message_received(self.message_callback)
 
         varanus_logger.debug(self.server)
         varanus_logger.info("+++ WebSocket Server Initialised +++")
@@ -173,6 +183,20 @@ class WebSocketInterface(SystemInterface):
 
     def connect(self):
         self.server.run_forever()
+
+    def websockect_check_event(self, client, server, message):
+        """Called when a client sends a message, callback method"""
+        varanus_logger.debug("Monitor got: " + message)
+        print(type(message))
+
+        # decode the event from the messge
+        decoded = self.parse_ROSMon_event(str(message)) # message is unicode
+        varanus_logger.debug("Monitor decoded message: " + decoded)
+
+            # then check the event against the state machine
+            # which we do already in run_offline_state_machine() (here)
+            # this also needs extracting and testing
+
 
     def new_client(self, client, server):
         """Called for every client connecting (after handshake)"""

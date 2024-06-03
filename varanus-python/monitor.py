@@ -463,23 +463,12 @@ class Monitor(object):
         assert (self.process is not None)
 
         ##connect to the system
-        system = WebSocketInterface(self.websockect_check_event, port)
+        system = WebSocketInterface(port)
         system.connect()
         # conn = system.connect()
         self.process.start()
 
-    def websockect_check_event(self, client, server, message):
-        """Called when a client sends a message, callback method"""
-        varanus_logger.debug("Monitor got: " + message)
 
-        # This needs to
-            # decode the event from the messge
-            # which we do already in the offline system interface's
-            # connect() method. This needs extracting and testing
-
-            # then check the event against the state machine
-            # which we do already in run_offline_state_machine() (here)
-            # this also needs extracting and testing
 
     def _deprecated_websockect_check_event(self, client, server, message):
         """Called when a client sends a message, callback method"""
