@@ -24,6 +24,8 @@ class Monitor(object):
     """The main class of the program, controls the process """
 
     def __init__(self, model_path, config_file, event_map_path=None, mode=None, old_version=False):
+        self.number_of_events = 0
+        self.trace = Trace()
         self.mode = mode
         self.old_version = old_version
         if event_map_path is None:
@@ -43,6 +45,8 @@ class Monitor(object):
         self.config_file = config_file
         if config_file is not None:
             self.load_alphabet_from_config(config_file)
+        self.monitored_system = None
+        self.transition_times = []
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -136,23 +140,24 @@ class Monitor(object):
         result = {}
 
         # Extract the Traces and start the loop
-        monitored_system = OfflineInterface(trace_path, self.event_map)
-        is_connected = monitored_system.connect()
+        self.monitored_system = OfflineInterface(trace_path, self.event_map)
+        is_connected = self.monitored_system.connect()
         if not is_connected:
             varanus_logger.error("Could not open trace_file at: " + trace_path)
-            return
-        trace = Trace()
-        transition_times = []
-        number_of_events = 0
+            return False # Not caught.
+
+        #trace = Trace()
+        #transition_times = []
+        #number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
         passed = True
-        while monitored_system.has_event():
+        while self.monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
-            number_of_events += 1
+            self.number_of_events += 1
             transition_start = time.time()
-            event = monitored_system.next_event()
+            event = self.monitored_system.next_event()
             varanus_logger.debug("event = " + event)
-            trace.add_event(Event(event))
+            self.trace.add_event(Event(event))
 
             if self.process.current_state.name not in result:
                 result[self.process.current_state.name] = []
@@ -164,27 +169,27 @@ class Monitor(object):
             if self.check_result(event, resulting_state):
                 result[old_state].append((event, resulting_state.name))
                 transition_end = time.time()
-                transition_times.append(transition_end - transition_start)
+                self.transition_times.append(transition_end - transition_start)
             else:
                 result[old_state].append((event, resulting_state))
-                varanus_logger.error("System Violated the Specification with Trace: " + str(trace.to_list()))
+                varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
                 varanus_logger.error("This node expected the following events: " + str(
                     self.process.get_outgoing_transitions()))  # TODO make this even prettier
                 #return result  # So far, return because a None means it's bad.
                 transition_end = time.time()
-                transition_times.append(transition_end - transition_start)
+                self.transition_times.append(transition_end - transition_start)
                 passed = False
                 break
 
-            transition_end = time.time()
-            transition_times.append(transition_end-transition_start)
+            #transition_end = time.time()
+            #transition_times.append(transition_end-transition_start)
 
-        print("! TRANSITION TIMES = " + str(transition_times))
+        print("! TRANSITION TIMES = " + str(self.transition_times))
         if passed:
             varanus_logger.info("Trace file finished with no violations")
 
-        varanus_times.add_time("avg_transition", sum(transition_times) / len(transition_times))
-        varanus_times.add_extra_information("num_events", len(transition_times))
+        varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
+        varanus_times.add_extra_information("num_events", len(self.transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
     def run_offline_stress_test(self, MAIN_PROCESS, events, repetitions):
@@ -461,12 +466,57 @@ class Monitor(object):
         """ Run as an Online Monitor, connecting via WebSocket """
         varanus_logger.info("+++ Running Online -- Using State Machine and Websockets +++")
         assert (self.process is not None)
+        self.transition_times = []
+        self.number_of_events = 0
 
         ##connect to the system
-        system = WebSocketInterface(port)
-        system.connect()
-        # conn = system.connect()
+        self.monitored_system = WebSocketInterface(self.websockect_check_event, self.websocket_client_disconnect, port)
+        self.monitored_system.connect()
+
         self.process.start()
+
+    def websockect_check_event(self, client, server,message):
+        """Called when a client sends a message, callback method"""
+        varanus_logger.debug("Monitor got: " + message)
+        print(type(message))
+
+        transition_start = time.time()
+
+        # decode the event from the message
+        event = self.monitored_system.parse_ROSMon_event(str(message)) # message is unicode
+        varanus_logger.debug("Monitor decoded event: " + event)
+
+            # then check the event against the state machine
+            # which we do already in run_offline_state_machine() (here)
+            # this also needs extracting and testing
+        resulting_state = self.process.transition(event)  # This returns None if there is no available transition
+        varanus_logger.debug("resulting_state = " + str(resulting_state))
+        self.trace.add_event(Event(event))
+
+        if self.check_result(event, resulting_state):
+            #result[old_state].append((event, resulting_state.name))
+            transition_end = time.time()
+            self.transition_times.append(transition_end - transition_start)
+        else:
+            #result[old_state].append((event, resulting_state))
+            varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
+            varanus_logger.error("This node expected the following events: " + str(
+                self.process.get_outgoing_transitions()))  # TODO make this even prettier
+            # return result  # So far, return because a None means it's bad.
+            transition_end = time.time()
+            self.transition_times.append(transition_end - transition_start)
+            passed = False
+
+
+        
+
+    def websocket_client_disconnect(self,client, server):
+        varanus_logger.info("ROS monitor " + str(client['id']) + " disconnected +++")
+        varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
+        varanus_times.add_extra_information("num_events", len(self.transition_times))
+
+        self.monitored_system.close() # this assumes that only one client connected, I suppose... Well, it assumes that the first client to disconnected was the monitor.
+
 
 
 

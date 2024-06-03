@@ -139,15 +139,19 @@ def run(check_type):
             mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
         else:
             mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
         else:
             mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
 
-        #mon = Monitor(MODEL, CONFIG_FILE, MAP)
-        #mon.run_online_traces_accumulate(IP, PORT, timeRun=False)
+        check_start = time.time()
         mon.run_online_websocket(IP, PORT)
+        check_end = time.time()
+
+        varanus_times.add_time("build", build_end - build_start)
+        varanus_times.add_time("check", check_end - check_start)
     elif check_type == "sm-test":  # This is temporary, for testing the state machine
         print("main process = " + MAIN_PROCESS)
         t0 = time.time()

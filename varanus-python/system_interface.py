@@ -82,14 +82,15 @@ class OfflineInterface(SystemInterface):
         self._file_open = False
         self.event_map = event_map
         self.events = deque()
+        self.trace_file = None
 
     def connect(self):
         varanus_logger.info("Parsing trace file at: " + self.trace_file_path)
         try:
-            trace_file = open(self.trace_file_path)
+            self.trace_file = open(self.trace_file_path)
             self._file_open = True
             line_num = 0
-            for json_line in trace_file:
+            for json_line in self.trace_file:
                 line_num += 1
                 if json_line == '\n':
                     continue
@@ -162,17 +163,16 @@ class TCPInterface_Client(TCPInterface):
 class WebSocketInterface(SystemInterface):
     """ Interface to a WebSocket Connection, runs a WebSocket Server """
 
-    def __init__(self, port, IP='127.0.0.1'):
+    def __init__(self, message_callback, disconnect_callback, port, IP='127.0.0.1'):
         SystemInterface.__init__(self) # Python is a silly language
         self.IP = IP
-        self.port = (port)
-        self.message_callback = self.websockect_check_event
+        self.port = port
 
         # init Websocket
         self.server = WebsocketServer(self.port, self.IP)
         self.server.set_fn_new_client(self.new_client)
-        self.server.set_fn_client_left(self.client_left)
-        self.server.set_fn_message_received(self.message_callback)
+        self.server.set_fn_client_left(disconnect_callback)
+        self.server.set_fn_message_received(message_callback)
 
         varanus_logger.debug(self.server)
         varanus_logger.info("+++ WebSocket Server Initialised +++")
@@ -184,20 +184,6 @@ class WebSocketInterface(SystemInterface):
     def connect(self):
         self.server.run_forever()
 
-    def websockect_check_event(self, client, server, message):
-        """Called when a client sends a message, callback method"""
-        varanus_logger.debug("Monitor got: " + message)
-        print(type(message))
-
-        # decode the event from the messge
-        decoded = self.parse_ROSMon_event(str(message)) # message is unicode
-        varanus_logger.debug("Monitor decoded message: " + decoded)
-
-            # then check the event against the state machine
-            # which we do already in run_offline_state_machine() (here)
-            # this also needs extracting and testing
-
-
     def new_client(self, client, server):
         """Called for every client connecting (after handshake)"""
         varanus_logger.info("+++ New ROS monitor connected and was given id: " + str(client['id']) + " +++")
@@ -208,7 +194,8 @@ class WebSocketInterface(SystemInterface):
         varanus_logger.info("ROS monitor " + str(client['id']) + " disconnected +++")
 
     def close(self):
-        self.server.close()
+        print("!!!!! closed")
+        self.server.shutdown()
 
 
 if __name__ == '__main__':
