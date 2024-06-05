@@ -303,6 +303,7 @@ class CSPStateMachine(object):
         depth = 0
         state_to_check = self.current_state
         while depth <= self._TAU_DEPTH:
+            assert(state_to_check.has_tau) # should handle this better, but it shouldn't fail if the input files are right.
             tau_transition = state_to_check.transitions[Transition._TAU]
             destination = tau_transition.get_first_state()
             print(str(tau_transition))

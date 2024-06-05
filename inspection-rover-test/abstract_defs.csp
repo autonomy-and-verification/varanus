@@ -1,4 +1,4 @@
-nametype waypointID = {0..12}
+nametype waypointID = {0..1}
 datatype radiation_category = Red | Orange | Green
 --nametype sensor_value = {0, 50, 120, 150, 250, 300}
 
@@ -10,6 +10,7 @@ channel move : waypointID
 channel mission_complete
 channel mission_abort
 channel mission_start
+channel get_rad : radiation_category
 
 
 

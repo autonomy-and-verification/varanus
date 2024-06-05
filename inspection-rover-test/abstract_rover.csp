@@ -12,12 +12,12 @@ ROVER(current_waypoint, inspected) =
 
 (not member(current_waypoint, inspected))& INSPECT(current_waypoint, inspected)
 []
-move?wp:(diff(waypointID, inspected)) -> ROVER(wp, inspected)
+inspect?wp:(diff(waypointID, inspected)) -> ROVER(wp, inspected)
 []
 (inspected == waypointID) & mission_complete -> MOVE_TO_DOOR
 
 INSPECT(i, inspected) = 
-	inspect.i -> RADIATION_CHECK(i, inspected)
+	move.i -> RADIATION_CHECK(i, inspected)
 
 RADIATION_CHECK(i, inspected) =
 radiation_level?Green ->  ROVER(i, union(inspected, {i}) ) 
@@ -52,3 +52,87 @@ assert ROVER_SYSTEM :[deterministic]
 assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
 assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[divergence free]
 assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deterministic]
+
+-- Ordering: this has to be first for the pattern matching...
+ROVER2({}) = mission_complete -> SKIP
+
+ROVER2(WaypointSet) = 	
+	inspect?wp:(WaypointSet) ->
+	move.wp ->
+	(
+		get_rad?r:({Red, Orange}) -> move.0 -> mission_abort -> SKIP
+		[]
+		get_rad?Green -> ROVER2(diff(WaypointSet, {wp}))	 -- Ordering is important in diff()
+	)
+	
+
+
+RAD_MON(rad) =
+	radiation_level?new_rad -> RAD_MON(new_rad)
+	[]
+	get_rad!rad -> RAD_MON(rad)
+	[]
+	mission_abort -> SKIP
+	[]
+	mission_complete -> SKIP
+	
+ROVER_SYSTEM2 =
+mission_start ->
+(	
+	ROVER2(waypointID) 
+	[|{|mission_abort, mission_complete, get_rad|}|]
+	RAD_MON(Green)
+)--\{|get_rad|}
+; ROVER_SYSTEM2
+
+
+--Check Single Rover Run
+assert ROVER2(waypointID); RUN(Events) :[deadlock free]
+assert ROVER2(waypointID) :[divergence free]
+assert ROVER2(waypointID) :[deterministic]
+
+
+--Check Repeated Rover Runs
+assert ROVER_SYSTEM2 :[deadlock free]
+assert ROVER_SYSTEM2 :[divergence free]
+assert ROVER_SYSTEM2 :[deterministic]
+
+--Check Hiding
+assert ROVER_SYSTEM2\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
+assert ROVER_SYSTEM2\{|mission_start, mission_complete, mission_abort|} :[divergence free]
+assert ROVER_SYSTEM2\{|mission_start, mission_complete, mission_abort|} :[deterministic]
+
+ROVER3({}) = mission_complete -> SKIP
+
+ROVER3(WaypointSet) = 	
+	inspect?wp:(WaypointSet) ->
+	move.wp ->
+	(
+		radiation_level?r:({Red, Orange}) -> move.0 -> mission_abort -> SKIP
+		[]
+		radiation_level?Green -> ROVER2(diff(WaypointSet, {wp}))	 -- Ordering is important in diff()
+	)
+	
+
+	
+ROVER_SYSTEM3 =
+mission_start ->
+ROVER3(waypointID) 
+; ROVER_SYSTEM3
+
+
+--Check Single Rover Run
+assert ROVER3(waypointID); RUN(Events) :[deadlock free]
+assert ROVER3(waypointID) :[divergence free]
+assert ROVER3(waypointID) :[deterministic]
+
+
+--Check Repeated Rover Runs
+assert ROVER_SYSTEM3 :[deadlock free]
+assert ROVER_SYSTEM3 :[divergence free]
+assert ROVER_SYSTEM3 :[deterministic]
+
+--Check Hiding
+assert ROVER_SYSTEM3\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
+assert ROVER_SYSTEM3\{|mission_start, mission_complete, mission_abort|} :[divergence free]
+assert ROVER_SYSTEM3\{|mission_start, mission_complete, mission_abort|} :[deterministic]

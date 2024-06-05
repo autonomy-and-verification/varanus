@@ -1,0 +1,12 @@
+---
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start, move]
+common_alphabet: [inspect, radiation_level, move, mission_start, mission_complete, mission_abort]
+main_process: "ROVER_SYSTEM3"
+model: "abstract_rover.csp" 
+trace_file: "log.json" #should pass, radiation=green. Should be slow
+#trace_file: "abs_rover2.json" #should fail, radiation level = red. Should be quick.
+name: "abstract_rover_test"
+mode: "permissive"
+
+
+

@@ -1,0 +1,54 @@
+-- Abstract inspection rover
+
+--Guarantee A: If the Robot is at waypoint i and it has inspected that waypoint and the radition level was not dangerous, then it will move to the next waypoint or to the original waypoint (the exit) if there is no next waypoint.
+
+-- Guarantee B: And, if the Robot is at waypoint i and it has not been inspected, then the Robot will inspect it.
+
+-- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
+include "abstract_defs.csp"
+
+
+ROVER(current_waypoint, inspected) = 
+
+(not member(current_waypoint, inspected))& INSPECT(current_waypoint, inspected)
+[]
+move?wp:(diff(waypointID, inspected)) -> ROVER(wp, inspected)
+[]
+(inspected == waypointID) & mission_complete -> MOVE_TO_DOOR
+
+INSPECT(i, inspected) = 
+	inspect.i -> RADIATION_CHECK(i, inspected)
+
+RADIATION_CHECK(i, inspected) =
+radiation_level?Green ->  ROVER(i, union(inspected, {i}) ) 
+[]
+radiation_level?r:({Orange, Red}) -> mission_abort -> MOVE_TO_DOOR
+
+MOVE_TO_DOOR = move.0 -> SKIP
+
+MOVE_TO_NEXT(current_waypoint, inspected) = 
+	if member(current_waypoint + 1, waypointID) then 
+		move.current_waypoint + 1 -> ROVER(current_waypoint + 1, union(inspected, {current_waypoint}) )
+	else
+		MOVE_TO_DOOR
+
+-- This top-level process allows the mission to restart
+ROVER_SYSTEM =
+mission_start ->
+ROVER(0, {}) ; ROVER_SYSTEM
+
+--Check Single Rover Run
+assert ROVER(0, {}); RUN(Events) :[deadlock free]
+assert ROVER(0, {}) :[divergence free]
+assert ROVER(0, {}) :[deterministic]
+
+
+--Check Repeated Rover Runs
+assert ROVER_SYSTEM :[deadlock free]
+assert ROVER_SYSTEM :[divergence free]
+assert ROVER_SYSTEM :[deterministic]
+
+--Check Hiding
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[divergence free]
+assert ROVER_SYSTEM\{|mission_start, mission_complete, mission_abort|} :[deterministic]
