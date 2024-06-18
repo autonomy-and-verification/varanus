@@ -1,4 +1,4 @@
-nametype waypointID = {0..1}
+nametype waypointID = {0..5}
 datatype radiation_category = Red | Orange | Green
 --nametype sensor_value = {0, 50, 120, 150, 250, 300}
 

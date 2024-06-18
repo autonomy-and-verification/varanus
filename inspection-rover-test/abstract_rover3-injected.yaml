@@ -1,0 +1,11 @@
+---
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start, move]
+common_alphabet: [inspect, radiation_level, move,  mission_complete, mission_abort, mission_start]
+main_process: "ROVER_SYSTEM3"
+model: "abstract_rover.csp" 
+trace_file: "logShort.json" 
+name: "abstract_rover_injectedshort"
+mode: "permissive"
+
+
+

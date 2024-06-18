@@ -1,0 +1,25 @@
+{"topic": "mission_start", "data": null, "time" : 0}
+{"topic": "radiation_level", "data": "Green", "time": 1}
+{"topic": "radiation_level", "data": "Green", "time": 2}
+{"topic": "radiation_level", "data": "Green", "time": 3}
+{"topic": "radiation_level", "data": "Green", "time": 4}
+{"topic": "radiation_level", "data": "Green", "time": 15}
+{"topic": "radiation_level", "data": "Green", "time": 16}
+{"topic": "radiation_level", "data": "Green", "time": 17}
+{"topic": "radiation_level", "data": "Green", "time": 18}
+{"topic": "move", "data": 0, "time": 19}
+{"topic": "radiation_level", "data": "Red", "time": 20}
+{"topic": "radiation_level", "data": "Green", "time": 21}
+{"topic": "radiation_level", "data": "Green", "time": 22}
+{"topic": "radiation_level", "data": "Green", "time": 23}
+{"topic": "radiation_level", "data": "Green", "time": 43}
+{"topic": "radiation_level", "data": "Green", "time": 44}
+{"topic": "radiation_level", "data": "Green", "time": 45}
+{"topic": "radiation_level", "data": "Green", "time": 46}
+{"topic": "radiation_level", "data": "Green", "time": 47}
+{"topic": "inspect", "data": 1, "time": 48}
+{"topic": "radiation_level", "data": "Red", "time": 49}
+{"topic": "radiation_level", "data": "Red", "time": 50}
+{"topic": "radiation_level", "data": "Red", "time": 51}
+{"topic": "radiation_level", "data": "Red", "time": 52}
+{"topic": "move", "data": 1, "time": 53}

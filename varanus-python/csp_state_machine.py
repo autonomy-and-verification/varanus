@@ -236,26 +236,32 @@ class CSPStateMachine(object):
         print(str(self.current_state.transitions))
         print("mode = " + str(self.mode))
         if transition is not None:
-            varanus_logger.debug("Transition good, moving to next state")
+            varanus_logger.debug("Saw " + transition_name + " Transition good, moving to next state")
             self.current_state = transition.get_first_state()
+            return self.current_state
         elif self.current_state.has_tau:
             transition = self.explore_taus(transition_name)
             if transition is not None:
-                varanus_logger.debug("Transition good, after exploring taus")
+                varanus_logger.debug("Saw " + transition_name + " Transition good, after exploring taus")
                 self.current_state = transition.get_first_state()
             else:
                 varanus_logger.debug("Transition bad, after exploring taus")
                 return None # Still couldn't find a valid transition
         elif self.mode == "strict" : # other situations that could cause this?
-            varanus_logger.debug("Transition bad (probably no transition with that name) abort")
+            varanus_logger.debug("Saw " + transition_name + " Transition bad (probably no transition with that name) abort")
             return None # Could not find a transition
         elif self.mode == "permissive":
-            # Ignore the event from SUA that is not in the model
-            varanus_logger.debug("Saw " + transition_name + " which is not in model alphabet, but mode is permissive, so ignoring")
-            return self.current_state
+            # Ignore the event from SUA that is not in the alphabet
+            if transition_name not in self.alphabet:
+                varanus_logger.debug("Saw " + transition_name + " which is not in model alphabet, but mode is permissive, so ignoring")
+                return self.current_state
+            else:
+                assert (transition is None) # belt and braces
+                varanus_logger.debug("Saw " + transition_name + " transition bad.")
+                return None
 
-        self.log("NORMAL TRANSITION", "Now in state " + self.current_state.name)
-        return self.current_state
+        self.log("Transitioned","Now in state " + self.current_state.name)
+
 
     def to_dictionary(self):
         state_dict = {}
