@@ -126,7 +126,7 @@ def preprocess():
 
 def run(check_type):
 
-    if check_type == "offline":
+    if check_type == "offline-old": # deprecated
         t0 = time.time()
         mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, old_version=True)
         mon._run_offline_traces_interate(MAIN_PROCESS, TRACE_FILE)
@@ -198,7 +198,7 @@ def run(check_type):
         varanus_times.add_time("check", check_end - check_start)
 
 
-    elif check_type == "offline-test":  # temp for testing upgrade of offline mode
+    elif check_type == "offline-test" or check_type == "offline":
         varanus_logger.info("+++ Running Offline Test +++")
         t0 = time.time()
 
