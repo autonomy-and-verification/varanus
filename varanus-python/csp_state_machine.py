@@ -228,8 +228,7 @@ class CSPStateMachine(object):
         ##if self.current_state.has_terminate_transition: #This is wrong....
         ##    transition_name = Transition._TERMINATE
         ##    self.log("terminal state bypass", "converting transition " + transition_name + " to " + Transition._TERMINATE)
-        transition = self.current_state.transit(
-            transition_name)  # WHAT IS THIS? This seems to return the transition... as in, 'transit(a)' gives me 'a'
+        transition = self.current_state.transit(transition_name)  # WHAT IS THIS? This seems to return the transition... as in, 'transit(a)' gives me 'a'
         print("+++ transition returned from  self.current_state.transit(transition_name) = " + str(transition))
         print(self.current_state.has_tau)
         print(self.current_state.name)
@@ -244,6 +243,11 @@ class CSPStateMachine(object):
             if transition is not None:
                 varanus_logger.debug("Saw " + transition_name + " Transition good, after exploring taus")
                 self.current_state = transition.get_first_state()
+                print ("===== current state now -> " + self.current_state.name + " with outgoing: " + str(self.current_state.transitions))
+                # Broke?
+                #SO... do this?
+                return self.current_state
+
             else:
                 varanus_logger.debug("Transition bad, after exploring taus")
                 return None # Still couldn't find a valid transition
@@ -300,7 +304,7 @@ class CSPStateMachine(object):
 
     def explore_taus(self, transition_name):
         """Explores tau transitions (to _TAU_DEPTH) from the current state to see if the event can be found in subsequent states
-        Returns """
+        Returns state with matching outgoing transition or None"""
         varanus_logger.debug("explore_taus called in state: " + str(self.current_state) + " looking for state that has " + transition_name)
         assert (self.current_state is not None)
         assert (self.current_state.has_tau)

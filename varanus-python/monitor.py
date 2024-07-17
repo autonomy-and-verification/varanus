@@ -143,7 +143,7 @@ class Monitor(object):
         self.monitored_system = OfflineInterface(trace_path, self.event_map)
         is_connected = self.monitored_system.connect()
         if not is_connected:
-            varanus_logger.error("Could not open trace_file at: " + trace_path)
+            varanus_logger.error("Could not parse trace_file at: " + trace_path)
             return False # Not caught.
 
         #trace = Trace()

@@ -44,8 +44,69 @@ class SystemInterface(object):
         else:
             return event_name
 
-    def parse_ROSMon_event(self, json_line):
-        """Decodes a ROSMon event from the json"""
+    def parse_ROSMon_event(self, json_line): # probably needs to be user-writen
+        """ Decodes a 'full' ROSMon Event, which is a JSON strong from ROS"""
+        #  {u'pose': {u'position': {u'y': -3.209985226226464, u'x': 5.392467103672291, u'z': 0.06349744727863198}, u'orientation': {u'y': -1.281609607287051e-06, u'x': 1.4244357144269074e-07, u'z': 0.07116127085777371,
+        #  u'w': -0.997464823203427}}, u'value': 38.0, u'topic': u'/radiation_sensor_plugin/sensor_0', u'header': {u'stamp': {u'secs': 161, u'nsecs': 539000000}, u'frame_id': u'sim_sensor', u'seq': 159},
+        #  u'verdict': u'currently_true', u'time': 161.539, u'type': u''}
+
+        # This needs to pull out the 'topic' and 'value'
+        assert(type(json_line) is str)
+        event_list = json.loads(json_line)
+        varanus_logger.debug("event_list = " + str(event_list))
+
+        if "topic" not in event_list:
+            raise ValueError("Event is missing topic field.")
+        else:
+            topic_name = event_list['topic']
+
+            if topic_name == "/command":
+
+                if "location" not in event_list:
+                    raise ValueError("Event is missing location")
+
+                if "name" not in event_list:
+                    raise ValueError("Event is missing name")
+
+                parsed_event = Event(event_list["name"], [event_list["location"]]) # Event is either move or inspect (or inspected)
+            elif topic_name == "/radiation_sensor_plugin/sensor_0":
+                if "value" not in event_list:
+                    raise ValueError("Event is missing value field.")
+                else:
+                    value = int(event_list["value"])
+                    if value >=0 and value < 120 :
+                        radiationStatus = "Green"
+                    elif value >= 120 and value < 250:
+                        radiationStatus = "Orange"
+                    elif value >= 250:
+                        radiationStatus = "Red"
+                    else:
+                        raise ValueError("Event has invalid radiation reading")
+
+                    parsed_event = Event("radiation_level", [radiationStatus])
+            else:
+                return None # Not a topic we have an event for so filter it
+
+        #if self.event_map is not None:
+        #    topic_name = self.convert_event(event_list['topic'])
+        #else:
+        #    topic_name = event_list['topic']
+
+        #if event_list["value"] is not None:
+        #    parsed_event = Event(topic_name, [event_list["value"]])
+        #else:
+        #    parsed_event = Event(topic_name)
+        print("++++ parsed_evet == " +str(parsed_event))
+
+        return parsed_event.to_fdr()
+
+
+
+
+    def parse_simple_ROSMon_event(self, json_line):
+        """Decodes a simple ROSMon event from the json file.
+        Assumes that there is "data" and a "topic"
+        """
         assert(type(json_line) is str)
 
         event_list = json.loads(json_line)
@@ -96,7 +157,8 @@ class OfflineInterface(SystemInterface):
                     continue
                 try:
                     event = self.parse_ROSMon_event(json_line)
-                    self.events.append(event)
+                    if event is not None:
+                        self.events.append(event)
                 except ValueError as e:
                     varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
                     varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
