@@ -1,0 +1,12 @@
+---
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start, move]
+common_alphabet: [inspect, radiation_level, move]
+main_process: "ROVER_SYSTEM4"
+model: "abstract_rover.csp" 
+trace_file: "log_rvaft.txt" 
+#trace_file: "log3.json" #no mission_complete or mission_start
+name: "abstract_rover_full_log"
+mode: "strict"
+
+
+
