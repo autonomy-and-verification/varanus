@@ -189,3 +189,71 @@ assert ROVER_SYSTEM4 :[deterministic]
 assert ROVER_SYSTEM4\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
 assert ROVER_SYSTEM4\{|mission_start, mission_complete, mission_abort|} :[divergence free]
 assert ROVER_SYSTEM4\{|mission_start, mission_complete, mission_abort|} :[deterministic]
+
+
+
+
+---------------------------------------------------------------------------------------------
+
+-- ROVER 5
+
+---------------------------------------------------------------------------------------------
+
+
+ROVER5({}, _) = 
+	SKIP
+	[]
+	radiation_level?Green -> ROVER5({}, Green)
+	[]
+	radiation_level?r:({Red, Orange}) -> ROVER_ABORT5
+	
+ROVER5(WaypointSet, Rad) = 	
+	inspect?wp:(WaypointSet) -> ROVER_INSPECTING5(WaypointSet, Rad, wp)
+	[]
+	radiation_level?Green -> ROVER5(WaypointSet, Green)
+	[]
+	radiation_level?r:({Red, Orange}) -> ROVER_ABORT5
+	[]
+	(member(0,WaypointSet)) & move.0 -> ROVER5(diff(WaypointSet, {0}), Rad)
+
+ROVER_INSPECTING5(WaypointSet, Rad, wp) = 	
+	move.wp -> ROVER5(diff(WaypointSet, {wp}), Rad)	 -- Ordering is important in diff()
+	[]
+	radiation_level?Green -> ROVER_INSPECTING5(WaypointSet, Green, wp)
+	[]
+	radiation_level?r:({Red, Orange}) -> ROVER_ABORT5
+	
+ROVER_ABORT5 = 
+(move.0 -> 
+--mission_abort -> 
+SKIP)
+[|{|move|}|]
+RAD_LOOP
+
+RAD_LOOP =
+radiation_level?r -> RAD_LOOP
+[]
+move?_ -> SKIP
+
+	
+ROVER_SYSTEM5 =
+--mission_start -> 
+ROVER5(waypointID, Green) 
+--; ROVER_SYSTEM5
+
+
+--Check Single Rover Run
+assert ROVER5(waypointID, Green) ; RUN(Events) :[deadlock free]
+assert ROVER5(waypointID, Green)  :[divergence free]
+assert ROVER5(waypointID, Green)  :[deterministic]
+
+
+--Check Repeated Rover Runs
+assert ROVER_SYSTEM5 :[deadlock free]
+assert ROVER_SYSTEM5 :[divergence free]
+assert ROVER_SYSTEM5 :[deterministic]
+
+--Check Hiding
+assert ROVER_SYSTEM5\{|mission_start, mission_complete, mission_abort|} :[deadlock free]
+assert ROVER_SYSTEM5\{|mission_start, mission_complete, mission_abort|} :[divergence free]
+assert ROVER_SYSTEM5\{|mission_start, mission_complete, mission_abort|} :[deterministic]

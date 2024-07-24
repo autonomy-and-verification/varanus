@@ -11,6 +11,7 @@ class Event(object):
     def __init__(self, channel, parameters=None):
         """ Constructs an event on the given channel communicating the given parameters """
         self.channel = str(channel)
+        self.suaEvent = ""
 
         if parameters is not None and type(parameters) != type([]):
             self.parameters = [parameters]
@@ -49,7 +50,7 @@ class Trace(object):
         elif isinstance(initial_trace, Event):
             self.trace = [initial_trace]
         elif isinstance(initial_trace, Trace):
-            varanus_logger.debug("appenind initial trace: " + initial_trace)
+            varanus_logger.debug("append initial trace: " + initial_trace)
             self.trace = []
             self.append_trace(initial_trace)
         else:

@@ -475,37 +475,46 @@ class Monitor(object):
 
         self.process.start()
 
-    def websockect_check_event(self, client, server,message):
+    def websockect_check_event(self, client, server, message):
         """Called when a client sends a message, callback method"""
         varanus_logger.debug("Monitor got: " + message)
+
+        # If the sua simulator says it is done, close the connection
+        if message == "sua-sim:complete":
+            varanus_logger.info("SUA Sim says the log file is finished. Closing")
+            self.monitored_system.close()
+            return
+
+
         print(type(message))
 
         transition_start = time.time()
 
         # decode the event from the message
         event = self.monitored_system.parse_ROSMon_event(str(message)) # message is unicode
-        varanus_logger.debug("Monitor decoded event: " + event)
+        if event is not None:
+            varanus_logger.debug("Monitor decoded event: " + event)
 
-            # then check the event against the state machine
-            # which we do already in run_offline_state_machine() (here)
-            # this also needs extracting and testing
-        resulting_state = self.process.transition(event)  # This returns None if there is no available transition
-        varanus_logger.debug("resulting_state = " + str(resulting_state))
-        self.trace.add_event(Event(event))
+                # then check the event against the state machine
+                # which we do already in run_offline_state_machine() (here)
+                # this also needs extracting and testing
+            resulting_state = self.process.transition(event)  # This returns None if there is no available transition
+            varanus_logger.debug("resulting_state = " + str(resulting_state))
+            self.trace.add_event(Event(event))
 
-        if self.check_result(event, resulting_state):
-            #result[old_state].append((event, resulting_state.name))
-            transition_end = time.time()
-            self.transition_times.append(transition_end - transition_start)
-        else:
-            #result[old_state].append((event, resulting_state))
-            varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
-            varanus_logger.error("This node expected the following events: " + str(
-                self.process.get_outgoing_transitions()))  # TODO make this even prettier
-            # return result  # So far, return because a None means it's bad.
-            transition_end = time.time()
-            self.transition_times.append(transition_end - transition_start)
-            passed = False
+            if self.check_result(event, resulting_state):
+                #result[old_state].append((event, resulting_state.name))
+                transition_end = time.time()
+                self.transition_times.append(transition_end - transition_start)
+            else:
+                #result[old_state].append((event, resulting_state))
+                varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
+                varanus_logger.error("This node expected the following events: " + str(
+                    self.process.get_outgoing_transitions()))  # TODO make this even prettier
+                # return result  # So far, return because a None means it's bad.
+                transition_end = time.time()
+                self.transition_times.append(transition_end - transition_start)
+                passed = False
 
 
 
@@ -518,7 +527,7 @@ class Monitor(object):
             varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
         varanus_times.add_extra_information("num_events", len(self.transition_times))
 
-        self.monitored_system.close() # this assumes that only one client connected, I suppose... Well, it assumes that the first client to disconnected was the system.
+        #self.monitored_system.close() # this assumes that only one client connected, I suppose... Well, it assumes that the first client to disconnected was the system.
 
 
 

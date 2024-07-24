@@ -1,0 +1,9 @@
+---
+alphabet: [inspect, radiation_level, mission_complete, mission_abort, mission_start, move]
+common_alphabet: [inspect, radiation_level, move]
+main_process: "ROVER_SYSTEM5"
+model: "abstract_rover.csp" 
+trace_file: "log_full_correct.txt" 
+name: "correct_abstract_rover_full_log"
+mode: "strict"
+

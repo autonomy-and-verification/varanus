@@ -69,6 +69,7 @@ class SystemInterface(object):
                     raise ValueError("Event is missing name")
 
                 parsed_event = Event(event_list["name"], [event_list["location"]]) # Event is either move or inspect (or inspected)
+                print ("SUA Event -> " + topic_name)
             elif topic_name == "/radiation_sensor_plugin/sensor_0":
                 if "value" not in event_list:
                     raise ValueError("Event is missing value field.")
@@ -84,6 +85,7 @@ class SystemInterface(object):
                         raise ValueError("Event has invalid radiation reading")
 
                     parsed_event = Event("radiation_level", [radiationStatus])
+                    print ("SUA Event -> " + topic_name + " with value: " + str(value))
             else:
                 return None # Not a topic we have an event for so filter it
 
@@ -248,15 +250,15 @@ class WebSocketInterface(SystemInterface):
 
     def new_client(self, client, server):
         """Called for every client connecting (after handshake)"""
-        varanus_logger.info("+++ New ROS monitor connected and was given id: " + str(client['id']) + " +++")
+        varanus_logger.info("+++ New SUA connected and was given id: " + str(client['id']) + " +++")
         # server.send_message_to_all("Hey all, a new client has joined us")
 
     def client_left(self, client, server):
         """ Called for every client disconnecting"""
-        varanus_logger.info("ROS monitor " + str(client['id']) + " disconnected +++")
+        varanus_logger.info("SUA " + str(client['id']) + " disconnected +++")
 
     def close(self):
-        print("!!!!! closed")
+        varanus_logger.debug("WebsocketInterface closed")
         self.server.shutdown()
 
 

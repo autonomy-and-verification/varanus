@@ -15,7 +15,7 @@ import yaml
 VERSION_NUM = '0.9.3'
 
 IP = '127.0.0.1'
-PORT = 5088
+PORT = 5087
 ###############
 
 ### Arguments###
