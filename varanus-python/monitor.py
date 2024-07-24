@@ -511,8 +511,11 @@ class Monitor(object):
 
 
     def websocket_client_disconnect(self,client, server):
-        varanus_logger.info("ROS monitor " + str(client['id']) + " disconnected +++")
-        varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
+        varanus_logger.info("SUA " + str(client['id']) + " disconnected +++")
+        if self.transition_times is None or self.transition_times == []:
+            varanus_times.add_time("avg_transition", 0)
+        else:
+            varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
         varanus_times.add_extra_information("num_events", len(self.transition_times))
 
         self.monitored_system.close() # this assumes that only one client connected, I suppose... Well, it assumes that the first client to disconnected was the system.
