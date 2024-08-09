@@ -148,7 +148,7 @@ def run(check_type):
 
         check_start = time.time()
         mon.run_online_websocket(IP, PORT)
-        check_end = time.time()
+        check_end = time.time() # Wont this be wrong because run_online_websocket will terminate as the checking begins?
 
         varanus_times.add_time("build", build_end - build_start)
         varanus_times.add_time("check", check_end - check_start)
@@ -219,7 +219,8 @@ def run(check_type):
         if continue_monitoring:
             varanus_logger.error("+++ starting monitoring against" + MAIN_PROCESS + " +++")
             check_start = time.time()
-            mon.run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+            result = mon.run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
+            print("!RESULT " + str(result)) #What even is this??
             check_end = time.time()
         else:
             varanus_logger.error("+++ " + MAIN_PROCESS + " is not monitorable ABORTING +++")

@@ -8,6 +8,7 @@ from mascot_event_abstractor import *
 from trace_representation import Event, Trace
 from csp_state_machine import CSPStateMachine
 from time_store import Time_Store
+from result import Result
 import state_machine
 import json
 import time
@@ -47,6 +48,7 @@ class Monitor(object):
             self.load_alphabet_from_config(config_file)
         self.monitored_system = None
         self.transition_times = []
+        self.result_obj = Result()
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -104,29 +106,30 @@ class Monitor(object):
         print("check_result: " + str(event) + " and " + str(result))
         print(str(self.alphabet))
         if result is None:
-            if self.explicit_alphabet:
-
-                if event not in self.alphabet:  # this is the wrong condition
-                    varanus_logger.info("UNEXPECTED TRANSITION")
-                    varanus_logger.info("Stated alphabet returning bad state i.e. None - saw bad event")
-
-                    return False
-                else:
-                    varanus_logger.info("unexpected transition:")
-                    varanus_logger.info(
-                        "Stated alphabet returning bad state i.e. None - event not available in this state")
-                    return False
-
-            else:
-                if event not in self.alphabet:
-                    varanus_logger.info("UNEXPECTED TRANSITION: ")
-                    varanus_logger.info("Inferred alphabet returning bad state i.e. None - saw bad event")
-
-                    return False
-                else:
-                    varanus_logger.info("UNEXPECTED TRANSITION")
-                    varanus_logger.info("Inferred alphabet returning current state i.e. ignoring event")
-                    return True
+            return False
+            #if self.explicit_alphabet:
+#
+ #               if event not in self.alphabet:  # this is the wrong condition
+  #                  varanus_logger.info("UNEXPECTED TRANSITION")
+   #                 varanus_logger.info("Stated alphabet returning bad state i.e. None - saw bad event")
+#
+ #                   return False
+  #              else:
+   #                 varanus_logger.info("unexpected transition:")
+    #                varanus_logger.info(
+     #                   "Stated alphabet returning bad state i.e. None - event not available in this state")
+      #              return False
+#
+       #     else:
+ #               if event not in self.alphabet:
+  #                  varanus_logger.info("UNEXPECTED TRANSITION: ")
+   #                 varanus_logger.info("Inferred alphabet returning bad state i.e. None - saw bad event")
+#
+ #                   return False
+  #              else:
+   #                 varanus_logger.info("UNEXPECTED TRANSITION")
+    #                varanus_logger.info("Inferred alphabet returning current state i.e. ignoring event")
+     #               return True
         else:
             return True
 
@@ -137,7 +140,8 @@ class Monitor(object):
 
         self.process.start()
         # test_result = process.test_machine()
-        result = {}
+       # result = {}
+
 
         # Extract the Traces and start the loop
         self.monitored_system = OfflineInterface(trace_path, self.event_map)
@@ -146,9 +150,6 @@ class Monitor(object):
             varanus_logger.error("Could not parse trace_file at: " + trace_path)
             return False # Not caught.
 
-        #trace = Trace()
-        #transition_times = []
-        #number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
         passed = True
         while self.monitored_system.has_event():
@@ -159,38 +160,42 @@ class Monitor(object):
             varanus_logger.debug("event = " + event)
             self.trace.add_event(Event(event))
 
-            if self.process.current_state.name not in result:
-                result[self.process.current_state.name] = []
-            old_state = self.process.current_state.name
+            #if self.process.current_state.name not in result:
+            #    result[self.process.current_state.name] = []
+            #old_state = self.process.current_state.name
 
             resulting_state = self.process.transition(event)  # This returns None if there is no available transition
             varanus_logger.debug("resulting_state = " + str(resulting_state))
 
             if self.check_result(event, resulting_state):
-                result[old_state].append((event, resulting_state.name))
+                #[old_state].append((event, resulting_state.name)) # Seems to return None
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
             else:
-                result[old_state].append((event, resulting_state))
-                varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
-                varanus_logger.error("This node expected the following events: " + str(
-                    self.process.get_outgoing_transitions()))  # TODO make this even prettier
+                #result[old_state].append((event, resulting_state))
+              #  varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
+              #  varanus_logger.error("This node expected the following events: " + str(
+              #      self.process.get_outgoing_transitions()))  # TODO make this even prettier
                 #return result  # So far, return because a None means it's bad.
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
                 passed = False
-                break
+                #break
+                self.result_obj.trace_failed(event, self.trace.to_list(),  self.process.get_outgoing_transitions())
+                return self.result_obj
 
             #transition_end = time.time()
             #transition_times.append(transition_end-transition_start)
 
         print("! TRANSITION TIMES = " + str(self.transition_times))
-        if passed:
-            varanus_logger.info("Trace file finished with no violations")
+      #  if passed:
+      #      varanus_logger.info("Trace file finished with no violations")
 
         varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
         varanus_times.add_extra_information("num_events", len(self.transition_times))
-        return result  # this is not caught, not sure if I need to return anything
+        #return result  # this is not caught, not sure if I need to return anything
+        self.result_obj.trace_passed()
+        return self.result_obj
 
     def run_offline_stress_test(self, MAIN_PROCESS, events, repetitions):
         """ Runs an offline stress test on Varanus, checking a random selection from events for the given number of repetitions"""
@@ -485,9 +490,6 @@ class Monitor(object):
             self.monitored_system.close()
             return
 
-
-        print(type(message))
-
         transition_start = time.time()
 
         # decode the event from the message
@@ -515,6 +517,7 @@ class Monitor(object):
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
                 passed = False
+                self.result_obj.trace_failed(event, self.trace.to_list(),  self.process.get_outgoing_transitions())
 
 
 
@@ -527,7 +530,9 @@ class Monitor(object):
             varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
         varanus_times.add_extra_information("num_events", len(self.transition_times))
 
-        #self.monitored_system.close() # this assumes that only one client connected, I suppose... Well, it assumes that the first client to disconnected was the system.
+        if self.result_obj.passed is None:
+            self.result_obj.trace_passed()
+
 
 
 
