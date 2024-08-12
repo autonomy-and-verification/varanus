@@ -87,7 +87,8 @@ class Transition(object):
 
 class CSPStateMachine(object):
     """
-    Represents a state machine of a CSP process/Labelled Transition System. The state machine is built from State objects.
+    Represents a state machine of a CSP process/Labelled Transition System.
+    The state machine is built from State objects.
     Each State has a name and a list of transitions.
     Each Transitions has a list of outgoing states.
     """
@@ -126,7 +127,8 @@ class CSPStateMachine(object):
         for key in sm_dictionary:
             self.add_state(key)
 
-        self.initial_state = self.states['0']
+        #self.initial_state = self.states['0']
+        #self.set_initial_state("0")
 
         for key in sm_dictionary:
             for tran in sm_dictionary[key]:
@@ -135,6 +137,8 @@ class CSPStateMachine(object):
                 transition_destination = tran[1]
                 self.add_state(transition_destination)
                 self.add_transition_by_name(transition_name, key, transition_destination)
+
+        self.set_initial_state("0")
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -281,7 +285,9 @@ class CSPStateMachine(object):
     def start(self):
         """Starts the state machine. Sets the current state to be the initial state"""
         self.current_state = self.initial_state
-        self.log("explicit_alphabet", str(self.explicit_alphabet))
+        #self.log("explicit_alphabet", str(self.explicit_alphabet))
+        varanus_logger.debug("Current State = " + str(self.current_state))
+        self.log("Current State = ", str(self.current_state))
 
     def test_machine(self):
         """Simple test of the State Machine class, using simple.csp"""
@@ -325,3 +331,23 @@ class CSPStateMachine(object):
             else:
                 state_to_check = destination
                 depth += 1
+
+    def __str__(self):
+
+        output = "CSP State Machine:\n"
+        for s in self.states.values():
+            for t in s.transitions:
+                output += "\t"+str(s) + " --" + str(t)+"--> " + str(s.transitions[t]) + "\n"
+
+        return output
+
+if __name__ == "__main__":
+    """ Test the CSP State Machine"""
+
+    machine = CSPStateMachine()
+
+    csp_dict = {0: [("a",1)],1: [("b",2)] }
+    machine.load_from_dictionary(csp_dict)
+    machine.start()
+    print(str(machine.to_dictionary()))
+#    machine.test_machine()
