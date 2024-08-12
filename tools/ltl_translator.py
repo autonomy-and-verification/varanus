@@ -37,7 +37,7 @@ def ltl2cspstatemachine(ltl):
     for s in transitions:
         csp += f'state{s} = \n'
         print(s)
-        machine.add_state(s)
+        machine.add_destination(s)
         l = []
         for ap in transitions[s]:
             l.append(f'{ap} -> state{transitions[s][ap]}')
@@ -138,7 +138,7 @@ def main(args):
     machine = ltl2cspstatemachine(ltl)
     print(str(machine))
 
-    for s in machine.states.values():
+    for s in machine.destinations.values():
         for trans in s.transitions:
             print(trans)
 
