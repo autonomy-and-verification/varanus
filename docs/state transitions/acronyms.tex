@@ -1,0 +1,253 @@
+%Acronyms and Abbreviations
+% Matt Luckcuck
+% m.luckcuck@tutanota.com
+% 2024-04-03
+
+%Source
+% https://github.com/autonomy-and-verification/acronyms 
+
+%Usage
+%\newacronym{<label>}{<abbrv>}{<full>}
+\usepackage{xspace}
+
+\newcommand{\Vanda}{\textsc{Vanda}\xspace}
+\newcommand{\Varanus}{\textsc{Varanus}\xspace}
+
+\newcommand{\Genom}{G\textsuperscript{en}oM\xspace}
+\newcommand{\Uppaal}{\textsc{Uppaal}\xspace}
+\newcommand{\Gwen}{\textsc{Gwendolen}\xspace}
+\newcommand{\Ethan}{\textsc{ETHAN}\xspace}
+\newcommand{\Rosrv}{\textsf{ROSRV}\xspace}
+\newcommand{\Rvbip}{RV-BIP\xspace}
+\newcommand{\Prism}{PRISM\xspace}
+\newcommand{\Klaim}{\textsc{Klaim}\xspace}
+\newcommand{\StoKlaim}{\textsc{Sto}\Klaim}
+\newcommand{\NuSMV}{\texttt{NuSMV}\xspace}
+\newcommand{\lintention}[2]{\ensuremath{\mathrm{{\mathcal I}}_{#1} #2}}
+\newcommand{\lgoal}[2]{\ensuremath{\mathrm{{\mathcal G}}_{#1} #2}}
+\newcommand{\eventually}{\ensuremath{\lozenge}}
+\newcommand{\always}{\ensuremath{\Box}}
+\newcommand{\lbelief}[2]{\ensuremath{\mathrm{{\mathcal B}}_{#1} \, #2}} 
+\newcommand{\assert}{\textit{ASSERT}$^{\text{TM}}$}
+\newcommand{\Framac}{\textbf{\textsf{Frama-C}}}
+
+
+%Temporal Logics
+\newacronym{ltl}{LTL}{Linear-time Temporal Logic}
+
+\newacronym{foltl}{FOLTL}{First-Order Linear-time Temporal Logic}
+
+\newacronym{ctl}{CTL}{Computation Tree Logic}
+
+\newacronym{ptl}{PTL}{Probabilistic Temporal Logic}
+
+\newacronym{pctl}{PCTL}{Probabilistic Computation Tree Logic}
+
+\newacronym{pctl*}{PCTL*}{Probabilistic Computation Tree Logic*}
+
+\newacronym{tctl}{TCTL}{Timed Computation Tree Logic}
+
+\newacronym{stl}{STL}{Signal Temporal Logic}
+
+\newacronym{ltl-x}{LTL-X}{a version of Linear Time Logic without the `next' operator}
+
+\newacronym{mtl}{MTL}{Metric Temporal Logic}
+
+\newacronym{iactlk-x}{IACTLK-X}{a fragment of the temporal-epistemic logic CTLK, without the `next' operator}
+
+\newacronym{mucalc}{$\mu$-calculus}{a strict superset of other temporal logics}
+
+\newacronym{fotl}{FOTL}{First-Order Temporal Logic}
+
+
+%Agent Languages and Logics
+\newacronym{bdi}{BDI}{Belief-Desire-Intention}
+
+\newacronym{prs}{PRS}{Procedural Reasoning System}
+
+\newacronym{are}{ARE}{Autonomous Reasoning Engine}
+
+\newacronym{dmars}{dMARS}{distributed Multi-Agent Reasoning System}
+
+\newacronym{mas}{MAS}{Multi-Agent System}
+
+%State-Transition Systems
+
+\newacronym{asm}{ASM}{Abstract State Machines}
+
+\newacronym{tasm}{TASM}{Timed Abstract State Machines}
+
+\newacronym{fsm}{FSM}{Finite-State Machine}
+
+\newacronym{pfsm}{PFSM}{Probabilistic Finite-State Machine}
+
+\newacronym{apfsm}{APFSM}{\textit{Autonomous} Probabilistic Finite-State Machine}
+
+\newacronym{pha}{PHA}{Probabilistic Hybrid Automata}
+
+\newacronym{fsa}{FSA}{Finite-State Automata}
+
+\newacronym{ta}{TA}{Timed Automata}
+
+\newacronym{pta}{PTA}{Probabilistic Timed Automata}
+
+\newacronym{gspn}{GSPN}{Generalised Stochastic Petri Net}
+
+\newacronym{mopn}{MOPN}{Marked Ordinary Petri Net}
+
+\newacronym{cpn}{CPN}{Coloured Petri Net}
+
+\newacronym{ba}{BA}{B\"{u}chi Automata}
+
+\newacronym{dtmc}{DTMC}{Discrete-Time Markov Chain}
+
+\newacronym{ctmc}{CTMC}{Continuous-Time Markov Chain}
+
+\newacronym{mdp}{MDP}{Markov Decision Process}
+
+\newacronym{ioa}{IOA}{Input/Output Automata}
+
+%Process Algebra
+
+\newacronym{pars}{PARS}{Process Algebra for Robot Schemas}
+
+\newacronym{fsp}{FSP}{Finite State Processes}
+
+\newacronym{piadl}{$\pi$ADL}{$\pi$ calculus combined with ADL}
+
+\newacronym{csp}{CSP}{Communicating Sequential Processes}
+
+\newacronym{hcsp}{HCSP}{Hybrid Communicating Sequential Processes}
+
+\newacronym{shcsp}{SHCSP}{Stochastic Hybrid Communicating Sequential Processes}
+
+\newacronym{ccs}{CCS}{Calculus of Communicating Systems}
+
+\newacronym{wsccs}{WSCCS}{Weighted Synchronous CCS}
+
+\newacronym{csp|b}{CSP$\|$B}{an integrated formalism combining CSP and B}
+
+% Description Languages
+
+\newacronym{vhdl}{VHDL}{VHSIC Hardware Description Language}
+
+\newacronym{adl}{ADL}{Architecture Description Language}
+
+\newacronym{slim}{SLIM}{System Level Integration Modelling}
+
+\newacronym{mal}{MAL}{Model Action Logic Language}
+
+\newacronym{acsl}{ACSL}{the ANSI C Specification Language}
+
+%Tools
+
+\newacronym{fdr}{FDR}{the Failures-Divergences Refinement checker}
+
+\newacronym{jpf}{JPF}{Java PathFinder}
+
+\newacronym{ajpf}{AJPF}{Agent Java PathFinder}
+
+\newacronym{mcmas}{MCMAS}{Model Checker for Multi-Agent Systems}
+
+\newacronym{ltlmop}{LTLMoP}{Linear Temporal Logic MissiOn Planning}
+
+\newacronym{cbmc}{CBMC}{C Bounded Model Checker}
+
+\newacronym{cadp}{CADP}{Construction and Analysis of Distributed Processes}
+\newacronym{spear}{SpeAR}{Specification and Analysis for Requirements Tool}
+
+%Others
+
+\newacronym{psl}{PSL}{Property Specification Language}
+
+\newacronym{fpga}{FPGA}{Field-Programmable Gate Array}
+
+\newacronym{aadl}{AADL}{Architecture Analysis and Design Language}
+
+\newacronym{lts}{LTS}{Labelled-Transition System}
+
+\newacronym{uml}{UML}{Unified Modelling Language}
+
+\newacronym{sysml}{SySML}{Systems Modelling Language}
+
+\newacronym{robotml}{RobotML}{Robot Modelling Language}
+
+\newacronym{dsl}{DSL}{Domain Specific Language}
+
+\newacronym{sct}{SCT}{Supervisory Control Theory}
+
+\newacronym{sat}{SAT}{Boolean satisfiability problem}
+
+\newacronym{smt}{SMT}{Satisfiability Modulo Theory}
+
+\newacronym{ide}{IDE}{Integrated Development Environment}
+
+\newacronym{mde}{MDE}{Model-Driven Engineering}
+
+\newacronym{ai}{AI}{Artificial Intelligence}
+
+\newacronym{fdir}{FDIR}{Fault Detection, Isolation and Recovery}
+
+\newacronym{ifm}{iFM}{Integrated Formal Methods}
+
+\newacronym{ros}{ROS}{Robot Operating System}
+
+\newacronym{amcl}{AMCL}{Adaptive Monte Carlo Localisation}
+
+\newacronym{dl}{\text{\upshape\textsf{d{\kern-0.05em}L}}}{differential dynamic logic}
+
+\newacronym{vm}{VM}{Virtual Machine}
+
+\newacronym{bip}{BIP}{Behaviour Interaction Priority}
+
+\newacronym{fol}{FOL}{First-Order Logic}
+
+\newacronym{owl}{OWL}{Web Ontology Language}
+
+\newacronym{ria}{RIA}{Restore Invariant Approach}
+
+\newacronym{ocl}{OCL}{Object Constraint Language}
+
+\newacronym{sil}{SIL}{Safety Integrity Level}
+
+\newacronym{rcl}{RCL}{ROS Contract Language}
+
+\newacronym{rv}{RV}{Runtime Verification}
+
+\newacronym{rml}{RML}{Runtime Monitoring Language}
+
+\newacronym{sats}{SATS}{Small Aircraft Transportation System}
+
+\newacronym{ico}{ICO}{Interactive Cooperative Objects}
+
+\newacronym{gui}{GUI}{Graphical User Interface}
+
+\newacronym{can}{CAN}{Controller Area Network}
+
+\newacronym{pals}{PALS}{Physically Asynchronous, Logically Synchronous}
+
+\newacronym{cps}{CPS}{Cyber-Physical System}
+
+\newacronym{cots}{COTS}{Commercial Off-The-Shelf}
+
+% Real-Time Systems Properties
+ 
+\newacronym{mtbf}{MTBF}{Mean Time Between Failures}
+
+\newacronym{wcet}{WCET}{Worst-Case Execution Time}
+
+\newacronym{sua}{SUA}{System Under Analysis}
+
+% Organisations / Jobs / Job Roles
+
+\newacronym{caa}{CAA}{Civilian Aviation Authority}
+
+\newacronym{atc}{ATC}{Air Traffic Control}
+
+\newacronym{dlr}{DLR}{German Aerospace Centre}
+
+\newacronym{assert}{\assert}{Analysis of Semantic Specifications and Efficient generation of Requirements-based Tests}
+
+\newacronym{rae}{RAE}{Requirements Analysis Engine}
+
+\newacronym{esa}{ESA}{European Space Agency}
