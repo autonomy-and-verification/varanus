@@ -95,7 +95,7 @@ else:
 ################
 # set to the name of the scenario
 logFileName = CHECK_NAME
-log_level = logging.DEBUG
+log_level = logging.INFO
 
 if not os.path.exists(LOG_PATH):
     os.mkdir(LOG_PATH)
@@ -217,7 +217,7 @@ def run(check_type):
         continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
 
         if continue_monitoring:
-            varanus_logger.error("+++ starting monitoring against" + MAIN_PROCESS + " +++")
+            varanus_logger.info("+++ starting monitoring against " + MAIN_PROCESS + " +++")
             check_start = time.time()
             mon.run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
             check_end = time.time()

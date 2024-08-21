@@ -1,4 +1,6 @@
 import socket
+from pkgutil import simplegeneric
+
 from websocket_server import WebsocketServer
 from trace_representation import Event, Trace
 from mascot_event_abstractor import MascotEventAbstractor
@@ -139,26 +141,35 @@ class SystemInterface(object):
 class OfflineInterface(SystemInterface):
     """ Interface to a file of traces."""
 
-    def __init__(self, trace_file_path, event_map=None):
+    def __init__(self, trace_file_path, event_map=None, simple =False):
         SystemInterface.__init__(self) # Python is a silly language. I have to manually make inheritance work...
         self.trace_file_path = trace_file_path
         self._file_open = False
         self.event_map = event_map
         self.events = deque()
         self.trace_file = None
+        self.simple=simple
 
     def connect(self):
         varanus_logger.info("Parsing trace file at: " + self.trace_file_path)
         try:
             self.trace_file = open(self.trace_file_path)
             self._file_open = True
+
             line_num = 0
             for json_line in self.trace_file:
+
                 line_num += 1
                 if json_line == '\n':
+
                     continue
                 try:
-                    event = self.parse_ROSMon_event(json_line)
+                    # TODO This is messy, needs better structure for individual parsing methods
+                    if self.simple:
+                        event = self.parse_simple_ROSMon_event(json_line)
+                    else:
+                        event = self.parse_ROSMon_event(json_line)
+
                     if event is not None:
                         self.events.append(event)
                 except ValueError as e:

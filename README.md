@@ -102,7 +102,7 @@ The config file sets the following parameters:
 
 ### Quick Check
 
-As a quick check that Varanus is installed correctly, you can enter the `varanus` root directly and run `python varanus-python/varanus.py offline-test rosmon-test/hibye.yaml` (assuming your `python` command points to Python 2.x) to run a very simple check on a simple process. If all is well, you should see `INFO:varanus:Trace file finished with no violations` at the end of the output to the terminal. 
+As a quick check that Varanus is installed correctly, you can enter the `varanus` root directly and run `python varanus-python/varanus.py offline rosmon-test/hibye.yaml` (assuming your `python` command points to Python 2.x) to run a very simple check on a simple process. If all is well, you should see `INFO:varanus:Trace file finished with no violations` at the end of the output to the terminal. 
 
 Lets look at the config file we've just checked:
 
