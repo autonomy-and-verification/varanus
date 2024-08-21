@@ -21,7 +21,7 @@ if __name__ == "__main__":
     main_process = "a -> (b -> SKIP [] c -> SKIP)"
     config_file = "../sm-test/sm_test.yaml"
     state_machine = (fdr.convert_to_state_machine(main_process))
-    print(str(state_machine.states))
+    print(str(state_machine.destinations))
     test_result = state_machine.test_machine()
     print("result = " + str(test_result))
 
@@ -34,9 +34,9 @@ if __name__ == "__main__":
     config_file = "../sm-test/sm_test.yaml"
     state_machine = (fdr.convert_to_state_machine(main_process))
 
-    print(state_machine.states)
+    print(state_machine.destinations)
 
-    for state, v in state_machine.states.items():
+    for state, v in state_machine.destinations.items():
         print(state)
         for t in v.transitions.values():
             print("\t" + t.name)

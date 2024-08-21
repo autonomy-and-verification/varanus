@@ -140,7 +140,10 @@ class Monitor(object):
         result = {}
 
         # Extract the Traces and start the loop
-        self.monitored_system = OfflineInterface(trace_path, self.event_map)
+        if trace_path =="rosmon-test/hello_goodbye.json":
+            self.monitored_system = OfflineInterface(trace_path, self.event_map, simple = True)
+        else:
+            self.monitored_system = OfflineInterface(trace_path, self.event_map)
         is_connected = self.monitored_system.connect()
         if not is_connected:
             varanus_logger.error("Could not parse trace_file at: " + trace_path)
@@ -150,6 +153,7 @@ class Monitor(object):
         #transition_times = []
         #number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
+        print (self.monitored_system.has_event())
         passed = True
         while self.monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))

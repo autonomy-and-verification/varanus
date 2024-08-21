@@ -28,14 +28,24 @@ class State(object):
         if transition.isTau:
             self.has_tau = True
 
+    def get_transition(self, name):
+        """ Gets a transition, by name, from this state.
+        May return None if there is no transition with that name."""
+        assert(self.transitions is not None)
+
+        return self.transitions[name]
+
     def transit(self, transition_name):
         """Returns the Transition named transition_name if it is in this State's transition list, or None if it does
         not exist"""
+        assert(self.transitions is not None)
+
         if transition_name in self.transitions:
             return self.transitions[transition_name]
         else:
             return None
-
+    def to_DOT(self):
+        return  str(self.name) + "[shape=circle]\n"
     def __str__(self):
         return self.name
 
@@ -49,7 +59,7 @@ class Transition(object):
     _TAU = '\xcf\x84'
     """The tau character."""
 
-    _ACCEPTINGSTATE = State('accepting')
+   # _ACCEPTINGSTATE = State('accepting')
 
     def __init__(self, name):
         self.isTerminate = False
@@ -62,32 +72,34 @@ class Transition(object):
         # Name is the transition is the event that triggers it
         self.name = name
         # TODO Is states only ever one item??
-        self.states = {}  # Outgoing states, presumably, or the states that the transition belongs to??
+        self.destinations = {}  # Outgoing states, presumably, or the states that the transition belongs to??
         self.probabilities = {}
 
-    def add_state(self, state):
-        """adds the given state to this Transition's list of states"""
-        if self.states is None:
-            self.states = {}
+    def add_destination(self, state):
+        """adds the given state to this Transition's list of destinations"""
+        if self.destinations is None:
+            self.destinations = {}
             self.probabilities = {}
 
-        self.states[state.name] = state
+        self.destinations[state.name] = state
         # TODO Might need to make tau map to a list of destinations
         self.probabilities[state.name] = 1.0
 
-    def get_first_state(self):
+    def get_destination(self):
         """return the first state in this Transition's list of states """
-        if self.isTerminate:
-            return self._ACCEPTINGSTATE
+        #if self.isTerminate:
+        #    return self._ACCEPTINGSTATE
         # just return the first state
-        return self.states.values()[0]  # ml Why the first state??
+        print(self.destinations)
+        return self.destinations.values()[0]  # ml Why the first state??
 
     def __str__(self):
         return self.name
 
 class CSPStateMachine(object):
     """
-    Represents a state machine of a CSP process/Labelled Transition System. The state machine is built from State objects.
+    Represents a state machine of a CSP process/Labelled Transition System.
+    The state machine is built from State objects.
     Each State has a name and a list of transitions.
     Each Transitions has a list of outgoing states.
     """
@@ -126,7 +138,8 @@ class CSPStateMachine(object):
         for key in sm_dictionary:
             self.add_state(key)
 
-        self.initial_state = self.states['0']
+        #self.initial_state = self.states['0']
+        #self.set_initial_state("0")
 
         for key in sm_dictionary:
             for tran in sm_dictionary[key]:
@@ -135,6 +148,8 @@ class CSPStateMachine(object):
                 transition_destination = tran[1]
                 self.add_state(transition_destination)
                 self.add_transition_by_name(transition_name, key, transition_destination)
+
+        self.set_initial_state("0")
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -187,7 +202,7 @@ class CSPStateMachine(object):
             self.add_state(source_name)
         if destination_name not in self.states:
             self.add_state(destination_name)
-        tran.add_state(self.states[destination_name])
+        tran.add_destination(self.states[destination_name])
         self.states[source_name].add_transition(tran)
 
     def log(self, msgprefix, msg):
@@ -203,7 +218,7 @@ class CSPStateMachine(object):
         returned_transitions = []
         for name, destination in outgoing_transitions.items():
             returned_destinations = []
-            for destination_name in destination.states:
+            for destination_name in destination.destinations:
                 returned_destinations.append(destination_name)
             returned_transition = (name, returned_destinations)
             returned_transitions.append(returned_transition)
@@ -236,13 +251,13 @@ class CSPStateMachine(object):
         print("mode = " + str(self.mode))
         if transition is not None:
             varanus_logger.debug("Saw " + transition_name + " Transition good, moving to next state")
-            self.current_state = transition.get_first_state()
+            self.current_state = transition.get_destination()
             return self.current_state
         elif self.current_state.has_tau:
             transition = self.explore_taus(transition_name)
             if transition is not None:
                 varanus_logger.debug("Saw " + transition_name + " Transition good, after exploring taus")
-                self.current_state = transition.get_first_state()
+                self.current_state = transition.get_destination()
                 print ("===== current state now -> " + self.current_state.name + " with outgoing: " + str(self.current_state.transitions))
                 # Broke?
                 #SO... do this?
@@ -269,10 +284,12 @@ class CSPStateMachine(object):
 
     def to_dictionary(self):
         state_dict = {}
-        for state in self.states:
+        for state_name in self.states:
             events = []
-            for trans in state.transitions.keys:
-                events.append(trans.name)
+            state = self.states[state_name]
+            for transition in state.transitions.values():
+
+                events.append(transition.name)
 
             state_dict[state.name] = events
 
@@ -281,7 +298,9 @@ class CSPStateMachine(object):
     def start(self):
         """Starts the state machine. Sets the current state to be the initial state"""
         self.current_state = self.initial_state
-        self.log("explicit_alphabet", str(self.explicit_alphabet))
+        #self.log("explicit_alphabet", str(self.explicit_alphabet))
+        varanus_logger.debug("Current State = " + str(self.current_state))
+        self.log("Current State = ", str(self.current_state))
 
     def test_machine(self):
         """Simple test of the State Machine class, using simple.csp"""
@@ -316,7 +335,7 @@ class CSPStateMachine(object):
             # should handle this better, but it shouldn't fail if the input files are right.
             assert(state_to_check.has_tau)
             tau_transition = state_to_check.transitions[Transition._TAU]
-            destination = tau_transition.get_first_state()
+            destination = tau_transition.get_destination()
             print(str(tau_transition))
 
             next_current_state = destination.transit(transition_name)
@@ -325,3 +344,40 @@ class CSPStateMachine(object):
             else:
                 state_to_check = destination
                 depth += 1
+    def to_DOT(self):
+        dot_string = "digraph CSPProcess{\nbgcolor = grey\n"
+
+        for state in self.states.values():
+            dot_string += state.to_DOT()
+            for transition in state.transitions.values():
+
+                t_name = transition.name
+                if t_name == Transition._TERMINATE:
+                    t_name = "Tick"
+                dot_string += str(state.name) + " -> " + \
+                               str(transition.get_destination().name) +\
+                               " [label=" + str(t_name) + "]\n"
+
+        dot_string += "}"
+
+        return dot_string
+
+    def __str__(self):
+
+        output = "CSP State Machine:\n"
+        for s in self.states.values():
+            for t in s.transitions:
+                output += "\t"+str(s) + " --" + str(t)+"--> " + str(s.transitions[t]) + "\n"
+
+        return output
+
+if __name__ == "__main__":
+    """ Test the CSP State Machine"""
+
+    machine = CSPStateMachine()
+
+    csp_dict = {0: [("a",1)],1: [("b",2)], 2: [(Transition._TERMINATE, 3)], 3: [] }
+    machine.load_from_dictionary(csp_dict)
+    machine.start()
+    print(str(machine.to_dictionary()))
+#    machine.test_machine()

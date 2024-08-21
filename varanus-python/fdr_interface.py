@@ -212,10 +212,10 @@ class FDRInterface(object):
         varanus_logger.info("Building CSP State Machine")
         self.explore_states2(csp_machine, [], state_machine, this_node)
         varanus_logger.debug("-")
-        varanus_logger.debug(len(state_machine.states))
-        varanus_logger.debug(str(state_machine.states))
+        varanus_logger.debug(len(state_machine.destinations))
+        varanus_logger.debug(str(state_machine.destinations))
         varanus_logger.debug(str(this_node.hash_code()))
-        varanus_logger.debug(type(state_machine.states[str(this_node.hash_code())]))
+        varanus_logger.debug(type(state_machine.destinations[str(this_node.hash_code())]))
         varanus_logger.debug("-")
         state_machine.set_initial_state(str(this_node.hash_code()))  # Sets the state_machine's initial and current state
         varanus_logger.debug("initial = " + str(type(state_machine.initial_state)))
