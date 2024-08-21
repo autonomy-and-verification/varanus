@@ -12,7 +12,7 @@ import yaml
 
 ################
 ###CONSTANTS###
-VERSION_NUM = '0.9.3'
+VERSION_NUM = '0.9.4'
 
 IP = '127.0.0.1'
 PORT = 5087
@@ -20,17 +20,17 @@ PORT = 5087
 
 ### Arguments###
 argParser = argparse.ArgumentParser()
-argParser.add_argument("type", help="The type of check to be performed",
-                       choices=['offline', 'online', 'sm-test', 'offline-test', 'stress_test'])
-argParser.add_argument("config", help="The location of the config file")
-argParser.add_argument("--model", help="The location of the model used as the oracle.",
-                       default="model/mascot-safety-system.csp")
-argParser.add_argument("--map", help="The location of the event map", default="event_map.json")
-argParser.add_argument("-n", "--name", help="The name of the check and therefore name of the log file")
-argParser.add_argument("--log_path", help="The path of the log dir")
-argParser.add_argument("-t", "--trace_file", help="The location of the trace file. Only used if type='offline'")
-argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the times and mean.", type=bool,
-                       default=False)
+argParser.add_argument("type", help="The type of action or check for Varanus to perform.",
+                       choices=['offline', 'online', 'sm-test', 'offline-test', 'stress-test', 'build-only'])
+argParser.add_argument("config", help="The location of the config file.")
+#argParser.add_argument("--model", help="The location of the model used as the oracle.",
+#                       default="model/mascot-safety-system.csp")
+#argParser.add_argument("--map", help="The location of the event map", default="event_map.json")
+argParser.add_argument("-n", "--name", help="Override the config file's name. This is the name of the check and therefore name of the log file.")
+argParser.add_argument("-l", "--log_path", help="Override the default log path.")
+#argParser.add_argument("-t", "--trace_file", help="The location of the trace file. Only used if type='offline'")
+#argParser.add_argument("-s", "--speed", help="Run 10 timed run and produce the times and mean.", type=bool,
+#                       default=False)
 
 args = argParser.parse_args()
 
@@ -55,9 +55,7 @@ with open(config_path, 'r') as data:
         CONF_MAP = config_path_prefix + config['map']
     else:
         CONF_MAP = None
-    if args.trace_file:
-        TRACE_FILE = args.trace_file
-    elif 'trace_file' in config:
+    if 'trace_file' in config:
         TRACE_FILE = config_path_prefix + config['trace_file']
     else:
         if args.type == "offline" or args.type == "offline-test":
@@ -82,10 +80,10 @@ if args.name:
 elif CHECK_NAME is None:
     CHECK_NAME = "scenario x"
 
-MODEL = args.model
-MAP = config_path_prefix + args.map
+#MODEL = args.model
+#MAP = config_path_prefix + args.map
 TYPE = args.type
-SPEED_CHECK = args.speed
+#SPEED_CHECK = args.speed
 
 if args.log_path:
     LOG_PATH = args.log_path + "/"
@@ -99,8 +97,8 @@ else:
 logFileName = CHECK_NAME
 log_level = logging.DEBUG
 
-if not os.path.exists("log"):
-    os.mkdir("log")
+if not os.path.exists(LOG_PATH):
+    os.mkdir(LOG_PATH)
 
 varanus_logger = logging.getLogger("varanus")
 varanus_logger.setLevel(log_level)
@@ -120,11 +118,13 @@ varanus_logger.addHandler(fileHandler)
 varanus_times = Time_Store()
 
 def preprocess():
+    """Unused preprocessing method. Implement if needed."""
     varanus_logger.info("Preprocessing...")
     varanus_logger.info("Preprocessing: pass")
     pass
 
 def run(check_type):
+    """runs Varanus, executing the check_type supplied by the user (as the type parameter)"""
 
     if check_type == "offline-old": # deprecated
         t0 = time.time()
@@ -152,18 +152,18 @@ def run(check_type):
 
         varanus_times.add_time("build", build_end - build_start)
         varanus_times.add_time("check", check_end - check_start)
-    elif check_type == "sm-test":  # This is temporary, for testing the state machine
-        print("main process = " + MAIN_PROCESS)
-        t0 = time.time()
-        mon = Monitor(CONF_MODEL, CONFIG_FILE, MAP)
-        build_start = time.time()
-        mon.build_state_machine(MAIN_PROCESS)
-        build_end = time.time()
+ #   elif check_type == "sm-test":  # This is temporary, for testing the state machine
+ #       print("main process = " + MAIN_PROCESS)
+ #       t0 = time.time()
+ #       mon = Monitor(CONF_MODEL, CONFIG_FILE, MAP)
+ #       build_start = time.time()
+ #       mon.build_state_machine(MAIN_PROCESS)
+ #       build_end = time.time()
 
-        check_start = time.time()
-        mon.run_state_machine_test(MAIN_PROCESS)
-        check_end = time.time()
-    elif check_type == "stress_test":
+#        check_start = time.time()
+#        mon.run_state_machine_test(MAIN_PROCESS)
+#        check_end = time.time()
+    elif check_type == "stress-test":
         varanus_logger.info("+++ Running Stress Test +++")
         stress_events = config["stress_events"]
         stress_reps = config["stress_repetitions"]
@@ -199,7 +199,7 @@ def run(check_type):
 
 
     elif check_type == "offline-test" or check_type == "offline":
-        varanus_logger.info("+++ Running Offline Test +++")
+        varanus_logger.info("+++ Running Offline +++")
         t0 = time.time()
 
         varanus_logger.debug(CONF_MAP)
@@ -228,6 +228,21 @@ def run(check_type):
 
         varanus_times.add_time("build", build_end - build_start)
         varanus_times.add_time("check", check_end - check_start)
+
+    elif check_type == "build-only":
+        varanus_logger.info("+++ Building State Machine Only +++")
+        t0 = time.time()
+        if CONF_MAP is not None:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
+        else:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        build_start = time.time()
+        if COMMON_ALPHA:
+            mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
+        else:
+            mon.build_state_machine(MAIN_PROCESS)
+        build_end = time.time()
+        varanus_times.add_time("build", build_end - build_start)
 
     # mon.run_online('127.0.0.1', 5044)
     # mon.run_online_websocket('127.0.0.1', 8080)
@@ -293,6 +308,8 @@ if __name__ == "__main__":
     if 'build' in times and 'check' in times:
         varanus_logger.info("+++ Build Time: \t\t\t" + str(times['build']) + "s +++")
         varanus_logger.info("+++ Check Time: \t\t\t" + str(times['check']) + "s +++")
+    elif 'build' in times:
+        varanus_logger.info("+++ Build Time: \t\t\t" + str(times['build']) + "s +++")
     if "avg_transition" in times:
         varanus_logger.info("+++ Average Transition Time: \t" + str(times["avg_transition"]) +"s ("+ str(extra_info["num_events"]) +" events) +++")
     varanus_logger.info("+++ Total Time: \t\t\t" + str(times['total']) + "s +++")
@@ -300,5 +317,5 @@ if __name__ == "__main__":
 
     varanus_logger.debug("Varanus Finished")
 
-    if SPEED_CHECK == True:
-        log_speed(CHECK_NAME, times['total'], TYPE)
+    #if SPEED_CHECK == True:
+    #    log_speed(CHECK_NAME, times['total'], TYPE)

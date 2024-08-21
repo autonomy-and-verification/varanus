@@ -1,4 +1,4 @@
-# Varanus 0.9.3
+# Varanus 0.9.4
 ### Matt Luckcuck
 ### Runtime Verification Toolchain using CSP and FDR
 
@@ -52,31 +52,26 @@ Varanus is a terminal program within the `varanus/varanus-python` directory.
 The basic usage is to run `varanus.py` passing a parameter that indicates either `online` or `offline` Runtime Verification, and a parameter that is the filepath of a `config` file (which, in turn, will point Varanus at the CSP model and System Under Analysis).
 
 The basic workflow is:
-    \* Write a CSP specification for the System Under Analysis
-    \* Build the config file to point Varanus at the System Under Analysis and the CSP  specification (and some other parameters)
-    \* Run Varanus on the config file, telling it if it should do online or offline RV (if it's offline then the 'system' it is monitoring will be a trace file, also written separately.)
+ * Write a CSP specification for the System Under Analysis
+ * Build the config file to point Varanus at the System Under Analysis and the CSP  specification (and some other parameters)
+ * Run Varanus on the config file, telling it if it should do online or offline RV (if it's offline then the 'system' it is monitoring will be a trace file, also written separately.)
 
 ```bash
-usage: varanus.py [-h] [--model MODEL] [--map MAP] [-n NAME]
-                  [--log_path LOG_PATH] [-t TRACE_FILE] [-s SPEED]
-                  {offline,online,sm-test,offline-test} config
+usage: varanus.py [-h] [-n NAME] [-l LOG_PATH]
+                  {offline,online,sm-test,offline-test,stress-test,build-only}
+                  config
 
 positional arguments:
-  {offline,online,sm-test,offline-test}
-                        The type of check to be performed
-  config                The location of the config file
+  {offline,online,sm-test,offline-test,stress-test,build-only}
+                        The type of action or check for Varanus to perform.
+  config                The location of the config file.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --model MODEL         The location of the model used as the oracle.
-  --map MAP             The location of the event map
-  -n NAME, --name NAME  The name of the check and therefore name of the log
-                        file
-  --log_path LOG_PATH   The path of the log dir
-  -t TRACE_FILE, --trace_file TRACE_FILE
-                        The location of the trace file. Only used if
-                        type='offline'
-  -s SPEED, --speed SPEED Run 10 timed run and produce the times and mean.).
+  -n NAME, --name NAME  Override the config file's name. This is the name of
+                        the check and therefore name of the log file.
+  -l LOG_PATH, --log_path LOG_PATH
+                        Override the default log path.
 ```
 
 Since Varanus 0.9.0 the parameters can be set in the config file, and some can be overridden at the command line.
