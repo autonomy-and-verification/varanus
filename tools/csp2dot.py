@@ -55,4 +55,18 @@ if __name__ == "__main__":
     dot_string = machine.to_DOT()
     graphs = pydot.graph_from_dot_data(dot_string)
     graphs[0].write_png("csp_graph.png")
+
+    machine2 = CSPStateMachine()
+
+    csp_dict = {0: [("a",1), ("c", 2)],1: [("b",0), ("c", 2)], 2: [(Transition._TERMINATE, 3)], 3: [] }
+    machine.load_from_dictionary(csp_dict)
+    machine.start()
+    print(str(machine.to_dictionary()))
+    #state_machine_2_dot(machine)
+    #state_machine_2_dot_string(machine)
+
+    dot_string = machine.to_DOT()
+    graphs = pydot.graph_from_dot_data(dot_string)
+    graphs[0].write_png("csp_graph2.png")
+
     print("Done")
