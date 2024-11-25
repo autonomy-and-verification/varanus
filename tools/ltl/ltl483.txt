@@ -1,0 +1,1 @@
+(X!Xt R Xs) W (o <-> (b xor c))

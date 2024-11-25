@@ -1,0 +1,1 @@
+G(GF((c -> w) & (c R x)) U !((0 R Fd) M (Gh R !d)))

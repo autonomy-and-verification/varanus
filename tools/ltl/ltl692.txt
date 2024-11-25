@@ -1,0 +1,1 @@
+!X((j xor t) M (Gb R Xj)) -> (e xor (k xor r))

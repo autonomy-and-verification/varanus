@@ -1,0 +1,19 @@
+a matches { event: 'a' };
+x matches { event: 'x' };
+o matches { event: 'o' };
+r matches { event: 'r' };
+c matches { event: 'c' };
+q matches { event: 'q' };
+k matches { event: 'k' };
+w matches { event: 'w' };
+z matches { event: 'z' };
+
+Main = c state3 \/ q state3 \/ a state8 \/ x state8 \/ o state8 \/ r state8 \/ k state8 \/ w state8 \/ z state8;
+state1 = x state7 \/ a state8 \/ o state8 \/ r state8 \/ c state8 \/ q state8 \/ k state8 \/ w state8 \/ z state8;
+state2 = x state5 \/ a state8 \/ o state8 \/ r state8 \/ c state8 \/ q state8 \/ k state8 \/ w state8 \/ z state8;
+state3 = c state3 \/ q state3 \/ x state5 \/ a state8 \/ o state8 \/ r state8 \/ k state8 \/ w state8 \/ z state8;
+state4 = c state3 \/ q state3 \/ x state5 \/ a state8 \/ o state8 \/ r state8 \/ k state8 \/ w state8 \/ z state8;
+state5 = x state5 \/ a state8 \/ o state8 \/ r state8 \/ c state8 \/ q state8 \/ k state8 \/ w state8 \/ z state8;
+state6 = x state6 \/ a state8 \/ o state8 \/ r state8 \/ c state8 \/ q state8 \/ k state8 \/ w state8 \/ z state8;
+state7 = a state7 \/ x state7 \/ o state7 \/ r state7 \/ c state7 \/ q state7 \/ k state7 \/ w state7 \/ z state7;
+state8 = a state8 \/ x state8 \/ o state8 \/ r state8 \/ c state8 \/ q state8 \/ k state8 \/ w state8 \/ z state8;

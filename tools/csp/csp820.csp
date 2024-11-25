@@ -1,0 +1,217 @@
+channel y, u, t, o, v, c, q
+
+state0 = 
+c -> state0
+[]
+y -> state13
+[]
+u -> state13
+[]
+t -> state13
+[]
+o -> state13
+[]
+v -> state13
+[]
+q -> state13
+
+state1 = 
+c -> state0
+[]
+y -> state13
+[]
+u -> state13
+[]
+t -> state13
+[]
+o -> state13
+[]
+v -> state13
+[]
+q -> state13
+
+state2 = 
+c -> state0
+[]
+y -> state13
+[]
+u -> state13
+[]
+t -> state13
+[]
+o -> state13
+[]
+v -> state13
+[]
+q -> state13
+
+state3 = 
+c -> state5
+[]
+t -> state7
+[]
+y -> state9
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+u -> state13
+
+state4 = 
+c -> state5
+[]
+t -> state7
+[]
+y -> state9
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+u -> state13
+
+state5 = 
+c -> state5
+[]
+t -> state7
+[]
+y -> state9
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+u -> state13
+
+state6 = 
+u -> state2
+[]
+o -> state3
+[]
+v -> state3
+[]
+c -> state3
+[]
+q -> state3
+[]
+t -> state7
+[]
+y -> state8
+
+state7 = 
+y -> state7
+[]
+u -> state7
+[]
+t -> state7
+[]
+o -> state7
+[]
+v -> state7
+[]
+c -> state7
+[]
+q -> state7
+
+state8 = 
+c -> state5
+[]
+t -> state7
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+y -> state10
+[]
+u -> state13
+
+state9 = 
+t -> state7
+[]
+y -> state9
+[]
+o -> state9
+[]
+v -> state9
+[]
+c -> state9
+[]
+q -> state9
+[]
+u -> state13
+
+state10 = 
+t -> state7
+[]
+o -> state9
+[]
+v -> state9
+[]
+c -> state9
+[]
+q -> state9
+[]
+y -> state10
+[]
+u -> state13
+
+state11 = 
+c -> state5
+[]
+t -> state7
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+y -> state10
+[]
+u -> state13
+
+state12 = 
+c -> state5
+[]
+t -> state7
+[]
+o -> state9
+[]
+v -> state9
+[]
+q -> state9
+[]
+y -> state10
+[]
+u -> state13
+
+state13 = 
+y -> state13
+[]
+u -> state13
+[]
+t -> state13
+[]
+o -> state13
+[]
+v -> state13
+[]
+c -> state13
+[]
+q -> state13
+
+WCST = state6 -- Main Process, starts the recursion in state6
+
+assert state6; RUN(Events) :[deadlock free]:
+assert state6 :[deterministic]:
+assert state6 :[divergence free]:

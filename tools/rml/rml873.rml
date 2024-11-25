@@ -1,0 +1,16 @@
+u matches { event: 'u' };
+y matches { event: 'y' };
+q matches { event: 'q' };
+z matches { event: 'z' };
+i matches { event: 'i' };
+n matches { event: 'n' };
+
+state0 = u state0 \/ q state0 \/ z state0 \/ i state0 \/ n state0 \/ y state8;
+state1 = i state3 \/ y state4 \/ q state4 \/ z state4 \/ u state6 \/ n state8;
+Main = y state4 \/ q state4 \/ z state4 \/ i state4 \/ n state4 \/ u state6;
+state3 = u state3 \/ y state3 \/ q state3 \/ z state3 \/ i state3 \/ n state3;
+state4 = i state3 \/ y state4 \/ q state4 \/ z state4 \/ n state4 \/ u state6;
+state5 = n state0 \/ i state3 \/ y state4 \/ q state4 \/ z state4 \/ u state6;
+state6 = i state3 \/ y state4 \/ q state4 \/ z state4 \/ u state6 \/ n state7;
+state7 = u state7 \/ y state7 \/ q state7 \/ z state7 \/ i state7 \/ n state7;
+state8 = u state8 \/ y state8 \/ q state8 \/ z state8 \/ i state8 \/ n state8;

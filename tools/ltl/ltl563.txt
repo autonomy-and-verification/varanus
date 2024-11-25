@@ -1,0 +1,1 @@
+k xor (o & !((GXr W !l) xor (x M p)))

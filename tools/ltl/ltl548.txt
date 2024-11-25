@@ -1,0 +1,1 @@
+(Xx R !e) xor !X((b | c) xor Fn)

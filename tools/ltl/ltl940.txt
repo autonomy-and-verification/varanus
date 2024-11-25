@@ -1,0 +1,1 @@
+G(!h xor (Xc M (h M z))) xor X(XFy -> FXl)

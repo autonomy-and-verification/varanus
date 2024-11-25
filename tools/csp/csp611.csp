@@ -1,0 +1,423 @@
+channel u, e, a, w, i, t
+
+state0 = 
+a -> state0
+[]
+w -> state16
+[]
+u -> state31
+[]
+e -> state31
+[]
+i -> state31
+[]
+t -> state31
+
+state1 = 
+i -> state1
+[]
+u -> state2
+[]
+a -> state2
+[]
+w -> state2
+[]
+e -> state31
+[]
+t -> state31
+
+state2 = 
+u -> state16
+[]
+a -> state16
+[]
+w -> state16
+[]
+i -> state16
+[]
+e -> state31
+[]
+t -> state31
+
+state3 = 
+u -> state16
+[]
+a -> state16
+[]
+w -> state16
+[]
+i -> state16
+[]
+e -> state31
+[]
+t -> state31
+
+state4 = 
+i -> state1
+[]
+u -> state2
+[]
+a -> state3
+[]
+w -> state16
+[]
+e -> state31
+[]
+t -> state31
+
+state5 = 
+w -> state11
+[]
+u -> state16
+[]
+i -> state16
+[]
+a -> state30
+[]
+e -> state31
+[]
+t -> state31
+
+state6 = 
+i -> state1
+[]
+u -> state2
+[]
+a -> state5
+[]
+w -> state11
+[]
+e -> state31
+[]
+t -> state31
+
+state7 = 
+t -> state2
+[]
+w -> state11
+[]
+u -> state16
+[]
+i -> state16
+[]
+a -> state30
+[]
+e -> state31
+
+state8 = 
+i -> state1
+[]
+t -> state2
+[]
+a -> state5
+[]
+w -> state11
+[]
+u -> state17
+[]
+e -> state31
+
+state9 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state31
+
+state10 = 
+a -> state9
+[]
+i -> state19
+[]
+u -> state20
+[]
+e -> state20
+[]
+w -> state23
+[]
+t -> state31
+
+state11 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state11
+
+state12 = 
+w -> state11
+[]
+a -> state13
+[]
+t -> state13
+[]
+e -> state14
+[]
+i -> state15
+[]
+u -> state21
+
+state13 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state13
+
+state14 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state13
+
+state15 = 
+w -> state11
+[]
+a -> state13
+[]
+t -> state13
+[]
+e -> state14
+[]
+i -> state15
+[]
+u -> state20
+
+state16 = 
+u -> state16
+[]
+a -> state16
+[]
+w -> state16
+[]
+i -> state16
+[]
+t -> state16
+[]
+e -> state31
+
+state17 = 
+t -> state2
+[]
+u -> state16
+[]
+a -> state16
+[]
+w -> state16
+[]
+i -> state16
+[]
+e -> state31
+
+state18 = 
+i -> state1
+[]
+t -> state2
+[]
+a -> state3
+[]
+w -> state16
+[]
+u -> state17
+[]
+e -> state31
+
+state19 = 
+i -> state19
+[]
+u -> state20
+[]
+e -> state20
+[]
+a -> state20
+[]
+w -> state20
+[]
+t -> state31
+
+state20 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state31
+
+state21 = 
+t -> state2
+[]
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+
+state22 = 
+t -> state2
+[]
+a -> state9
+[]
+i -> state19
+[]
+e -> state20
+[]
+u -> state21
+[]
+w -> state23
+
+state23 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state16
+
+state24 = 
+t -> state16
+[]
+e -> state20
+[]
+u -> state23
+[]
+a -> state23
+[]
+w -> state23
+[]
+i -> state24
+
+state25 = 
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+[]
+t -> state31
+
+state26 = 
+w -> state11
+[]
+i -> state19
+[]
+u -> state20
+[]
+e -> state20
+[]
+a -> state25
+[]
+t -> state31
+
+state27 = 
+w -> state11
+[]
+a -> state27
+[]
+u -> state31
+[]
+e -> state31
+[]
+i -> state31
+[]
+t -> state31
+
+state28 = 
+t -> state2
+[]
+u -> state11
+[]
+e -> state11
+[]
+a -> state11
+[]
+w -> state11
+[]
+i -> state11
+
+state29 = 
+t -> state2
+[]
+w -> state11
+[]
+i -> state19
+[]
+e -> state20
+[]
+u -> state21
+[]
+a -> state25
+
+state30 = 
+w -> state11
+[]
+u -> state16
+[]
+i -> state16
+[]
+t -> state16
+[]
+a -> state30
+[]
+e -> state31
+
+state31 = 
+u -> state31
+[]
+e -> state31
+[]
+a -> state31
+[]
+w -> state31
+[]
+i -> state31
+[]
+t -> state31
+
+WCST = state12 -- Main Process, starts the recursion in state12
+
+assert state12; RUN(Events) :[deadlock free]:
+assert state12 :[deterministic]:
+assert state12 :[divergence free]:

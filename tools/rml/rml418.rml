@@ -1,0 +1,10 @@
+p matches { event: 'p' };
+q matches { event: 'q' };
+z matches { event: 'z' };
+t matches { event: 't' };
+
+state0 = t state0 \/ p state4 \/ q state4 \/ z state4;
+state1 = p state3 \/ q state3 \/ t state3 \/ z state4;
+Main = q state1 \/ z state1 \/ t state1 \/ p state3;
+state3 = p state3 \/ q state3 \/ z state3 \/ t state3;
+state4 = p state4 \/ q state4 \/ z state4 \/ t state4;

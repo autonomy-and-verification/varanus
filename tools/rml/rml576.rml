@@ -1,0 +1,15 @@
+o matches { event: 'o' };
+f matches { event: 'f' };
+a matches { event: 'a' };
+w matches { event: 'w' };
+l matches { event: 'l' };
+
+state0 = o state0 \/ f state8 \/ a state8 \/ w state8 \/ l state8;
+state1 = a state1 \/ o state8 \/ f state8 \/ w state8 \/ l state8;
+state2 = o state2 \/ f state2 \/ w state2 \/ a state8 \/ l state8;
+state3 = w state2 \/ o state3 \/ f state3 \/ l state3 \/ a state8;
+Main = w state2 \/ f state3 \/ l state3 \/ o state5 \/ a state8;
+state5 = w state2 \/ f state3 \/ l state3 \/ o state5 \/ a state8;
+state6 = f state2 \/ w state2 \/ o state6 \/ a state8 \/ l state8;
+state7 = o state0 \/ a state1 \/ f state8 \/ w state8 \/ l state8;
+state8 = o state8 \/ f state8 \/ a state8 \/ w state8 \/ l state8;

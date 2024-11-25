@@ -1,0 +1,1 @@
+F(!w | !(Fe W y)) | (!p xor F(!m -> (i -> Fl)))

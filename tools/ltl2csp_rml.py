@@ -4,7 +4,7 @@ import spot
 import buddy
 
 # Function to convert an LTL formula into a CSP model
-def ltl2csp(ltl):
+def ltl2csp(ltl, name=None):
     csp = 'channel '  # Start the CSP model with the 'channel' declaration
     # Translate the LTL formula to a monitor automaton using Spot
     monitor = spot.translate(ltl, 'monitor', 'det', 'complete')
@@ -17,6 +17,7 @@ def ltl2csp(ltl):
     
     # Add APs to the CSP channel declaration
     csp += ', '.join(l) + '\n\n'
+    channels = ', '.join(l)
     
     transitions = {}  # Dictionary to store state transitions
     
@@ -61,7 +62,19 @@ def ltl2csp(ltl):
     csp += f'assert state{monitor.get_init_state_number()} :[deterministic]:\n'
     csp += f'assert state{monitor.get_init_state_number()} :[divergence free]:'
     
-    return csp  # Return the complete CSP model
+    if not name:
+        name = 'random_csp.csp'
+
+    yaml = f'''---
+alphabet: [{channels}]
+common_alphabet: [{channels}]
+main_process: "state{monitor.get_init_state_number()}"
+model: "{name}" 
+trace_file: "log.txt" 
+name: "random_csp"
+mode: "strict"'''
+
+    return csp, yaml  # Return the complete CSP model and Yaml config file
 
 # Function to convert an LTL formula into an RML (Reactive Model Logic) model
 def ltl2rml(ltl):
@@ -133,10 +146,14 @@ def main():
     # Parse the command line arguments
     args = parser.parse_args()
 
+    csp, yaml = ltl2csp(args.ltl, args.csp_output)
+
     # Write the CSP model to a file
     with open(args.csp_output, 'w') as file:
-        file.write(ltl2csp(args.ltl))
-    
+        file.write(csp)
+    with open(args.csp_output.replace('.csp', '.yaml'), 'w') as file:
+        file.write(yaml)
+     
     # Write the RML model to a file
     with open(args.rml_output, 'w') as file:
         file.write(ltl2rml(args.ltl))

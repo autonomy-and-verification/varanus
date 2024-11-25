@@ -1,0 +1,16 @@
+z matches { event: 'z' };
+h matches { event: 'h' };
+t matches { event: 't' };
+n matches { event: 'n' };
+r matches { event: 'r' };
+e matches { event: 'e' };
+x matches { event: 'x' };
+l matches { event: 'l' };
+j matches { event: 'j' };
+
+state0 = x state3 \/ z state5 \/ h state5 \/ t state5 \/ n state5 \/ r state5 \/ e state5 \/ l state5 \/ j state5;
+Main = z state4 \/ h state4 \/ t state4 \/ n state4 \/ r state4 \/ e state4 \/ x state4 \/ l state4 \/ j state4;
+state2 = x state0 \/ z state5 \/ h state5 \/ t state5 \/ n state5 \/ r state5 \/ e state5 \/ l state5 \/ j state5;
+state3 = x state3 \/ z state5 \/ h state5 \/ t state5 \/ n state5 \/ r state5 \/ e state5 \/ l state5 \/ j state5;
+state4 = z state4 \/ h state4 \/ t state4 \/ n state4 \/ r state4 \/ e state4 \/ x state4 \/ l state4 \/ j state4;
+state5 = z state5 \/ h state5 \/ t state5 \/ n state5 \/ r state5 \/ e state5 \/ x state5 \/ l state5 \/ j state5;

@@ -1,0 +1,1 @@
+!(r xor (v & !(l xor Xa))) W Gv

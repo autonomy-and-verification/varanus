@@ -1,0 +1,1 @@
+G((a xor f) <-> G(y M w))

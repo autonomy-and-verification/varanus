@@ -1,0 +1,22 @@
+r matches { event: 'r' };
+c matches { event: 'c' };
+f matches { event: 'f' };
+z matches { event: 'z' };
+d matches { event: 'd' };
+
+state0 = d state0 \/ r state15 \/ c state15 \/ f state15 \/ z state15;
+state1 = r state1 \/ c state1 \/ f state1 \/ z state1 \/ d state1;
+Main = f state11 \/ z state11 \/ d state11 \/ r state12 \/ c state13;
+state3 = c state3 \/ f state5 \/ d state5 \/ r state6 \/ z state15;
+state4 = d state5 \/ f state7 \/ r state8 \/ c state9 \/ z state15;
+state5 = d state0 \/ z state5 \/ r state15 \/ c state15 \/ f state15;
+state6 = d state0 \/ z state7 \/ r state15 \/ c state15 \/ f state15;
+state7 = z state5 \/ r state15 \/ c state15 \/ f state15 \/ d state15;
+state8 = z state7 \/ r state15 \/ c state15 \/ f state15 \/ d state15;
+state9 = c state3 \/ f state5 \/ d state5 \/ r state6 \/ z state15;
+state10 = f state7 \/ d state7 \/ r state8 \/ c state9 \/ z state15;
+state11 = d state0 \/ f state1 \/ z state5 \/ r state15 \/ c state15;
+state12 = d state0 \/ f state1 \/ z state7 \/ r state15 \/ c state15;
+state13 = f state1 \/ c state3 \/ d state5 \/ r state6 \/ z state15;
+state14 = f state1 \/ d state5 \/ r state8 \/ c state9 \/ z state15;
+state15 = r state15 \/ c state15 \/ f state15 \/ z state15 \/ d state15;

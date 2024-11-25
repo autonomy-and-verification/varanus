@@ -1,0 +1,13 @@
+g matches { event: 'g' };
+p matches { event: 'p' };
+u matches { event: 'u' };
+t matches { event: 't' };
+z matches { event: 'z' };
+
+state0 = g state0 \/ u state0 \/ t state0 \/ z state0 \/ p state6;
+state1 = z state0 \/ t state1 \/ u state2 \/ g state6 \/ p state6;
+state2 = z state0 \/ u state2 \/ g state6 \/ p state6 \/ t state6;
+state3 = g state0 \/ p state0 \/ u state0 \/ t state0 \/ z state0;
+state4 = g state4 \/ p state4 \/ u state4 \/ t state4 \/ z state4;
+Main = g state3 \/ p state4 \/ u state4 \/ t state4 \/ z state4;
+state6 = g state6 \/ p state6 \/ u state6 \/ t state6 \/ z state6;

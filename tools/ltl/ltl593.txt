@@ -1,0 +1,1 @@
+!(G(m <-> y) U (Gz xor (G(z M h) U d)))

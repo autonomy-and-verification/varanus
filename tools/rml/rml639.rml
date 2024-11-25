@@ -1,0 +1,12 @@
+l matches { event: 'l' };
+e matches { event: 'e' };
+m matches { event: 'm' };
+r matches { event: 'r' };
+
+state0 = r state4 \/ l state6 \/ e state6 \/ m state6;
+state1 = m state1 \/ l state6 \/ e state6 \/ r state6;
+state2 = l state6 \/ e state6 \/ m state6 \/ r state6;
+state3 = l state0 \/ e state6 \/ m state6 \/ r state6;
+state4 = l state4 \/ e state4 \/ m state4 \/ r state4;
+Main = l state3 \/ e state3 \/ m state3 \/ r state3;
+state6 = l state6 \/ e state6 \/ m state6 \/ r state6;

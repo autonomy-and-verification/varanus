@@ -1,0 +1,19 @@
+d matches { event: 'd' };
+s matches { event: 's' };
+c matches { event: 'c' };
+a matches { event: 'a' };
+y matches { event: 'y' };
+j matches { event: 'j' };
+v matches { event: 'v' };
+u matches { event: 'u' };
+
+state0 = s state0 \/ c state0 \/ a state0 \/ y state0 \/ j state0 \/ v state0 \/ u state0 \/ d state9;
+state1 = d state1 \/ s state1 \/ c state1 \/ a state1 \/ y state1 \/ j state1 \/ v state1 \/ u state1;
+state2 = d state1 \/ s state1 \/ c state1 \/ a state1 \/ y state1 \/ j state1 \/ v state1 \/ u state2;
+Main = d state1 \/ s state1 \/ c state1 \/ a state1 \/ y state1 \/ j state1 \/ v state1 \/ u state4;
+state4 = d state1 \/ s state1 \/ c state1 \/ a state1 \/ y state1 \/ j state1 \/ v state1 \/ u state4;
+state5 = y state1 \/ j state1 \/ v state1 \/ d state9 \/ s state9 \/ c state9 \/ a state9 \/ u state9;
+state6 = y state1 \/ j state1 \/ v state1 \/ d state9 \/ s state9 \/ c state9 \/ a state9 \/ u state9;
+state7 = s state0 \/ c state0 \/ a state0 \/ u state0 \/ y state1 \/ j state1 \/ v state1 \/ d state9;
+state8 = s state0 \/ c state0 \/ a state0 \/ u state0 \/ y state1 \/ j state1 \/ v state1 \/ d state9;
+state9 = d state9 \/ s state9 \/ c state9 \/ a state9 \/ y state9 \/ j state9 \/ v state9 \/ u state9;

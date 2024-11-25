@@ -1,0 +1,14 @@
+k matches { event: 'k' };
+p matches { event: 'p' };
+a matches { event: 'a' };
+
+state0 = a state0 \/ p state2 \/ k state9;
+state1 = k state7 \/ p state7 \/ a state9;
+state2 = a state0 \/ p state2 \/ k state3;
+state3 = k state3 \/ p state9 \/ a state9;
+state4 = a state0 \/ k state7 \/ p state7;
+state5 = a state0 \/ k state7 \/ p state7;
+state6 = k state7 \/ p state7 \/ a state9;
+state7 = k state7 \/ p state7 \/ a state7;
+Main = a state4 \/ p state5 \/ k state6;
+state9 = k state9 \/ p state9 \/ a state9;

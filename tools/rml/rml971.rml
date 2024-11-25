@@ -1,0 +1,23 @@
+i matches { event: 'i' };
+o matches { event: 'o' };
+e matches { event: 'e' };
+m matches { event: 'm' };
+x matches { event: 'x' };
+c matches { event: 'c' };
+l matches { event: 'l' };
+
+Main = e Main \/ i state2 \/ x state8 \/ c state8 \/ l state8 \/ o state10 \/ m state14;
+state1 = i state2 \/ x state2 \/ c state2 \/ l state2 \/ e state3 \/ o state7 \/ m state14;
+state2 = i state2 \/ o state2 \/ e state2 \/ m state2 \/ x state2 \/ c state2 \/ l state14;
+state3 = i state2 \/ m state2 \/ x state2 \/ c state2 \/ l state2 \/ e state3 \/ o state7;
+state4 = e Main \/ o state4 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state5 = e state3 \/ o state6 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state6 = e state3 \/ o state6 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state7 = i state2 \/ m state2 \/ x state2 \/ c state2 \/ e state3 \/ o state7 \/ l state14;
+state8 = i state2 \/ o state8 \/ e state8 \/ x state8 \/ c state8 \/ m state14 \/ l state14;
+state9 = i state2 \/ o state2 \/ e state2 \/ x state2 \/ c state2 \/ m state14 \/ l state14;
+state10 = e Main \/ i state2 \/ x state8 \/ c state8 \/ o state10 \/ m state14 \/ l state14;
+state11 = e state8 \/ o state11 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state12 = e state2 \/ o state13 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state13 = e state2 \/ o state13 \/ i state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;
+state14 = i state14 \/ o state14 \/ e state14 \/ m state14 \/ x state14 \/ c state14 \/ l state14;

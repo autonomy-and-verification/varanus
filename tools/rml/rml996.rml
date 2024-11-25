@@ -1,0 +1,17 @@
+r matches { event: 'r' };
+v matches { event: 'v' };
+h matches { event: 'h' };
+s matches { event: 's' };
+t matches { event: 't' };
+o matches { event: 'o' };
+
+state0 = r state0 \/ v state0 \/ h state0 \/ s state0 \/ t state0 \/ o state0;
+state1 = r state1 \/ v state1 \/ h state1 \/ s state5 \/ t state9 \/ o state9;
+state2 = r state2 \/ v state2 \/ s state2 \/ t state2 \/ o state2 \/ h state4;
+Main = h state0 \/ s state0 \/ t state0 \/ o state0 \/ r state2 \/ v state2;
+state4 = r state4 \/ v state4 \/ h state4 \/ s state5 \/ t state6 \/ o state7;
+state5 = h state1 \/ r state5 \/ v state5 \/ s state5 \/ t state5 \/ o state9;
+state6 = o state2 \/ r state6 \/ v state6 \/ s state6 \/ t state6 \/ h state8;
+state7 = t state2 \/ r state7 \/ v state7 \/ o state7 \/ h state8 \/ s state9;
+state8 = t state6 \/ o state7 \/ r state8 \/ v state8 \/ h state8 \/ s state9;
+state9 = r state9 \/ v state9 \/ h state9 \/ s state9 \/ t state9 \/ o state9;

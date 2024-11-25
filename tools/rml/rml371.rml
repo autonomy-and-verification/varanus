@@ -1,0 +1,14 @@
+h matches { event: 'h' };
+b matches { event: 'b' };
+c matches { event: 'c' };
+n matches { event: 'n' };
+
+state0 = b state0 \/ c state0 \/ h state1 \/ n state8;
+state1 = h state1 \/ b state8 \/ c state8 \/ n state8;
+state2 = h state2 \/ n Main \/ b state5 \/ c state5;
+Main = n Main \/ h state6 \/ b state7 \/ c state7;
+state4 = h state6 \/ b state8 \/ c state8 \/ n state8;
+state5 = h state2 \/ b state8 \/ c state8 \/ n state8;
+state6 = n Main \/ b state5 \/ c state5 \/ h state6;
+state7 = b state0 \/ c state0 \/ h state6 \/ n state8;
+state8 = h state8 \/ b state8 \/ c state8 \/ n state8;

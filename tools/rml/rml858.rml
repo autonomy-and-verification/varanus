@@ -1,0 +1,22 @@
+j matches { event: 'j' };
+l matches { event: 'l' };
+n matches { event: 'n' };
+g matches { event: 'g' };
+o matches { event: 'o' };
+z matches { event: 'z' };
+
+state0 = z state0 \/ j state14 \/ l state14 \/ n state14 \/ g state14 \/ o state14;
+state1 = o state12 \/ j state14 \/ l state14 \/ n state14 \/ g state14 \/ z state14;
+state2 = n state2 \/ g state2 \/ j state14 \/ l state14 \/ o state14 \/ z state14;
+state3 = z state0 \/ o state12 \/ j state14 \/ l state14 \/ n state14 \/ g state14;
+state4 = z state0 \/ n state2 \/ g state2 \/ j state14 \/ l state14 \/ o state14;
+state5 = z state0 \/ n state2 \/ g state2 \/ o state12 \/ j state14 \/ l state14;
+state6 = n state2 \/ g state2 \/ o state12 \/ j state14 \/ l state14 \/ z state14;
+state7 = j state0 \/ l state0 \/ n state0 \/ g state0 \/ o state0 \/ z state0;
+state8 = j state0 \/ l state0 \/ n state0 \/ g state0 \/ z state0 \/ o state12;
+state9 = j state0 \/ l state0 \/ z state0 \/ n state4 \/ g state4 \/ o state12;
+state10 = j state7 \/ l state7 \/ n state7 \/ g state7 \/ z state7 \/ o state12;
+state11 = j state10 \/ l state10 \/ n state10 \/ g state10 \/ o state10 \/ z state10;
+state12 = j state12 \/ l state12 \/ n state12 \/ g state12 \/ o state12 \/ z state12;
+Main = j state11 \/ l state11 \/ n state11 \/ g state11 \/ o state11 \/ z state11;
+state14 = j state14 \/ l state14 \/ n state14 \/ g state14 \/ o state14 \/ z state14;

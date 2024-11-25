@@ -1,0 +1,1 @@
+G((G(h xor (z M l)) xor (g M (u M z))) W h)

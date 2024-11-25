@@ -1,0 +1,1 @@
+G(i U (t xor X(0))) xor (((t & y) <-> GFo) -> s)

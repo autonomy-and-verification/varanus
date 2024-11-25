@@ -1,0 +1,1 @@
+(!(!u U t) -> (i xor t)) R F((Fx -> w) -> c)

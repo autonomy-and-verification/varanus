@@ -1,0 +1,14 @@
+k matches { event: 'k' };
+u matches { event: 'u' };
+v matches { event: 'v' };
+g matches { event: 'g' };
+r matches { event: 'r' };
+
+state0 = r state3 \/ k state7 \/ u state7 \/ v state7 \/ g state7;
+state1 = v state6 \/ k state7 \/ u state7 \/ g state7 \/ r state7;
+state2 = u state1 \/ v state4 \/ g state4 \/ r state4 \/ k state6;
+state3 = g state0 \/ k state3 \/ u state3 \/ v state3 \/ r state3;
+state4 = g state0 \/ k state3 \/ u state3 \/ r state3 \/ v state6;
+Main = k state2 \/ u state2 \/ v state2 \/ g state2 \/ r state2;
+state6 = k state6 \/ u state6 \/ v state6 \/ g state6 \/ r state6;
+state7 = k state7 \/ u state7 \/ v state7 \/ g state7 \/ r state7;

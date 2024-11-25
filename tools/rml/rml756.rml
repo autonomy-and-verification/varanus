@@ -1,0 +1,19 @@
+i matches { event: 'i' };
+v matches { event: 'v' };
+d matches { event: 'd' };
+u matches { event: 'u' };
+p matches { event: 'p' };
+t matches { event: 't' };
+
+state0 = p state0 \/ t state0 \/ i state11 \/ v state11 \/ d state11 \/ u state11;
+state1 = i state1 \/ v state11 \/ d state11 \/ u state11 \/ p state11 \/ t state11;
+state2 = v state2 \/ i state11 \/ d state11 \/ u state11 \/ p state11 \/ t state11;
+state3 = i state3 \/ v state3 \/ d state3 \/ u state3 \/ p state3 \/ t state3;
+state4 = i state3 \/ d state3 \/ u state3 \/ p state3 \/ t state3 \/ v state4;
+Main = d state3 \/ u state3 \/ p state3 \/ t state3 \/ v state4 \/ i state7;
+state6 = p state0 \/ t state0 \/ v state2 \/ i state11 \/ d state11 \/ u state11;
+state7 = v state3 \/ d state3 \/ u state3 \/ p state3 \/ t state3 \/ i state7;
+state8 = p state0 \/ t state0 \/ i state1 \/ v state11 \/ d state11 \/ u state11;
+state9 = i state1 \/ v state2 \/ d state11 \/ u state11 \/ p state11 \/ t state11;
+state10 = p state0 \/ t state0 \/ i state1 \/ v state2 \/ d state11 \/ u state11;
+state11 = i state11 \/ v state11 \/ d state11 \/ u state11 \/ p state11 \/ t state11;

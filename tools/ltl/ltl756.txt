@@ -1,0 +1,1 @@
+((s | x) W (Gi <-> Gv)) <-> G((d & u) -> G(p xor t))

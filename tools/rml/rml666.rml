@@ -1,0 +1,23 @@
+h matches { event: 'h' };
+n matches { event: 'n' };
+f matches { event: 'f' };
+m matches { event: 'm' };
+b matches { event: 'b' };
+t matches { event: 't' };
+
+state0 = m state3 \/ h state15 \/ n state15 \/ f state15 \/ b state15 \/ t state15;
+state1 = t state13 \/ h state15 \/ n state15 \/ f state15 \/ m state15 \/ b state15;
+state2 = h state13 \/ n state13 \/ f state13 \/ m state13 \/ b state13 \/ t state15;
+state3 = m state3 \/ b state5 \/ h state15 \/ n state15 \/ f state15 \/ t state15;
+state4 = h state13 \/ n state13 \/ f state13 \/ m state13 \/ b state13 \/ t state15;
+state5 = b state5 \/ h state15 \/ n state15 \/ f state15 \/ m state15 \/ t state15;
+state6 = h state13 \/ n state13 \/ f state13 \/ m state13 \/ b state13 \/ t state15;
+state7 = h state13 \/ n state13 \/ f state13 \/ m state13 \/ b state13 \/ t state15;
+state8 = h state1 \/ n state1 \/ f state1 \/ m state1 \/ b state1 \/ t state1;
+state9 = h state2 \/ n state2 \/ f state2 \/ m state2 \/ b state2 \/ t state2;
+state10 = h state2 \/ n state2 \/ f state2 \/ m state2 \/ t state2 \/ b state6;
+state11 = h state2 \/ n state2 \/ f state2 \/ t state2 \/ b state6 \/ m state7;
+state12 = h state2 \/ n state2 \/ f state2 \/ b state2 \/ t state2 \/ m state7;
+state13 = h state13 \/ n state13 \/ f state13 \/ m state13 \/ b state13 \/ t state13;
+Main = n state8 \/ m state8 \/ b state8 \/ t state8 \/ h state9 \/ f state9;
+state15 = h state15 \/ n state15 \/ f state15 \/ m state15 \/ b state15 \/ t state15;

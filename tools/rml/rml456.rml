@@ -1,0 +1,19 @@
+d matches { event: 'd' };
+y matches { event: 'y' };
+n matches { event: 'n' };
+g matches { event: 'g' };
+c matches { event: 'c' };
+
+state0 = d state0 \/ y state0 \/ n state0 \/ c state0 \/ g state12;
+Main = g state2 \/ d state3 \/ y state3 \/ c state3 \/ n state7;
+state2 = c state3 \/ d state12 \/ y state12 \/ n state12 \/ g state12;
+state3 = c state4 \/ d state12 \/ y state12 \/ n state12 \/ g state12;
+state4 = d state0 \/ y state0 \/ n state0 \/ c state4 \/ g state12;
+state5 = d state0 \/ y state0 \/ n state0 \/ c state4 \/ g state12;
+state6 = d state6 \/ y state6 \/ n state6 \/ g state6 \/ c state6;
+state7 = c state6 \/ d state12 \/ y state12 \/ n state12 \/ g state12;
+state8 = c state4 \/ d state12 \/ y state12 \/ n state12 \/ g state12;
+state9 = d state0 \/ y state0 \/ n state0 \/ c state6 \/ g state12;
+state10 = d state0 \/ y state0 \/ c state4 \/ n state6 \/ g state12;
+state11 = d state0 \/ y state0 \/ c state0 \/ n state6 \/ g state12;
+state12 = d state12 \/ y state12 \/ n state12 \/ g state12 \/ c state12;

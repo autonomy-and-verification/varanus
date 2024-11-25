@@ -1,0 +1,449 @@
+channel x, s, u, i, d, o
+
+state0 = 
+u -> state0
+[]
+x -> state33
+[]
+s -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state1 = 
+s -> state1
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state2 = 
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state3 = 
+u -> state0
+[]
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state4 = 
+u -> state0
+[]
+s -> state1
+[]
+o -> state31
+[]
+x -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state5 = 
+u -> state0
+[]
+s -> state1
+[]
+x -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state6 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+d -> state6
+[]
+o -> state6
+
+state7 = 
+i -> state10
+[]
+u -> state12
+[]
+d -> state13
+[]
+o -> state13
+[]
+x -> state17
+[]
+s -> state20
+
+state8 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state9 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state10 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state11 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state12 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state13 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state14 = 
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state15 = 
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state16 = 
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state17 = 
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state18 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state19 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state20 = 
+x -> state6
+[]
+s -> state6
+[]
+u -> state6
+[]
+i -> state6
+[]
+o -> state6
+[]
+d -> state33
+
+state21 = 
+s -> state1
+[]
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state22 = 
+s -> state1
+[]
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state23 = 
+s -> state1
+[]
+d -> state6
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+
+state24 = 
+s -> state1
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state25 = 
+s -> state1
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state26 = 
+s -> state1
+[]
+o -> state31
+[]
+x -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state27 = 
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state28 = 
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+state29 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state30 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state31 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state32 = 
+o -> state31
+[]
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+
+state33 = 
+x -> state33
+[]
+s -> state33
+[]
+u -> state33
+[]
+i -> state33
+[]
+d -> state33
+[]
+o -> state33
+
+WCST = state7 -- Main Process, starts the recursion in state7
+
+assert state7; RUN(Events) :[deadlock free]:
+assert state7 :[deterministic]:
+assert state7 :[divergence free]:

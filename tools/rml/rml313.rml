@@ -1,0 +1,13 @@
+l matches { event: 'l' };
+q matches { event: 'q' };
+h matches { event: 'h' };
+a matches { event: 'a' };
+p matches { event: 'p' };
+
+state0 = l state0 \/ q state0 \/ h state0 \/ a state0 \/ p state0;
+state1 = l state0 \/ a state0 \/ p state0 \/ q state1 \/ h state6;
+state2 = h state0 \/ q state2 \/ l state6 \/ a state6 \/ p state6;
+Main = l state0 \/ h state0 \/ p state0 \/ q state4 \/ a state6;
+state4 = h state0 \/ q state4 \/ l state6 \/ a state6 \/ p state6;
+state5 = l state0 \/ p state0 \/ q state6 \/ h state6 \/ a state6;
+state6 = l state6 \/ q state6 \/ h state6 \/ a state6 \/ p state6;

@@ -1,0 +1,1 @@
+(!u xor !Fe) W ((i W Xt) -> (a W w))

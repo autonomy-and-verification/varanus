@@ -1,0 +1,15 @@
+h matches { event: 'h' };
+r matches { event: 'r' };
+p matches { event: 'p' };
+y matches { event: 'y' };
+m matches { event: 'm' };
+q matches { event: 'q' };
+
+Main = h state6 \/ r state6 \/ p state6 \/ y state6 \/ m state6 \/ q state6;
+state1 = y state1 \/ h state7 \/ r state7 \/ p state7 \/ m state7 \/ q state7;
+state2 = h state7 \/ r state7 \/ p state7 \/ y state7 \/ m state7 \/ q state7;
+state3 = m state3 \/ q state3 \/ h state7 \/ r state7 \/ p state7 \/ y state7;
+state4 = y state1 \/ m state3 \/ q state3 \/ h state7 \/ r state7 \/ p state7;
+state5 = h state7 \/ r state7 \/ p state7 \/ y state7 \/ m state7 \/ q state7;
+state6 = h state7 \/ r state7 \/ p state7 \/ y state7 \/ m state7 \/ q state7;
+state7 = h state7 \/ r state7 \/ p state7 \/ y state7 \/ m state7 \/ q state7;

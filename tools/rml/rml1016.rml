@@ -1,0 +1,16 @@
+y matches { event: 'y' };
+n matches { event: 'n' };
+d matches { event: 'd' };
+k matches { event: 'k' };
+r matches { event: 'r' };
+
+Main = n state2 \/ d state2 \/ k state2 \/ r state2 \/ y state3;
+state1 = y state1 \/ n state1 \/ d state1 \/ k state1 \/ r state1;
+state2 = n state2 \/ d state2 \/ k state2 \/ r state2 \/ y state3;
+state3 = y state1 \/ d state1 \/ k state1 \/ r state1 \/ n state3;
+state4 = d state2 \/ k state2 \/ r state2 \/ y state3 \/ n state4;
+state5 = y state1 \/ d state1 \/ k state1 \/ r state1 \/ n state5;
+state6 = n state2 \/ r state2 \/ y state3 \/ k state6 \/ d state9;
+state7 = y state1 \/ n state1 \/ r state1 \/ k state7 \/ d state9;
+state8 = y state1 \/ r state1 \/ n state3 \/ k state7 \/ d state9;
+state9 = y state9 \/ n state9 \/ d state9 \/ k state9 \/ r state9;

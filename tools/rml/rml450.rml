@@ -1,0 +1,15 @@
+x matches { event: 'x' };
+z matches { event: 'z' };
+o matches { event: 'o' };
+y matches { event: 'y' };
+q matches { event: 'q' };
+w matches { event: 'w' };
+
+Main = q state6 \/ x state7 \/ z state7 \/ o state7 \/ y state7 \/ w state7;
+state1 = x state6 \/ z state6 \/ q state6 \/ w state6 \/ o state7 \/ y state7;
+state2 = x state6 \/ z state6 \/ q state6 \/ w state6 \/ o state7 \/ y state7;
+state3 = x state5 \/ z state6 \/ q state6 \/ o state7 \/ y state7 \/ w state7;
+state4 = x state5 \/ z state6 \/ o state7 \/ y state7 \/ q state7 \/ w state7;
+state5 = x state5 \/ z state6 \/ o state7 \/ y state7 \/ q state7 \/ w state7;
+state6 = x state6 \/ z state6 \/ o state6 \/ y state6 \/ q state6 \/ w state6;
+state7 = x state7 \/ z state7 \/ o state7 \/ y state7 \/ q state7 \/ w state7;

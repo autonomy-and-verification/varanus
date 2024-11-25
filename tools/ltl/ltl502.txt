@@ -1,0 +1,1 @@
+n xor F((!f <-> Gy) -> XG(Ga M f))

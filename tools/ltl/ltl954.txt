@@ -1,0 +1,1 @@
+X!X(i -> m) <-> ((s | (k xor s)) xor (i | X(Fr & Xg)))

@@ -1,0 +1,1 @@
+X(p & (Gb -> (h xor (!l xor (Xr & ((j <-> Ga) U Gh))))))

@@ -1,0 +1,1 @@
+(!FX((Fr R l) | Fw) W !l) | ((u -> z) M z)

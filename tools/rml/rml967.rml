@@ -1,0 +1,25 @@
+a matches { event: 'a' };
+w matches { event: 'w' };
+q matches { event: 'q' };
+s matches { event: 's' };
+c matches { event: 'c' };
+v matches { event: 'v' };
+
+state0 = a state0 \/ w state0 \/ q state0 \/ s state0 \/ c state0 \/ v state17;
+state1 = s state15 \/ a state17 \/ w state17 \/ q state17 \/ c state17 \/ v state17;
+state2 = a state15 \/ w state15 \/ q state15 \/ c state15 \/ v state15 \/ s state17;
+state3 = s state15 \/ q state16 \/ a state17 \/ w state17 \/ c state17 \/ v state17;
+state4 = a state4 \/ w state4 \/ q state4 \/ s state4 \/ c state4 \/ v state15;
+state5 = s state0 \/ a state4 \/ w state4 \/ q state4 \/ c state4 \/ v state15;
+state6 = w state4 \/ c state4 \/ s state11 \/ q state16 \/ a state17 \/ v state17;
+state7 = w state0 \/ c state0 \/ s state13 \/ a state15 \/ q state15 \/ v state15;
+state8 = a state15 \/ w state15 \/ q state15 \/ c state15 \/ v state15 \/ s state17;
+state9 = a state0 \/ w state0 \/ q state0 \/ c state0 \/ s state4 \/ v state17;
+state10 = s state10 \/ a state15 \/ q state15 \/ v state15 \/ w state17 \/ c state17;
+state11 = w state0 \/ c state0 \/ s state11 \/ a state15 \/ q state15 \/ v state15;
+Main = v state2 \/ w state5 \/ q state5 \/ s state5 \/ c state5 \/ a state9;
+state13 = w state4 \/ c state4 \/ s state13 \/ q state16 \/ a state17 \/ v state17;
+state14 = s state14 \/ w state15 \/ c state15 \/ q state16 \/ a state17 \/ v state17;
+state15 = a state15 \/ w state15 \/ q state15 \/ s state15 \/ c state15 \/ v state15;
+state16 = q state16 \/ a state17 \/ w state17 \/ s state17 \/ c state17 \/ v state17;
+state17 = a state17 \/ w state17 \/ q state17 \/ s state17 \/ c state17 \/ v state17;

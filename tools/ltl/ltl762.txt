@@ -1,0 +1,1 @@
+g xor F((G(1 U Xm) -> (a <-> l)) xor !Xm)

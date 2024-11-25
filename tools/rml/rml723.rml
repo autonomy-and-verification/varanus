@@ -1,0 +1,14 @@
+e matches { event: 'e' };
+j matches { event: 'j' };
+a matches { event: 'a' };
+y matches { event: 'y' };
+z matches { event: 'z' };
+q matches { event: 'q' };
+
+Main = e state4 \/ j state4 \/ a state4 \/ y state4 \/ z state6 \/ q state6;
+state1 = y state3 \/ e state4 \/ j state4 \/ a state6 \/ z state6 \/ q state6;
+state2 = y state3 \/ e state4 \/ j state4 \/ z state4 \/ a state6 \/ q state6;
+state3 = y state3 \/ e state4 \/ j state4 \/ z state4 \/ a state6 \/ q state6;
+state4 = e state4 \/ j state4 \/ a state4 \/ y state4 \/ z state4 \/ q state6;
+state5 = e state4 \/ j state4 \/ a state4 \/ y state4 \/ z state4 \/ q state6;
+state6 = e state6 \/ j state6 \/ a state6 \/ y state6 \/ z state6 \/ q state6;

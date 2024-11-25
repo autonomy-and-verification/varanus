@@ -1,0 +1,15 @@
+w matches { event: 'w' };
+y matches { event: 'y' };
+s matches { event: 's' };
+m matches { event: 'm' };
+
+state0 = m state8 \/ w state9 \/ y state9 \/ s state9;
+state1 = w state8 \/ y state8 \/ s state8 \/ m state9;
+state2 = y state3 \/ w state8 \/ s state8 \/ m state8;
+state3 = y state3 \/ w state8 \/ s state8 \/ m state8;
+state4 = w state8 \/ y state8 \/ s state8 \/ m state8;
+state5 = s state0 \/ w state1 \/ y state1 \/ m state1;
+state6 = y state4 \/ w state8 \/ s state8 \/ m state8;
+Main = y state6 \/ w state8 \/ s state8 \/ m state8;
+state8 = w state8 \/ y state8 \/ s state8 \/ m state8;
+state9 = w state9 \/ y state9 \/ s state9 \/ m state9;

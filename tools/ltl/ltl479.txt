@@ -1,0 +1,1 @@
+(z W (r W X(!r xor u))) -> (z -> h)

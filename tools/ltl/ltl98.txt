@@ -1,0 +1,1 @@
+f xor (b xor g)

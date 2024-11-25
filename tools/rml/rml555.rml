@@ -1,0 +1,14 @@
+w matches { event: 'w' };
+e matches { event: 'e' };
+p matches { event: 'p' };
+a matches { event: 'a' };
+
+state0 = w state8 \/ e state8 \/ p state8 \/ a state8;
+state1 = w state8 \/ e state8 \/ p state8 \/ a state8;
+state2 = p state2 \/ w state8 \/ e state8 \/ a state8;
+state3 = w state8 \/ e state8 \/ p state8 \/ a state8;
+state4 = w state4 \/ e state4 \/ p state4 \/ a state4;
+Main = e state3 \/ w state4 \/ p state6 \/ a state6;
+state6 = e state3 \/ w state6 \/ p state6 \/ a state6;
+state7 = e state3 \/ w state6 \/ a state6 \/ p state7;
+state8 = w state8 \/ e state8 \/ p state8 \/ a state8;

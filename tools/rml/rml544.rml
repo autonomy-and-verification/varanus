@@ -1,0 +1,10 @@
+r matches { event: 'r' };
+t matches { event: 't' };
+j matches { event: 'j' };
+z matches { event: 'z' };
+a matches { event: 'a' };
+
+state0 = a state0 \/ r state3 \/ t state3 \/ j state3 \/ z state3;
+Main = r state2 \/ a state2 \/ t state3 \/ j state3 \/ z state3;
+state2 = r state2 \/ t state2 \/ j state2 \/ z state2 \/ a state2;
+state3 = r state3 \/ t state3 \/ j state3 \/ z state3 \/ a state3;

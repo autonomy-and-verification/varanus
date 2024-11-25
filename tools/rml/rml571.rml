@@ -1,0 +1,10 @@
+k matches { event: 'k' };
+v matches { event: 'v' };
+f matches { event: 'f' };
+
+state0 = k state0 \/ v state0 \/ f state0;
+state1 = k state1 \/ v state1 \/ f state5;
+state2 = k state1 \/ v state2 \/ f state5;
+state3 = v state3 \/ k state5 \/ f state5;
+Main = k state0 \/ v state2 \/ f state5;
+state5 = k state5 \/ v state5 \/ f state5;

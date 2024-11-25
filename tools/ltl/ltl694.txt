@@ -1,0 +1,1 @@
+(!m | x) & XG(c W !((Fs xor Gi) -> l))

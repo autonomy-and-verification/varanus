@@ -1,0 +1,1 @@
+(g <-> z) xor (r M (f W c))

@@ -1,0 +1,1 @@
+G(Gh <-> X((G(c xor k) W (Xc <-> Xu)) | GFn))

@@ -1,0 +1,1 @@
+(a <-> Xs) <-> ((!w | ((Gq U s) U (c xor w))) U v)

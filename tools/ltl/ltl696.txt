@@ -1,0 +1,1 @@
+(!a | n) xor (G(Fg | F(z M Gw)) -> !d)

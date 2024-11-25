@@ -1,0 +1,5 @@
+n matches { event: 'n' };
+z matches { event: 'z' };
+
+Main = n Main \/ z Main;
+state1 = n state1 \/ z state1;

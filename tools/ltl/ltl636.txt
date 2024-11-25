@@ -1,0 +1,1 @@
+X(r & (((a & !k) xor (z -> Xa)) U X!Fa))

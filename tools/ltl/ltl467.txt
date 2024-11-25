@@ -1,0 +1,1 @@
+p & ((c & l) | (v xor (Xs R Xn)))

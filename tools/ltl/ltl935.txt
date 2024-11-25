@@ -1,0 +1,1 @@
+!G(f <-> (j & v)) W F(Fa xor (y & (1 U a)))

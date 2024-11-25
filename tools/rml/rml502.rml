@@ -1,0 +1,10 @@
+n matches { event: 'n' };
+f matches { event: 'f' };
+y matches { event: 'y' };
+
+state0 = n state0 \/ f state0 \/ y state0;
+state1 = f state3 \/ n state5 \/ y state5;
+state2 = y state2 \/ n state5 \/ f state5;
+state3 = y state2 \/ f state3 \/ n state5;
+Main = f state0 \/ y state0 \/ n state5;
+state5 = n state5 \/ f state5 \/ y state5;

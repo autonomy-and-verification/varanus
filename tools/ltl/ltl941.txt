@@ -1,0 +1,1 @@
+F(!(G(q xor (!(Xj -> Gr) U s)) -> !g) M y)

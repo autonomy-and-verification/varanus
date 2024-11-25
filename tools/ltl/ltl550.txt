@@ -1,0 +1,1 @@
+(!Gk <-> F(s xor Ga)) U (h W (u xor v))

@@ -1,0 +1,259 @@
+channel d, a, p, j
+
+state0 = 
+d -> state11
+[]
+j -> state11
+[]
+p -> state12
+[]
+a -> state27
+
+state1 = 
+a -> state1
+[]
+d -> state27
+[]
+p -> state27
+[]
+j -> state27
+
+state2 = 
+j -> state26
+[]
+d -> state27
+[]
+a -> state27
+[]
+p -> state27
+
+state3 = 
+d -> state27
+[]
+a -> state27
+[]
+p -> state27
+[]
+j -> state27
+
+state4 = 
+a -> state1
+[]
+j -> state26
+[]
+d -> state27
+[]
+p -> state27
+
+state5 = 
+d -> state26
+[]
+a -> state26
+[]
+p -> state26
+[]
+j -> state27
+
+state6 = 
+a -> state1
+[]
+p -> state7
+[]
+j -> state26
+[]
+d -> state27
+
+state7 = 
+a -> state1
+[]
+p -> state7
+[]
+d -> state27
+[]
+j -> state27
+
+state8 = 
+d -> state0
+[]
+a -> state0
+[]
+p -> state0
+[]
+j -> state0
+
+state9 = 
+a -> state15
+[]
+p -> state16
+[]
+d -> state23
+[]
+j -> state23
+
+state10 = 
+a -> state5
+[]
+p -> state17
+[]
+d -> state23
+[]
+j -> state23
+
+state11 = 
+a -> state2
+[]
+d -> state13
+[]
+j -> state13
+[]
+p -> state14
+
+state12 = 
+a -> state4
+[]
+d -> state13
+[]
+j -> state13
+[]
+p -> state14
+
+state13 = 
+a -> state2
+[]
+d -> state13
+[]
+p -> state14
+[]
+j -> state26
+
+state14 = 
+a -> state4
+[]
+d -> state13
+[]
+p -> state14
+[]
+j -> state26
+
+state15 = 
+d -> state26
+[]
+a -> state26
+[]
+p -> state26
+[]
+j -> state27
+
+state16 = 
+a -> state5
+[]
+p -> state17
+[]
+d -> state23
+[]
+j -> state27
+
+state17 = 
+a -> state15
+[]
+d -> state23
+[]
+p -> state24
+[]
+j -> state27
+
+state18 = 
+d -> state26
+[]
+a -> state26
+[]
+p -> state26
+[]
+j -> state27
+
+state19 = 
+d -> state27
+[]
+a -> state27
+[]
+p -> state27
+[]
+j -> state27
+
+state20 = 
+d -> state27
+[]
+a -> state27
+[]
+p -> state27
+[]
+j -> state27
+
+state21 = 
+d -> state8
+[]
+a -> state25
+[]
+p -> state25
+[]
+j -> state25
+
+state22 = 
+d -> state9
+[]
+j -> state9
+[]
+p -> state10
+[]
+a -> state26
+
+state23 = 
+a -> state15
+[]
+p -> state16
+[]
+d -> state23
+[]
+j -> state27
+
+state24 = 
+a -> state15
+[]
+d -> state23
+[]
+p -> state24
+[]
+j -> state27
+
+state25 = 
+d -> state22
+[]
+a -> state22
+[]
+p -> state22
+[]
+j -> state22
+
+state26 = 
+d -> state26
+[]
+a -> state26
+[]
+p -> state26
+[]
+j -> state26
+
+state27 = 
+d -> state27
+[]
+a -> state27
+[]
+p -> state27
+[]
+j -> state27
+
+WCST = state21 -- Main Process, starts the recursion in state21
+
+assert state21; RUN(Events) :[deadlock free]:
+assert state21 :[deterministic]:
+assert state21 :[divergence free]:

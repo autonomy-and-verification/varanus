@@ -1,0 +1,1 @@
+G(((x | Xt) <-> GF(X(y U a) W (!h W z))) xor !Gu)

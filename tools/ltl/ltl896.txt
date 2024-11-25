@@ -1,0 +1,1 @@
+((p R F((h & n) xor (i & v))) & !Fx) | (e -> (z xor Xa))

@@ -1,0 +1,260 @@
+channel l, u, z, w, x
+
+state0 = 
+l -> state0
+[]
+z -> state0
+[]
+w -> state0
+[]
+x -> state0
+[]
+u -> state22
+
+state1 = 
+z -> state1
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+[]
+l -> state22
+
+state2 = 
+z -> state1
+[]
+l -> state6
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state3 = 
+l -> state0
+[]
+z -> state0
+[]
+w -> state0
+[]
+x -> state3
+[]
+u -> state22
+
+state4 = 
+z -> state1
+[]
+l -> state6
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state5 = 
+z -> state1
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state6 = 
+l -> state6
+[]
+u -> state22
+[]
+z -> state22
+[]
+w -> state22
+[]
+x -> state22
+
+state7 = 
+z -> state0
+[]
+l -> state22
+[]
+u -> state22
+[]
+w -> state22
+[]
+x -> state22
+
+state8 = 
+z -> state0
+[]
+l -> state6
+[]
+u -> state22
+[]
+w -> state22
+[]
+x -> state22
+
+state9 = 
+l -> state6
+[]
+x -> state12
+[]
+u -> state22
+[]
+z -> state22
+[]
+w -> state22
+
+state10 = 
+z -> state0
+[]
+x -> state12
+[]
+l -> state22
+[]
+u -> state22
+[]
+w -> state22
+
+state11 = 
+z -> state0
+[]
+l -> state6
+[]
+x -> state12
+[]
+u -> state22
+[]
+w -> state22
+
+state12 = 
+x -> state12
+[]
+l -> state22
+[]
+u -> state22
+[]
+z -> state22
+[]
+w -> state22
+
+state13 = 
+l -> state13
+[]
+u -> state13
+[]
+z -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state14 = 
+z -> state1
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+[]
+l -> state22
+
+state15 = 
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+[]
+z -> state22
+
+state16 = 
+z -> state1
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state17 = 
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+[]
+z -> state22
+
+state18 = 
+z -> state1
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state19 = 
+z -> state0
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state20 = 
+z -> state0
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state21 = 
+z -> state1
+[]
+l -> state13
+[]
+u -> state13
+[]
+w -> state13
+[]
+x -> state13
+
+state22 = 
+l -> state22
+[]
+u -> state22
+[]
+z -> state22
+[]
+w -> state22
+[]
+x -> state22
+
+WCST = state2 -- Main Process, starts the recursion in state2
+
+assert state2; RUN(Events) :[deadlock free]:
+assert state2 :[deterministic]:
+assert state2 :[divergence free]:

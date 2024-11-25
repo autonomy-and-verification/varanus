@@ -1,0 +1,19 @@
+r matches { event: 'r' };
+o matches { event: 'o' };
+j matches { event: 'j' };
+a matches { event: 'a' };
+s matches { event: 's' };
+
+Main = o state2 \/ j state3 \/ r state4 \/ a state4 \/ s state4;
+state1 = r state1 \/ o state1 \/ j state1 \/ a state1 \/ s state1;
+state2 = o state5 \/ j state6 \/ r state7 \/ a state7 \/ s state7;
+state3 = o state5 \/ j state6 \/ r state7 \/ a state7 \/ s state7;
+state4 = o state5 \/ j state6 \/ r state7 \/ a state7 \/ s state7;
+state5 = o state5 \/ j state6 \/ a state7 \/ s state7 \/ r state12;
+state6 = o state5 \/ j state6 \/ a state7 \/ s state7 \/ r state12;
+state7 = o state5 \/ j state6 \/ a state7 \/ s state7 \/ r state12;
+state8 = r state12 \/ o state12 \/ j state12 \/ a state12 \/ s state12;
+state9 = r state12 \/ o state12 \/ j state12 \/ a state12 \/ s state12;
+state10 = o state5 \/ j state6 \/ a state7 \/ s state7 \/ r state12;
+state11 = o state5 \/ j state6 \/ a state7 \/ s state7 \/ r state12;
+state12 = r state12 \/ o state12 \/ j state12 \/ a state12 \/ s state12;

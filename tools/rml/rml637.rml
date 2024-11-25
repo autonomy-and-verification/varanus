@@ -1,0 +1,21 @@
+j matches { event: 'j' };
+o matches { event: 'o' };
+w matches { event: 'w' };
+z matches { event: 'z' };
+q matches { event: 'q' };
+x matches { event: 'x' };
+f matches { event: 'f' };
+
+state0 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ x state0 \/ f state0;
+state1 = f state0 \/ j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ x state12;
+state2 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ f state0 \/ x state2;
+state3 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ x state0 \/ f state12;
+state4 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ f state0 \/ x state2;
+state5 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ f state0 \/ x state2;
+Main = j state0 \/ o state0 \/ f state0 \/ w state12 \/ z state12 \/ q state12 \/ x state12;
+state7 = j state0 \/ o state0 \/ w state0 \/ z state0 \/ q state0 \/ f state0 \/ x state2;
+state8 = x state8 \/ j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ f state12;
+state9 = x state8 \/ j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ f state12;
+state10 = x state8 \/ j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ f state12;
+state11 = x state8 \/ j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ f state12;
+state12 = j state12 \/ o state12 \/ w state12 \/ z state12 \/ q state12 \/ x state12 \/ f state12;

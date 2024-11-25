@@ -1,0 +1,1 @@
+c xor (Fs W (((u -> a) W (r M m)) | X(Gb R Xj)))

@@ -1,0 +1,1 @@
+X(GF(Fx U Fb) & X(h & (n -> (r xor (t xor x)))))

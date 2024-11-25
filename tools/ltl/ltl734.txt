@@ -1,0 +1,1 @@
+j <-> (((i | z) xor X(j U n)) R ((i U y) U !(h | r)))

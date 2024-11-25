@@ -1,0 +1,10 @@
+o matches { event: 'o' };
+z matches { event: 'z' };
+b matches { event: 'b' };
+
+state0 = b state0 \/ o state5 \/ z state5;
+state1 = b state1 \/ z state4 \/ o state5;
+state2 = o state0 \/ b state0 \/ z state2;
+Main = o state0 \/ b state1 \/ z Main;
+state4 = z state4 \/ b state4 \/ o state5;
+state5 = o state5 \/ z state5 \/ b state5;

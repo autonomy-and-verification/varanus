@@ -1,0 +1,9 @@
+k matches { event: 'k' };
+n matches { event: 'n' };
+e matches { event: 'e' };
+x matches { event: 'x' };
+
+state0 = k state0 \/ n state0 \/ e state0 \/ x state3;
+Main = n state2 \/ e state2 \/ x state2 \/ k state3;
+state2 = k state2 \/ n state2 \/ e state2 \/ x state2;
+state3 = k state3 \/ n state3 \/ e state3 \/ x state3;

@@ -1,0 +1,12 @@
+c matches { event: 'c' };
+i matches { event: 'i' };
+a matches { event: 'a' };
+t matches { event: 't' };
+
+state0 = c state0 \/ i state0 \/ a state0 \/ t state0;
+Main = i state0 \/ a state0 \/ c state4 \/ t state6;
+state2 = i state0 \/ c state2 \/ a state6 \/ t state6;
+state3 = i state0 \/ c state3 \/ a state6 \/ t state6;
+state4 = i state0 \/ a state0 \/ c state4 \/ t state6;
+state5 = i state0 \/ a state0 \/ c state5 \/ t state6;
+state6 = c state6 \/ i state6 \/ a state6 \/ t state6;

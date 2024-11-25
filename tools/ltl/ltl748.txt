@@ -1,0 +1,1 @@
+(G(f <-> Gs) R ((b xor g) <-> Gr)) <-> (d M !p)

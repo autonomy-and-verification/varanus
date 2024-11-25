@@ -1,0 +1,21 @@
+e matches { event: 'e' };
+h matches { event: 'h' };
+z matches { event: 'z' };
+d matches { event: 'd' };
+l matches { event: 'l' };
+k matches { event: 'k' };
+
+state0 = k state0 \/ e state13 \/ h state13 \/ z state13 \/ d state13 \/ l state13;
+state1 = e state13 \/ h state13 \/ z state13 \/ d state13 \/ l state13 \/ k state13;
+state2 = k state0 \/ e state1 \/ l state6 \/ d state7 \/ h state13 \/ z state13;
+state3 = e state1 \/ z state6 \/ l state6 \/ d state10 \/ k state11 \/ h state13;
+state4 = k state0 \/ e state13 \/ h state13 \/ z state13 \/ d state13 \/ l state13;
+Main = e state2 \/ h state2 \/ d state3 \/ l state3 \/ k state3 \/ z state6;
+state6 = e state6 \/ h state6 \/ z state6 \/ d state6 \/ l state6 \/ k state6;
+state7 = e state1 \/ d state7 \/ h state13 \/ z state13 \/ l state13 \/ k state13;
+state8 = k state0 \/ e state1 \/ d state7 \/ h state13 \/ z state13 \/ l state13;
+state9 = z state6 \/ d state9 \/ l state9 \/ k state9 \/ e state13 \/ h state13;
+state10 = e state1 \/ z state6 \/ l state9 \/ k state9 \/ d state10 \/ h state13;
+state11 = z state6 \/ d state9 \/ l state9 \/ k state11 \/ e state13 \/ h state13;
+state12 = e state1 \/ z state6 \/ l state9 \/ d state10 \/ k state11 \/ h state13;
+state13 = e state13 \/ h state13 \/ z state13 \/ d state13 \/ l state13 \/ k state13;

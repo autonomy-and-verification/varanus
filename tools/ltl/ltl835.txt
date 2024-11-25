@@ -1,0 +1,1 @@
+!((Gq & ((y xor (z xor G(n <-> v))) U Xa)) R (y -> (q xor s)))

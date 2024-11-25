@@ -1,0 +1,6 @@
+q matches { event: 'q' };
+
+Main = q state2;
+state1 = q state1;
+state2 = q state1;
+state3 = q state3;

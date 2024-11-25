@@ -1,0 +1,247 @@
+channel c, j, o, v, q, g, z
+
+state0 = 
+o -> state11
+[]
+c -> state15
+[]
+j -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+g -> state15
+[]
+z -> state15
+
+state1 = 
+z -> state11
+[]
+c -> state15
+[]
+j -> state15
+[]
+o -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+g -> state15
+
+state2 = 
+c -> state12
+[]
+j -> state12
+[]
+o -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+g -> state15
+[]
+z -> state15
+
+state3 = 
+g -> state3
+[]
+c -> state11
+[]
+j -> state11
+[]
+o -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+z -> state11
+
+state4 = 
+c -> state11
+[]
+j -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+g -> state11
+[]
+z -> state11
+[]
+o -> state15
+
+state5 = 
+c -> state11
+[]
+j -> state11
+[]
+o -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+g -> state11
+[]
+z -> state15
+
+state6 = 
+g -> state3
+[]
+c -> state11
+[]
+j -> state11
+[]
+o -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+z -> state11
+
+state7 = 
+g -> state3
+[]
+c -> state11
+[]
+j -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+z -> state11
+[]
+o -> state15
+
+state8 = 
+o -> state11
+[]
+z -> state11
+[]
+c -> state15
+[]
+j -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+g -> state15
+
+state9 = 
+o -> state11
+[]
+g -> state13
+[]
+c -> state15
+[]
+j -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+z -> state15
+
+state10 = 
+c -> state11
+[]
+j -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+g -> state11
+[]
+o -> state15
+[]
+z -> state15
+
+state11 = 
+c -> state11
+[]
+j -> state11
+[]
+o -> state11
+[]
+v -> state11
+[]
+q -> state11
+[]
+g -> state11
+[]
+z -> state11
+
+state12 = 
+v -> state0
+[]
+z -> state0
+[]
+c -> state4
+[]
+j -> state4
+[]
+o -> state4
+[]
+q -> state4
+[]
+g -> state4
+
+state13 = 
+g -> state13
+[]
+c -> state15
+[]
+j -> state15
+[]
+o -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+z -> state15
+
+state14 = 
+g -> state13
+[]
+c -> state15
+[]
+j -> state15
+[]
+o -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+z -> state15
+
+state15 = 
+c -> state15
+[]
+j -> state15
+[]
+o -> state15
+[]
+v -> state15
+[]
+q -> state15
+[]
+g -> state15
+[]
+z -> state15
+
+WCST = state2 -- Main Process, starts the recursion in state2
+
+assert state2; RUN(Events) :[deadlock free]:
+assert state2 :[deterministic]:
+assert state2 :[divergence free]:

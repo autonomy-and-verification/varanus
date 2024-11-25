@@ -1,0 +1,1 @@
+(p | ((Fj xor Gd) <-> (n xor Gh))) -> X(f <-> ((r & w) M (j W e)))

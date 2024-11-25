@@ -1,0 +1,12 @@
+x matches { event: 'x' };
+w matches { event: 'w' };
+s matches { event: 's' };
+j matches { event: 'j' };
+
+state0 = x state0 \/ w state0 \/ s state0 \/ j state0;
+state1 = s state0 \/ x state6 \/ w state6 \/ j state6;
+state2 = x state2 \/ w state2 \/ s state2 \/ j state6;
+state3 = s state0 \/ x state2 \/ w state2 \/ j state6;
+state4 = x state0 \/ w state0 \/ j state0 \/ s state6;
+Main = x state0 \/ s state0 \/ w state2 \/ j state2;
+state6 = x state6 \/ w state6 \/ s state6 \/ j state6;

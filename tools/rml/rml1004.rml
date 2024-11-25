@@ -1,0 +1,6 @@
+x matches { event: 'x' };
+
+Main = x state2;
+state1 = x state1;
+state2 = x state1;
+state3 = x state3;

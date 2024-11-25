@@ -1,0 +1,9 @@
+o matches { event: 'o' };
+x matches { event: 'x' };
+w matches { event: 'w' };
+r matches { event: 'r' };
+
+state0 = o state0 \/ x state0 \/ w state0 \/ r state3;
+Main = o state2 \/ x state3 \/ w state3 \/ r state3;
+state2 = o state2 \/ x state2 \/ w state2 \/ r state2;
+state3 = o state3 \/ x state3 \/ w state3 \/ r state3;

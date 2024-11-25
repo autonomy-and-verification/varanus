@@ -1,0 +1,10 @@
+q matches { event: 'q' };
+h matches { event: 'h' };
+l matches { event: 'l' };
+
+state0 = h state0 \/ l state0 \/ q state5;
+state1 = h state4 \/ l state4 \/ q state5;
+state2 = h state4 \/ l state4 \/ q state5;
+Main = q state1 \/ h state2 \/ l state2;
+state4 = q state4 \/ h state4 \/ l state4;
+state5 = q state5 \/ h state5 \/ l state5;

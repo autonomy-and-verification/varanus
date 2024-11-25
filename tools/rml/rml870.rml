@@ -1,0 +1,20 @@
+g matches { event: 'g' };
+h matches { event: 'h' };
+m matches { event: 'm' };
+j matches { event: 'j' };
+q matches { event: 'q' };
+r matches { event: 'r' };
+
+state0 = g state0 \/ j state0 \/ q state0 \/ r state0 \/ m state6 \/ h state12;
+state1 = j state2 \/ g state12 \/ h state12 \/ m state12 \/ q state12 \/ r state12;
+state2 = j state2 \/ q state2 \/ r state2 \/ h state8 \/ g state9 \/ m state9;
+state3 = j state3 \/ q state3 \/ r state3 \/ g state5 \/ h state8 \/ m state10;
+Main = j Main \/ q Main \/ r Main \/ g state5 \/ m state10 \/ h state11;
+state5 = j state0 \/ q state3 \/ g state5 \/ r state5 \/ h state9 \/ m state10;
+state6 = g state0 \/ h state6 \/ m state6 \/ j state6 \/ q state6 \/ r state6;
+state7 = g state0 \/ j Main \/ h state6 \/ m state6 \/ q state6 \/ r state6;
+state8 = q state2 \/ r state2 \/ h state8 \/ g state9 \/ m state9 \/ j state12;
+state9 = q state2 \/ g state9 \/ h state9 \/ m state9 \/ r state9 \/ j state12;
+state10 = q Main \/ g state5 \/ j state6 \/ h state10 \/ m state10 \/ r state10;
+state11 = q Main \/ r Main \/ g state5 \/ j state6 \/ m state10 \/ h state11;
+state12 = g state12 \/ h state12 \/ m state12 \/ j state12 \/ q state12 \/ r state12;

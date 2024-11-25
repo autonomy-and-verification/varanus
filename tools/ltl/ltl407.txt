@@ -1,0 +1,1 @@
+X(Xc xor ((c & n) U (Xf & Go)))

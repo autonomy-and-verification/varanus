@@ -1,0 +1,1 @@
+(v & G(x W a)) | (F(Xy <-> Gs) xor (x <-> (Xm R (f | g))))

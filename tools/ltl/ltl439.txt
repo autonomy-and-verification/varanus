@@ -1,0 +1,1 @@
+Fo xor (!Gl -> ((j <-> k) M Gl))

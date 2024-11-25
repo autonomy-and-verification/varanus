@@ -1,0 +1,1 @@
+((d xor (e & q)) M (s W !x)) & GFXw

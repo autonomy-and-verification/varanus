@@ -1,0 +1,10 @@
+x matches { event: 'x' };
+f matches { event: 'f' };
+o matches { event: 'o' };
+
+state0 = x state0 \/ f state0 \/ o state0;
+state1 = x state1 \/ f state5 \/ o state5;
+state2 = x state2 \/ f state2 \/ o state5;
+Main = f state0 \/ x state4 \/ o state5;
+state4 = f state2 \/ x state4 \/ o state5;
+state5 = x state5 \/ f state5 \/ o state5;

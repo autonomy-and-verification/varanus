@@ -1,0 +1,16 @@
+t matches { event: 't' };
+j matches { event: 'j' };
+n matches { event: 'n' };
+r matches { event: 'r' };
+e matches { event: 'e' };
+
+state0 = j state0 \/ t state9 \/ n state9 \/ r state9 \/ e state9;
+state1 = j state0 \/ t state4 \/ n state9 \/ r state9 \/ e state9;
+state2 = t state9 \/ j state9 \/ n state9 \/ r state9 \/ e state9;
+state3 = t Main \/ j state9 \/ n state9 \/ r state9 \/ e state9;
+state4 = t state4 \/ j state9 \/ n state9 \/ r state9 \/ e state9;
+state5 = t state5 \/ j state5 \/ n state5 \/ r state5 \/ e state5;
+Main = t Main \/ j state9 \/ n state9 \/ r state9 \/ e state9;
+state7 = e state5 \/ r state7 \/ t state9 \/ j state9 \/ n state9;
+state8 = e state5 \/ t Main \/ r state7 \/ j state9 \/ n state9;
+state9 = t state9 \/ j state9 \/ n state9 \/ r state9 \/ e state9;

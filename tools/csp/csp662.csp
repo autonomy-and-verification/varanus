@@ -1,0 +1,49 @@
+channel o, z, b
+
+state0 = 
+b -> state0
+[]
+o -> state5
+[]
+z -> state5
+
+state1 = 
+b -> state1
+[]
+z -> state4
+[]
+o -> state5
+
+state2 = 
+o -> state0
+[]
+b -> state0
+[]
+z -> state2
+
+state3 = 
+o -> state0
+[]
+b -> state1
+[]
+z -> state3
+
+state4 = 
+z -> state4
+[]
+b -> state4
+[]
+o -> state5
+
+state5 = 
+o -> state5
+[]
+z -> state5
+[]
+b -> state5
+
+WCST = state3 -- Main Process, starts the recursion in state3
+
+assert state3; RUN(Events) :[deadlock free]:
+assert state3 :[deterministic]:
+assert state3 :[divergence free]:

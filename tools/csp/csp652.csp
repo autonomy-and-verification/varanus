@@ -1,0 +1,216 @@
+channel s, c, d, x, e
+
+state0 = 
+d -> state9
+[]
+s -> state10
+[]
+c -> state12
+[]
+x -> state12
+[]
+e -> state12
+
+state1 = 
+c -> state1
+[]
+x -> state1
+[]
+e -> state1
+[]
+d -> state9
+[]
+s -> state18
+
+state2 = 
+c -> state2
+[]
+x -> state2
+[]
+e -> state2
+[]
+d -> state4
+[]
+s -> state18
+
+state3 = 
+c -> state5
+[]
+d -> state5
+[]
+x -> state5
+[]
+e -> state5
+[]
+s -> state7
+
+state4 = 
+s -> state4
+[]
+c -> state4
+[]
+d -> state4
+[]
+x -> state4
+[]
+e -> state4
+
+state5 = 
+c -> state6
+[]
+d -> state6
+[]
+x -> state6
+[]
+e -> state6
+[]
+s -> state8
+
+state6 = 
+c -> state6
+[]
+d -> state6
+[]
+x -> state6
+[]
+e -> state6
+[]
+s -> state8
+
+state7 = 
+s -> state8
+[]
+c -> state8
+[]
+x -> state8
+[]
+e -> state8
+[]
+d -> state11
+
+state8 = 
+s -> state8
+[]
+c -> state8
+[]
+x -> state8
+[]
+e -> state8
+[]
+d -> state11
+
+state9 = 
+d -> state9
+[]
+s -> state10
+[]
+c -> state12
+[]
+x -> state12
+[]
+e -> state12
+
+state10 = 
+s -> state13
+[]
+c -> state13
+[]
+d -> state13
+[]
+x -> state13
+[]
+e -> state13
+
+state11 = 
+s -> state8
+[]
+c -> state8
+[]
+x -> state8
+[]
+e -> state8
+[]
+d -> state14
+
+state12 = 
+d -> state9
+[]
+s -> state13
+[]
+c -> state15
+[]
+x -> state15
+[]
+e -> state15
+
+state13 = 
+e -> state13
+[]
+s -> state18
+[]
+c -> state18
+[]
+d -> state18
+[]
+x -> state18
+
+state14 = 
+s -> state8
+[]
+c -> state8
+[]
+x -> state8
+[]
+e -> state8
+[]
+d -> state16
+
+state15 = 
+c -> state1
+[]
+x -> state1
+[]
+d -> state9
+[]
+e -> state15
+[]
+s -> state18
+
+state16 = 
+s -> state8
+[]
+c -> state8
+[]
+x -> state8
+[]
+e -> state8
+[]
+d -> state16
+
+state17 = 
+s -> state4
+[]
+c -> state4
+[]
+x -> state4
+[]
+e -> state4
+[]
+d -> state17
+
+state18 = 
+s -> state18
+[]
+c -> state18
+[]
+d -> state18
+[]
+x -> state18
+[]
+e -> state18
+
+WCST = state3 -- Main Process, starts the recursion in state3
+
+assert state3; RUN(Events) :[deadlock free]:
+assert state3 :[deterministic]:
+assert state3 :[divergence free]:

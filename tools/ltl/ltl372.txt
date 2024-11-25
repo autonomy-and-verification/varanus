@@ -1,0 +1,1 @@
+F((!w -> XFr) xor (a W j))

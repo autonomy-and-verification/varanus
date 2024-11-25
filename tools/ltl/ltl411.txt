@@ -1,0 +1,1 @@
+G((!h U w) U ((j xor Gh) -> Ga))

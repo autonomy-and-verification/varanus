@@ -1,0 +1,5 @@
+t matches { event: 't' };
+r matches { event: 'r' };
+
+Main = t Main \/ r Main;
+state1 = t state1 \/ r state1;

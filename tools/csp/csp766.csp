@@ -1,0 +1,241 @@
+channel i, p, j, r, y, s
+
+state0 = 
+s -> state1
+[]
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+
+state1 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state1
+
+state2 = 
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+[]
+s -> state17
+
+state3 = 
+r -> state16
+[]
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+y -> state17
+[]
+s -> state17
+
+state4 = 
+i -> state4
+[]
+p -> state4
+[]
+r -> state4
+[]
+y -> state4
+[]
+s -> state4
+[]
+j -> state17
+
+state5 = 
+s -> state4
+[]
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+
+state6 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state17
+
+state7 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state1
+
+state8 = 
+i -> state1
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+[]
+s -> state17
+
+state9 = 
+i -> state4
+[]
+p -> state4
+[]
+y -> state4
+[]
+s -> state4
+[]
+j -> state17
+[]
+r -> state17
+
+state10 = 
+s -> state4
+[]
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+
+state11 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+y -> state1
+[]
+s -> state1
+[]
+r -> state11
+
+state12 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state4
+
+state13 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state4
+
+state14 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+r -> state1
+[]
+y -> state1
+[]
+s -> state1
+
+state15 = 
+i -> state1
+[]
+p -> state1
+[]
+j -> state1
+[]
+y -> state1
+[]
+s -> state1
+[]
+r -> state11
+
+state16 = 
+i -> state4
+[]
+p -> state4
+[]
+y -> state4
+[]
+s -> state4
+[]
+r -> state16
+[]
+j -> state17
+
+state17 = 
+i -> state17
+[]
+p -> state17
+[]
+j -> state17
+[]
+r -> state17
+[]
+y -> state17
+[]
+s -> state17
+
+WCST = state8 -- Main Process, starts the recursion in state8
+
+assert state8; RUN(Events) :[deadlock free]:
+assert state8 :[deterministic]:
+assert state8 :[divergence free]:

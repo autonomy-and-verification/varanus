@@ -1,0 +1,15 @@
+b matches { event: 'b' };
+m matches { event: 'm' };
+f matches { event: 'f' };
+i matches { event: 'i' };
+s matches { event: 's' };
+
+state0 = b state0 \/ m state8 \/ f state8 \/ i state8 \/ s state8;
+state1 = b state6 \/ m state6 \/ f state6 \/ i state6 \/ s state6;
+state2 = b state6 \/ m state6 \/ f state6 \/ i state6 \/ s state6;
+state3 = m state1 \/ f state3 \/ b state4 \/ i state4 \/ s state4;
+state4 = b state6 \/ m state6 \/ f state6 \/ i state6 \/ s state6;
+state5 = b state6 \/ m state6 \/ f state6 \/ i state6 \/ s state6;
+state6 = b state6 \/ m state6 \/ f state6 \/ i state6 \/ s state6;
+Main = m state1 \/ f state3 \/ i state4 \/ s state4 \/ b state5;
+state8 = b state8 \/ m state8 \/ f state8 \/ i state8 \/ s state8;

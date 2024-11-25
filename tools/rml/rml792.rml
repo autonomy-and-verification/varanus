@@ -1,0 +1,27 @@
+s matches { event: 's' };
+m matches { event: 'm' };
+b matches { event: 'b' };
+i matches { event: 'i' };
+u matches { event: 'u' };
+
+state0 = s state0 \/ m state3 \/ b state20 \/ i state20 \/ u state20;
+state1 = s state1 \/ m state8 \/ b state20 \/ i state20 \/ u state20;
+state2 = m state8 \/ u state11 \/ s state16 \/ b state19 \/ i state20;
+state3 = s state0 \/ m state3 \/ b state5 \/ i state20 \/ u state20;
+state4 = b state5 \/ s state6 \/ m state8 \/ i state20 \/ u state20;
+state5 = b state5 \/ s state20 \/ m state20 \/ i state20 \/ u state20;
+state6 = s state6 \/ m state8 \/ b state20 \/ i state20 \/ u state20;
+state7 = s state1 \/ b state5 \/ m state8 \/ i state20 \/ u state20;
+state8 = s state8 \/ m state8 \/ b state8 \/ i state8 \/ u state8;
+Main = m state8 \/ i state10 \/ u state11 \/ b state12 \/ s state16;
+state10 = s state11 \/ u state11 \/ b state12 \/ m state15 \/ i state20;
+state11 = s state11 \/ u state11 \/ b state12 \/ m state18 \/ i state20;
+state12 = s state11 \/ u state11 \/ m state15 \/ b state19 \/ i state20;
+state13 = s state11 \/ u state11 \/ m state18 \/ b state19 \/ i state20;
+state14 = s state11 \/ u state11 \/ b state12 \/ m state15 \/ i state20;
+state15 = s state11 \/ u state11 \/ m state18 \/ b state19 \/ i state20;
+state16 = m state8 \/ u state11 \/ b state12 \/ s state16 \/ i state20;
+state17 = m state8 \/ u state11 \/ s state16 \/ b state19 \/ i state20;
+state18 = s state11 \/ u state11 \/ m state18 \/ b state19 \/ i state20;
+state19 = s state11 \/ u state11 \/ m state15 \/ b state19 \/ i state20;
+state20 = s state20 \/ m state20 \/ b state20 \/ i state20 \/ u state20;

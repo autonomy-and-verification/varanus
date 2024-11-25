@@ -1,0 +1,1 @@
+((f U g) xor Gu) R !a

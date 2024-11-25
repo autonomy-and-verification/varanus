@@ -1,0 +1,12 @@
+i matches { event: 'i' };
+n matches { event: 'n' };
+h matches { event: 'h' };
+z matches { event: 'z' };
+
+state0 = h state2 \/ i state6 \/ n state6 \/ z state6;
+state1 = i state1 \/ n state1 \/ h state1 \/ z state1;
+state2 = h state2 \/ i state6 \/ n state6 \/ z state6;
+state3 = n state1 \/ h state1 \/ z state3 \/ i state6;
+Main = h state2 \/ i state6 \/ n state6 \/ z state6;
+state5 = n state1 \/ h state1 \/ z state3 \/ i state6;
+state6 = i state6 \/ n state6 \/ h state6 \/ z state6;

@@ -1,0 +1,17 @@
+i matches { event: 'i' };
+w matches { event: 'w' };
+d matches { event: 'd' };
+b matches { event: 'b' };
+g matches { event: 'g' };
+l matches { event: 'l' };
+
+state0 = i state0 \/ w state0 \/ d state0 \/ b state0 \/ g state0 \/ l state0;
+state1 = i state1 \/ w state1 \/ d state1 \/ b state1 \/ g state1 \/ l state9;
+state2 = b state2 \/ i state9 \/ w state9 \/ d state9 \/ g state9 \/ l state9;
+state3 = i state3 \/ w state3 \/ d state3 \/ l state3 \/ b state9 \/ g state9;
+state4 = b state2 \/ i state3 \/ w state3 \/ d state3 \/ l state3 \/ g state9;
+state5 = g state1 \/ l state3 \/ i state7 \/ w state7 \/ d state7 \/ b state8;
+Main = d state0 \/ b state0 \/ g state0 \/ l state0 \/ i state1 \/ w state1;
+state7 = b state1 \/ g state1 \/ l state3 \/ i state7 \/ w state7 \/ d state7;
+state8 = i state1 \/ w state1 \/ d state1 \/ g state1 \/ b state8 \/ l state9;
+state9 = i state9 \/ w state9 \/ d state9 \/ b state9 \/ g state9 \/ l state9;

@@ -1,0 +1,1 @@
+F((h & (m xor n)) xor (z R c))

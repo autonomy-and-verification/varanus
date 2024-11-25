@@ -1,0 +1,12 @@
+a matches { event: 'a' };
+z matches { event: 'z' };
+v matches { event: 'v' };
+i matches { event: 'i' };
+u matches { event: 'u' };
+
+state0 = a state0 \/ z state0 \/ v state0 \/ i state0 \/ u state0;
+state1 = a state0 \/ z state0 \/ v state0 \/ u state1 \/ i state5;
+state2 = a state0 \/ z state0 \/ i state2 \/ u state3 \/ v state5;
+state3 = a state0 \/ z state0 \/ v state0 \/ i state2 \/ u state3;
+Main = a state0 \/ z state0 \/ i state2 \/ u state3 \/ v state5;
+state5 = a state5 \/ z state5 \/ v state5 \/ i state5 \/ u state5;

@@ -1,0 +1,1 @@
+F((l <-> m) | (G(i U (t xor X(0))) xor ((Xx <-> GFo) -> s)))

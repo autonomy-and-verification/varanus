@@ -1,0 +1,16 @@
+f matches { event: 'f' };
+l matches { event: 'l' };
+r matches { event: 'r' };
+h matches { event: 'h' };
+b matches { event: 'b' };
+
+state0 = h state0 \/ f state9 \/ l state9 \/ r state9 \/ b state9;
+state1 = f state7 \/ l state7 \/ r state7 \/ h state7 \/ b state9;
+Main = f Main \/ l Main \/ b Main \/ h state3 \/ r state4;
+state3 = f Main \/ l Main \/ b Main \/ h state3 \/ r state4;
+state4 = f Main \/ l Main \/ h state3 \/ r state4 \/ b state9;
+state5 = f Main \/ l Main \/ h state3 \/ r state4 \/ b state9;
+state6 = f Main \/ l Main \/ h state3 \/ r state4 \/ b state9;
+state7 = f state7 \/ l state7 \/ r state7 \/ h state7 \/ b state7;
+state8 = f state7 \/ l state7 \/ r state7 \/ h state7 \/ b state9;
+state9 = f state9 \/ l state9 \/ r state9 \/ h state9 \/ b state9;

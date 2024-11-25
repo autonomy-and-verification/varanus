@@ -1,0 +1,161 @@
+channel l, j, n, b, z
+
+state0 = 
+j -> state0
+[]
+n -> state0
+[]
+b -> state0
+[]
+z -> state0
+[]
+l -> state13
+
+state1 = 
+j -> state1
+[]
+n -> state5
+[]
+l -> state7
+[]
+b -> state13
+[]
+z -> state13
+
+state2 = 
+b -> state0
+[]
+z -> state0
+[]
+j -> state2
+[]
+n -> state5
+[]
+l -> state7
+
+state3 = 
+j -> state3
+[]
+n -> state5
+[]
+l -> state13
+[]
+b -> state13
+[]
+z -> state13
+
+state4 = 
+b -> state0
+[]
+z -> state0
+[]
+j -> state4
+[]
+n -> state5
+[]
+l -> state13
+
+state5 = 
+l -> state5
+[]
+j -> state5
+[]
+n -> state5
+[]
+b -> state5
+[]
+z -> state5
+
+state6 = 
+l -> state7
+[]
+b -> state10
+[]
+z -> state10
+[]
+n -> state11
+[]
+j -> state12
+
+state7 = 
+l -> state7
+[]
+n -> state8
+[]
+j -> state9
+[]
+b -> state13
+[]
+z -> state13
+
+state8 = 
+l -> state5
+[]
+j -> state5
+[]
+n -> state5
+[]
+b -> state13
+[]
+z -> state13
+
+state9 = 
+j -> state1
+[]
+n -> state5
+[]
+l -> state7
+[]
+b -> state13
+[]
+z -> state13
+
+state10 = 
+b -> state0
+[]
+z -> state0
+[]
+l -> state7
+[]
+n -> state11
+[]
+j -> state12
+
+state11 = 
+b -> state0
+[]
+z -> state0
+[]
+l -> state5
+[]
+j -> state5
+[]
+n -> state5
+
+state12 = 
+b -> state0
+[]
+z -> state0
+[]
+j -> state2
+[]
+n -> state5
+[]
+l -> state7
+
+state13 = 
+l -> state13
+[]
+j -> state13
+[]
+n -> state13
+[]
+b -> state13
+[]
+z -> state13
+
+WCST = state6 -- Main Process, starts the recursion in state6
+
+assert state6; RUN(Events) :[deadlock free]:
+assert state6 :[deterministic]:
+assert state6 :[divergence free]:

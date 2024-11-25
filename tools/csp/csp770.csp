@@ -1,0 +1,682 @@
+channel j, u, i, s, q, r, h
+
+state0 = 
+r -> state0
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+h -> state44
+
+state1 = 
+j -> state1
+[]
+u -> state1
+[]
+i -> state1
+[]
+s -> state1
+[]
+h -> state1
+[]
+r -> state4
+[]
+q -> state44
+
+state2 = 
+j -> state1
+[]
+u -> state1
+[]
+i -> state1
+[]
+s -> state1
+[]
+h -> state2
+[]
+r -> state4
+[]
+q -> state44
+
+state3 = 
+j -> state1
+[]
+u -> state1
+[]
+i -> state1
+[]
+s -> state1
+[]
+h -> state2
+[]
+r -> state4
+[]
+q -> state44
+
+state4 = 
+j -> state1
+[]
+u -> state1
+[]
+i -> state1
+[]
+s -> state1
+[]
+h -> state1
+[]
+r -> state4
+[]
+q -> state44
+
+state5 = 
+s -> state1
+[]
+i -> state7
+[]
+j -> state44
+[]
+u -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state6 = 
+s -> state1
+[]
+i -> state7
+[]
+j -> state44
+[]
+u -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state7 = 
+s -> state1
+[]
+i -> state7
+[]
+j -> state44
+[]
+u -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state8 = 
+s -> state1
+[]
+i -> state7
+[]
+j -> state44
+[]
+u -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state9 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state10 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state11 = 
+j -> state1
+[]
+q -> state10
+[]
+h -> state12
+[]
+i -> state15
+[]
+s -> state15
+[]
+r -> state16
+[]
+u -> state43
+
+state12 = 
+j -> state1
+[]
+q -> state10
+[]
+h -> state12
+[]
+i -> state15
+[]
+s -> state15
+[]
+r -> state16
+[]
+u -> state43
+
+state13 = 
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+s -> state15
+[]
+i -> state20
+[]
+u -> state43
+[]
+j -> state44
+
+state14 = 
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+s -> state15
+[]
+i -> state20
+[]
+u -> state43
+[]
+j -> state44
+
+state15 = 
+j -> state1
+[]
+q -> state10
+[]
+i -> state15
+[]
+s -> state15
+[]
+h -> state15
+[]
+r -> state16
+[]
+u -> state43
+
+state16 = 
+j -> state1
+[]
+q -> state10
+[]
+i -> state15
+[]
+s -> state15
+[]
+h -> state15
+[]
+r -> state16
+[]
+u -> state43
+
+state17 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+h -> state10
+[]
+r -> state17
+[]
+u -> state43
+[]
+j -> state44
+
+state18 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state19 = 
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+s -> state15
+[]
+i -> state20
+[]
+u -> state43
+[]
+j -> state44
+
+state20 = 
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+s -> state15
+[]
+i -> state20
+[]
+u -> state43
+[]
+j -> state44
+
+state21 = 
+h -> state22
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+
+state22 = 
+h -> state2
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+
+state23 = 
+h -> state2
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+
+state24 = 
+j -> state27
+[]
+i -> state32
+[]
+s -> state32
+[]
+h -> state32
+[]
+q -> state33
+[]
+r -> state34
+[]
+u -> state43
+
+state25 = 
+r -> state0
+[]
+h -> state22
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+
+state26 = 
+r -> state0
+[]
+h -> state2
+[]
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+
+state27 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state28 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state29 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state30 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state31 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+state32 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state33 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state34 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state35 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state37
+[]
+u -> state43
+[]
+j -> state44
+
+state36 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state12
+[]
+u -> state43
+[]
+j -> state44
+
+state37 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state12
+[]
+u -> state43
+[]
+j -> state44
+
+state38 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state17
+[]
+h -> state37
+[]
+u -> state43
+[]
+j -> state44
+
+state39 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+h -> state12
+[]
+r -> state17
+[]
+u -> state43
+[]
+j -> state44
+
+state40 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state41 = 
+i -> state10
+[]
+s -> state10
+[]
+q -> state10
+[]
+r -> state10
+[]
+h -> state10
+[]
+u -> state43
+[]
+j -> state44
+
+state42 = 
+j -> state24
+[]
+u -> state24
+[]
+i -> state24
+[]
+s -> state24
+[]
+q -> state24
+[]
+r -> state24
+[]
+h -> state24
+
+state43 = 
+j -> state43
+[]
+u -> state43
+[]
+i -> state43
+[]
+s -> state43
+[]
+q -> state43
+[]
+r -> state43
+[]
+h -> state43
+
+state44 = 
+j -> state44
+[]
+u -> state44
+[]
+i -> state44
+[]
+s -> state44
+[]
+q -> state44
+[]
+r -> state44
+[]
+h -> state44
+
+WCST = state42 -- Main Process, starts the recursion in state42
+
+assert state42; RUN(Events) :[deadlock free]:
+assert state42 :[deterministic]:
+assert state42 :[divergence free]:

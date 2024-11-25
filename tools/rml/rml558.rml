@@ -1,0 +1,23 @@
+h matches { event: 'h' };
+z matches { event: 'z' };
+l matches { event: 'l' };
+g matches { event: 'g' };
+u matches { event: 'u' };
+
+state0 = h state0 \/ z state5 \/ l state16 \/ g state16 \/ u state16;
+state1 = l state1 \/ h state16 \/ z state16 \/ g state16 \/ u state16;
+state2 = l state1 \/ h state3 \/ z state16 \/ g state16 \/ u state16;
+state3 = l state1 \/ h state3 \/ z state16 \/ g state16 \/ u state16;
+state4 = h state3 \/ z state16 \/ l state16 \/ g state16 \/ u state16;
+state5 = z state5 \/ h state16 \/ l state16 \/ g state16 \/ u state16;
+state6 = z state5 \/ h state16 \/ l state16 \/ g state16 \/ u state16;
+state7 = z state5 \/ h state16 \/ l state16 \/ g state16 \/ u state16;
+state8 = z state5 \/ h state16 \/ l state16 \/ g state16 \/ u state16;
+state9 = z state5 \/ h state16 \/ l state16 \/ g state16 \/ u state16;
+Main = l state1 \/ z state5 \/ h Main \/ g state16 \/ u state16;
+state11 = l state1 \/ h state3 \/ z state5 \/ g state16 \/ u state16;
+state12 = l state1 \/ h state3 \/ z state5 \/ g state16 \/ u state16;
+state13 = h state0 \/ l state1 \/ z state5 \/ g state16 \/ u state16;
+state14 = l state1 \/ h state3 \/ z state5 \/ g state16 \/ u state16;
+state15 = l state1 \/ h state3 \/ z state16 \/ g state16 \/ u state16;
+state16 = h state16 \/ z state16 \/ l state16 \/ g state16 \/ u state16;

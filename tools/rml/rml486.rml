@@ -1,0 +1,11 @@
+l matches { event: 'l' };
+d matches { event: 'd' };
+u matches { event: 'u' };
+p matches { event: 'p' };
+t matches { event: 't' };
+r matches { event: 'r' };
+
+state0 = l state0 \/ d state0 \/ u state0 \/ p state0 \/ t state0 \/ r state0;
+state1 = l state0 \/ d state0 \/ u state0 \/ p state0 \/ t state0 \/ r state0;
+Main = d state0 \/ u state0 \/ p state0 \/ t state0 \/ r state0 \/ l state3;
+state3 = l state3 \/ d state3 \/ u state3 \/ p state3 \/ t state3 \/ r state3;

@@ -1,0 +1,10 @@
+x matches { event: 'x' };
+q matches { event: 'q' };
+k matches { event: 'k' };
+c matches { event: 'c' };
+s matches { event: 's' };
+
+state0 = x state0 \/ q state0 \/ k state0 \/ c state0 \/ s state0;
+state1 = c state0 \/ s state0 \/ x state3 \/ q state3 \/ k state3;
+Main = x state3 \/ q state3 \/ k state3 \/ c state3 \/ s state3;
+state3 = x state3 \/ q state3 \/ k state3 \/ c state3 \/ s state3;

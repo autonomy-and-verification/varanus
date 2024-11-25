@@ -1,0 +1,10 @@
+w matches { event: 'w' };
+j matches { event: 'j' };
+y matches { event: 'y' };
+n matches { event: 'n' };
+v matches { event: 'v' };
+
+state0 = w state0 \/ j state0 \/ y state0 \/ n state3 \/ v state3;
+Main = j state2 \/ y state2 \/ n state2 \/ v state2 \/ w state3;
+state2 = w state2 \/ j state2 \/ y state2 \/ n state2 \/ v state2;
+state3 = w state3 \/ j state3 \/ y state3 \/ n state3 \/ v state3;

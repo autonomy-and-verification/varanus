@@ -1,0 +1,23 @@
+h matches { event: 'h' };
+c matches { event: 'c' };
+k matches { event: 'k' };
+u matches { event: 'u' };
+
+Main = c state1 \/ k state1 \/ u state1 \/ h state2;
+state1 = c state7 \/ k state7 \/ u state7 \/ h state8;
+state2 = c state7 \/ k state7 \/ u state7 \/ h state11;
+state3 = h state3 \/ c state17 \/ k state17 \/ u state17;
+state4 = h state4 \/ c state17 \/ k state17 \/ u state17;
+state5 = h state4 \/ c state17 \/ k state17 \/ u state17;
+state6 = c state7 \/ u state7 \/ h state17 \/ k state17;
+state7 = c state7 \/ u state7 \/ h state17 \/ k state17;
+state8 = c state7 \/ u state7 \/ h state17 \/ k state17;
+state9 = c state7 \/ u state7 \/ h state17 \/ k state17;
+state10 = h state17 \/ c state17 \/ k state17 \/ u state17;
+state11 = h state3 \/ c state7 \/ u state7 \/ k state17;
+state12 = h state4 \/ c state7 \/ u state7 \/ k state17;
+state13 = h state4 \/ c state7 \/ u state7 \/ k state17;
+state14 = h state4 \/ c state7 \/ u state7 \/ k state17;
+state15 = h state4 \/ c state17 \/ k state17 \/ u state17;
+state16 = c state7 \/ u state7 \/ h state17 \/ k state17;
+state17 = h state17 \/ c state17 \/ k state17 \/ u state17;

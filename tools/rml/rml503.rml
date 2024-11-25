@@ -1,0 +1,13 @@
+d matches { event: 'd' };
+f matches { event: 'f' };
+z matches { event: 'z' };
+o matches { event: 'o' };
+l matches { event: 'l' };
+
+state0 = d state0 \/ f state0 \/ z state0 \/ o state0 \/ l state0;
+state1 = o state1 \/ d state6 \/ f state6 \/ z state6 \/ l state6;
+state2 = o state1 \/ z state2 \/ d state6 \/ f state6 \/ l state6;
+Main = f state0 \/ o state1 \/ z state2 \/ d state4 \/ l state6;
+state4 = f state0 \/ d state4 \/ z state6 \/ o state6 \/ l state6;
+state5 = f state0 \/ o state1 \/ d state4 \/ z state6 \/ l state6;
+state6 = d state6 \/ f state6 \/ z state6 \/ o state6 \/ l state6;

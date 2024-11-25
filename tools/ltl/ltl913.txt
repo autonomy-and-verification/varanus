@@ -1,0 +1,1 @@
+F(((Fp M 1) R r) W (X!c W !Xh)) & G!(w xor z)

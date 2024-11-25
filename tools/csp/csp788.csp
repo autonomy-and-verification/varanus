@@ -1,0 +1,337 @@
+channel y, f, l, r, i
+
+state0 = 
+i -> state7
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state1 = 
+i -> state12
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state2 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state3 = 
+f -> state3
+[]
+y -> state6
+[]
+r -> state15
+[]
+i -> state20
+[]
+l -> state22
+
+state4 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state5 = 
+i -> state5
+[]
+l -> state17
+[]
+y -> state19
+[]
+r -> state19
+[]
+f -> state29
+
+state6 = 
+l -> state1
+[]
+r -> state7
+[]
+y -> state10
+[]
+f -> state29
+[]
+i -> state29
+
+state7 = 
+i -> state7
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state8 = 
+i -> state12
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state9 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state10 = 
+l -> state1
+[]
+r -> state7
+[]
+y -> state10
+[]
+f -> state29
+[]
+i -> state29
+
+state11 = 
+l -> state1
+[]
+r -> state7
+[]
+y -> state10
+[]
+f -> state29
+[]
+i -> state29
+
+state12 = 
+i -> state12
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state13 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state14 = 
+f -> state3
+[]
+y -> state6
+[]
+r -> state15
+[]
+i -> state20
+[]
+l -> state22
+
+state15 = 
+y -> state15
+[]
+f -> state15
+[]
+l -> state15
+[]
+r -> state15
+[]
+i -> state15
+
+state16 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state17 = 
+l -> state17
+[]
+y -> state19
+[]
+r -> state19
+[]
+i -> state19
+[]
+f -> state29
+
+state18 = 
+i -> state18
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state19 = 
+l -> state17
+[]
+y -> state19
+[]
+r -> state19
+[]
+i -> state19
+[]
+f -> state29
+
+state20 = 
+f -> state3
+[]
+y -> state4
+[]
+r -> state15
+[]
+i -> state20
+[]
+l -> state22
+
+state21 = 
+i -> state5
+[]
+l -> state17
+[]
+y -> state19
+[]
+r -> state19
+[]
+f -> state29
+
+state22 = 
+f -> state3
+[]
+y -> state4
+[]
+r -> state15
+[]
+i -> state20
+[]
+l -> state22
+
+state23 = 
+f -> state3
+[]
+y -> state6
+[]
+r -> state15
+[]
+i -> state20
+[]
+l -> state22
+
+state24 = 
+i -> state18
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state25 = 
+l -> state1
+[]
+r -> state7
+[]
+y -> state10
+[]
+f -> state29
+[]
+i -> state29
+
+state26 = 
+i -> state12
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state27 = 
+i -> state12
+[]
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+
+state28 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+state29 = 
+y -> state29
+[]
+f -> state29
+[]
+l -> state29
+[]
+r -> state29
+[]
+i -> state29
+
+WCST = state14 -- Main Process, starts the recursion in state14
+
+assert state14; RUN(Events) :[deadlock free]:
+assert state14 :[deterministic]:
+assert state14 :[divergence free]:

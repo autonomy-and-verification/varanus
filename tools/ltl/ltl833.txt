@@ -1,0 +1,1 @@
+(c | (l & m)) <-> F(((h & (m xor n)) xor (z R c)) W G(c U a))

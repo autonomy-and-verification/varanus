@@ -1,0 +1,1 @@
+(v W w) M (!X(x M p) xor !(x M Go))

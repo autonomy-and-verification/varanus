@@ -1,0 +1,1 @@
+GX(Gy <-> (s xor ((b & w & y) W !(i M o))))

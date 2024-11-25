@@ -1,0 +1,6 @@
+w matches { event: 'w' };
+d matches { event: 'd' };
+
+state0 = w state0 \/ d state0;
+Main = w Main \/ d state2;
+state2 = w state2 \/ d state2;

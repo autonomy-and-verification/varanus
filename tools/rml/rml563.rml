@@ -1,0 +1,15 @@
+k matches { event: 'k' };
+o matches { event: 'o' };
+x matches { event: 'x' };
+p matches { event: 'p' };
+l matches { event: 'l' };
+r matches { event: 'r' };
+
+state0 = r state0 \/ k state7 \/ o state7 \/ x state7 \/ p state7 \/ l state7;
+state1 = p state1 \/ k state7 \/ o state7 \/ x state7 \/ l state7 \/ r state7;
+Main = k state6 \/ o state7 \/ x state7 \/ p state7 \/ l state7 \/ r state7;
+state3 = p state3 \/ k state6 \/ o state6 \/ x state6 \/ l state6 \/ r state6;
+state4 = p state3 \/ k state6 \/ o state6 \/ x state6 \/ l state6 \/ r state6;
+state5 = r state0 \/ p state1 \/ k state7 \/ o state7 \/ x state7 \/ l state7;
+state6 = k state6 \/ o state6 \/ x state6 \/ p state6 \/ l state6 \/ r state6;
+state7 = k state7 \/ o state7 \/ x state7 \/ p state7 \/ l state7 \/ r state7;

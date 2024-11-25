@@ -1,0 +1,25 @@
+r matches { event: 'r' };
+h matches { event: 'h' };
+b matches { event: 'b' };
+i matches { event: 'i' };
+w matches { event: 'w' };
+s matches { event: 's' };
+
+state0 = r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5 \/ s state17;
+state1 = s state2 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5;
+state2 = s state2 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5;
+state3 = s state2 \/ w state4 \/ r state5 \/ h state5 \/ b state5 \/ i state5;
+state4 = w state4 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ s state5;
+state5 = r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5 \/ s state5;
+state6 = s state2 \/ h state5 \/ b state5 \/ i state5 \/ w state5 \/ r state6;
+state7 = s state2 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5;
+Main = r Main \/ h state9 \/ b state17 \/ i state17 \/ w state17 \/ s state17;
+state9 = r state9 \/ h state9 \/ b state17 \/ i state17 \/ w state17 \/ s state17;
+state10 = h state5 \/ b state5 \/ i state5 \/ w state5 \/ r state6 \/ s state17;
+state11 = r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5 \/ s state17;
+state12 = s state2 \/ h state5 \/ b state5 \/ i state5 \/ w state5 \/ r state6;
+state13 = s state2 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ w state5;
+state14 = s state2 \/ w state4 \/ h state5 \/ b state5 \/ i state5 \/ r state6;
+state15 = s state2 \/ w state4 \/ r state5 \/ h state5 \/ b state5 \/ i state5;
+state16 = w state4 \/ r state5 \/ h state5 \/ b state5 \/ i state5 \/ s state5;
+state17 = r state17 \/ h state17 \/ b state17 \/ i state17 \/ w state17 \/ s state17;

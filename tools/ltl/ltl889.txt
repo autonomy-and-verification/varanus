@@ -1,0 +1,1 @@
+!(x xor Xd) | (!i R ((F(u -> Gx) W X!o) <-> Gs))

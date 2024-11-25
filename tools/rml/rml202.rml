@@ -1,0 +1,9 @@
+l matches { event: 'l' };
+u matches { event: 'u' };
+d matches { event: 'd' };
+
+state0 = d state2 \/ l state4 \/ u state4;
+state1 = l state2 \/ u state2 \/ d state4;
+state2 = l state2 \/ u state2 \/ d state2;
+Main = d state0 \/ l state1 \/ u state1;
+state4 = l state4 \/ u state4 \/ d state4;

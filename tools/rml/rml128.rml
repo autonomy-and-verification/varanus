@@ -1,0 +1,4 @@
+s matches { event: 's' };
+
+Main = s state1;
+state1 = s state1;

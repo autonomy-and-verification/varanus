@@ -1,0 +1,1 @@
+F(((d xor Xw) W (x | Xe)) & (!z M Gk))

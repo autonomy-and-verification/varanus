@@ -1,0 +1,1 @@
+Gm R !((y | !y) xor (Gf R w))

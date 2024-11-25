@@ -1,0 +1,1 @@
+!GX((l | F(g M b)) R (((m -> y) M a) R !c))

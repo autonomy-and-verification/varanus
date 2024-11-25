@@ -1,0 +1,12 @@
+w matches { event: 'w' };
+f matches { event: 'f' };
+h matches { event: 'h' };
+c matches { event: 'c' };
+q matches { event: 'q' };
+z matches { event: 'z' };
+
+state0 = c state0 \/ w state4 \/ f state4 \/ h state4 \/ q state4 \/ z state4;
+state1 = f state1 \/ w state4 \/ h state4 \/ c state4 \/ q state4 \/ z state4;
+Main = w state4 \/ f state4 \/ h state4 \/ c state4 \/ q state4 \/ z state4;
+state3 = c state0 \/ f state1 \/ w state4 \/ h state4 \/ q state4 \/ z state4;
+state4 = w state4 \/ f state4 \/ h state4 \/ c state4 \/ q state4 \/ z state4;

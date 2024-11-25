@@ -1,0 +1,1 @@
+(f xor Xn) M ((!b | X(e & u)) & (n | (Ft -> f)))

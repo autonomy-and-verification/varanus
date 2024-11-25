@@ -1,0 +1,1 @@
+(l xor (q W h)) U (q xor (a -> p))

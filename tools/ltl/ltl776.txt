@@ -1,0 +1,1 @@
+((i <-> y) R (Fb xor (!y U !(h & z)))) U GXFo

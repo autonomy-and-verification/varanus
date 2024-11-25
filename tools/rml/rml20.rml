@@ -1,0 +1,6 @@
+g matches { event: 'g' };
+o matches { event: 'o' };
+
+state0 = o state0 \/ g state2;
+Main = g state2 \/ o state2;
+state2 = g state2 \/ o state2;

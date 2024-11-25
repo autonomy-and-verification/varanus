@@ -1,0 +1,11 @@
+c matches { event: 'c' };
+n matches { event: 'n' };
+k matches { event: 'k' };
+z matches { event: 'z' };
+
+state0 = c state0 \/ n state0 \/ k state0 \/ z state5;
+state1 = k state1 \/ z state1 \/ c state5 \/ n state5;
+state2 = c state0 \/ n state0 \/ z state1 \/ k state2;
+state3 = c state3 \/ n state3 \/ k state3 \/ z state3;
+Main = c state2 \/ n state2 \/ z state2 \/ k state3;
+state5 = c state5 \/ n state5 \/ k state5 \/ z state5;

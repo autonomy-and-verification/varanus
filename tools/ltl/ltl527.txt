@@ -1,0 +1,1 @@
+Fx R (F(l | GFXo) <-> (l & Xw))

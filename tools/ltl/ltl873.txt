@@ -1,0 +1,1 @@
+(Xn -> !u) U (Xi xor !((q & (!q W z)) R Fy))

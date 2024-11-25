@@ -1,0 +1,1 @@
+(!Ff -> a) M (((f <-> v) R Xm) M (!s xor u))

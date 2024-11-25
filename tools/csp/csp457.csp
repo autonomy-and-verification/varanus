@@ -1,0 +1,282 @@
+channel x, k, d, r, y
+
+state0 = 
+k -> state0
+[]
+x -> state24
+[]
+d -> state24
+[]
+r -> state24
+[]
+y -> state24
+
+state1 = 
+x -> state22
+[]
+k -> state22
+[]
+d -> state22
+[]
+r -> state22
+[]
+y -> state24
+
+state2 = 
+y -> state9
+[]
+x -> state22
+[]
+k -> state22
+[]
+d -> state22
+[]
+r -> state22
+
+state3 = 
+y -> state9
+[]
+x -> state22
+[]
+k -> state22
+[]
+d -> state22
+[]
+r -> state22
+
+state4 = 
+k -> state0
+[]
+y -> state10
+[]
+x -> state24
+[]
+d -> state24
+[]
+r -> state24
+
+state5 = 
+k -> state0
+[]
+d -> state6
+[]
+y -> state10
+[]
+x -> state24
+[]
+r -> state24
+
+state6 = 
+d -> state6
+[]
+x -> state24
+[]
+k -> state24
+[]
+r -> state24
+[]
+y -> state24
+
+state7 = 
+k -> state0
+[]
+d -> state6
+[]
+x -> state24
+[]
+r -> state24
+[]
+y -> state24
+
+state8 = 
+x -> state9
+[]
+d -> state10
+[]
+r -> state10
+[]
+y -> state10
+[]
+k -> state12
+
+state9 = 
+y -> state9
+[]
+x -> state22
+[]
+k -> state22
+[]
+d -> state22
+[]
+r -> state22
+
+state10 = 
+y -> state10
+[]
+x -> state24
+[]
+k -> state24
+[]
+d -> state24
+[]
+r -> state24
+
+state11 = 
+y -> state22
+[]
+x -> state24
+[]
+k -> state24
+[]
+d -> state24
+[]
+r -> state24
+
+state12 = 
+y -> state10
+[]
+x -> state24
+[]
+k -> state24
+[]
+d -> state24
+[]
+r -> state24
+
+state13 = 
+y -> state10
+[]
+x -> state24
+[]
+k -> state24
+[]
+d -> state24
+[]
+r -> state24
+
+state14 = 
+y -> state9
+[]
+k -> state19
+[]
+x -> state22
+[]
+r -> state22
+[]
+d -> state23
+
+state15 = 
+y -> state9
+[]
+x -> state22
+[]
+k -> state22
+[]
+r -> state22
+[]
+d -> state23
+
+state16 = 
+k -> state19
+[]
+x -> state22
+[]
+r -> state22
+[]
+y -> state22
+[]
+d -> state23
+
+state17 = 
+y -> state9
+[]
+x -> state22
+[]
+k -> state22
+[]
+r -> state22
+[]
+d -> state23
+
+state18 = 
+y -> state9
+[]
+k -> state19
+[]
+x -> state22
+[]
+d -> state22
+[]
+r -> state22
+
+state19 = 
+k -> state19
+[]
+x -> state22
+[]
+d -> state22
+[]
+r -> state22
+[]
+y -> state22
+
+state20 = 
+d -> state6
+[]
+y -> state10
+[]
+x -> state24
+[]
+k -> state24
+[]
+r -> state24
+
+state21 = 
+d -> state6
+[]
+y -> state10
+[]
+x -> state24
+[]
+k -> state24
+[]
+r -> state24
+
+state22 = 
+x -> state22
+[]
+k -> state22
+[]
+d -> state22
+[]
+r -> state22
+[]
+y -> state22
+
+state23 = 
+x -> state22
+[]
+k -> state22
+[]
+r -> state22
+[]
+y -> state22
+[]
+d -> state23
+
+state24 = 
+x -> state24
+[]
+k -> state24
+[]
+d -> state24
+[]
+r -> state24
+[]
+y -> state24
+
+WCST = state8 -- Main Process, starts the recursion in state8
+
+assert state8; RUN(Events) :[deadlock free]:
+assert state8 :[deterministic]:
+assert state8 :[divergence free]:

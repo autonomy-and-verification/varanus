@@ -1,0 +1,15 @@
+d matches { event: 'd' };
+j matches { event: 'j' };
+r matches { event: 'r' };
+n matches { event: 'n' };
+s matches { event: 's' };
+i matches { event: 'i' };
+
+state0 = s state3 \/ d state7 \/ j state7 \/ r state7 \/ n state7 \/ i state7;
+state1 = s state3 \/ d state7 \/ j state7 \/ r state7 \/ n state7 \/ i state7;
+state2 = d state2 \/ j state2 \/ r state2 \/ n state2 \/ s state2 \/ i state2;
+state3 = d state3 \/ j state3 \/ r state3 \/ n state3 \/ s state3 \/ i state3;
+Main = d state1 \/ j state1 \/ r state5 \/ n state5 \/ s state5 \/ i state5;
+state5 = s state2 \/ d state3 \/ j state3 \/ r state3 \/ n state3 \/ i state3;
+state6 = s state2 \/ d state3 \/ j state3 \/ r state3 \/ n state3 \/ i state3;
+state7 = d state7 \/ j state7 \/ r state7 \/ n state7 \/ s state7 \/ i state7;

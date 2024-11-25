@@ -1,0 +1,7 @@
+a matches { event: 'a' };
+z matches { event: 'z' };
+y matches { event: 'y' };
+
+state0 = a state0 \/ z state0 \/ y state0;
+Main = a state0 \/ z Main \/ y Main;
+state2 = a state2 \/ z state2 \/ y state2;

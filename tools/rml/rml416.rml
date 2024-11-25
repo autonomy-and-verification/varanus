@@ -1,0 +1,25 @@
+p matches { event: 'p' };
+g matches { event: 'g' };
+w matches { event: 'w' };
+s matches { event: 's' };
+
+state0 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state1 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state2 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state3 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state4 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state5 = s state11 \/ p state19 \/ g state19 \/ w state19;
+state6 = p state19 \/ g state19 \/ w state19 \/ s state19;
+Main = w state8 \/ s state9 \/ g state10 \/ p state19;
+state8 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state9 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state10 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state11 = s state11 \/ p state19 \/ g state19 \/ w state19;
+state12 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state13 = p state19 \/ g state19 \/ w state19 \/ s state19;
+state14 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state15 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state16 = s state11 \/ p state19 \/ g state19 \/ w state19;
+state17 = w state8 \/ s state9 \/ g state10 \/ p state19;
+state18 = s state11 \/ p state19 \/ g state19 \/ w state19;
+state19 = p state19 \/ g state19 \/ w state19 \/ s state19;

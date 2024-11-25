@@ -1,0 +1,1 @@
+((a <-> q) <-> Fy) xor (!x | X((q & (r xor t)) <-> (f | Gq)))

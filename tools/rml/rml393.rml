@@ -1,0 +1,10 @@
+c matches { event: 'c' };
+q matches { event: 'q' };
+s matches { event: 's' };
+v matches { event: 'v' };
+
+state0 = c state0 \/ q state0 \/ s state0 \/ v state0;
+Main = c state2 \/ q state4 \/ s state4 \/ v state4;
+state2 = v state0 \/ c state2 \/ q state3 \/ s state4;
+state3 = q state3 \/ c state4 \/ s state4 \/ v state4;
+state4 = c state4 \/ q state4 \/ s state4 \/ v state4;

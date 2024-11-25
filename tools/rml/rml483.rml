@@ -1,0 +1,11 @@
+o matches { event: 'o' };
+b matches { event: 'b' };
+c matches { event: 'c' };
+s matches { event: 's' };
+t matches { event: 't' };
+
+state0 = s state1 \/ o state4 \/ b state4 \/ c state4 \/ t state4;
+state1 = o state2 \/ b state2 \/ c state2 \/ s state2 \/ t state4;
+state2 = o state2 \/ b state2 \/ c state2 \/ s state2 \/ t state2;
+Main = o state0 \/ b state0 \/ c state0 \/ s state2 \/ t state2;
+state4 = o state4 \/ b state4 \/ c state4 \/ s state4 \/ t state4;

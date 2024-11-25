@@ -1,0 +1,5 @@
+l matches { event: 'l' };
+
+Main = l state2;
+state1 = l state1;
+state2 = l state2;

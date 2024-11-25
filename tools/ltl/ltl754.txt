@@ -1,0 +1,1 @@
+F(((v xor Xo) xor (Xt W b)) -> (i W j))

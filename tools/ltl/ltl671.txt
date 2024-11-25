@@ -1,0 +1,1 @@
+((a <-> XFq) -> XX(Fq & (n -> Xb))) U s

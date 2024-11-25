@@ -1,0 +1,1 @@
+((e xor m) R G(e & k)) <-> ((y <-> z) M !(!g R (n -> (z W r))))

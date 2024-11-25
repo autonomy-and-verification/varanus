@@ -1,0 +1,1 @@
+((((c <-> n) -> (s xor Xl)) xor !Gf) xor (X!b M r)) -> ((b W Fd) R j)

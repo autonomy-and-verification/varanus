@@ -1,0 +1,1 @@
+F(k & F(!w xor (r -> k))) | ((s U q) U (b -> Fp))

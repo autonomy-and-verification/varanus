@@ -1,0 +1,1 @@
+!(G(Fl & Ga) xor ((c W i) -> Go)) W ((c W t) -> a)

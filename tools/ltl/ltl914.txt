@@ -1,0 +1,1 @@
+F((a xor (l U k)) M 1) R G(X(y & (w W q)) | ((a M q) xor Xw))

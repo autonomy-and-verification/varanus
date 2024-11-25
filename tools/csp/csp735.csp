@@ -1,0 +1,1582 @@
+channel g, s, k, z, t, c, x
+
+state0 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state1 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state2 = 
+g -> state46
+[]
+s -> state46
+[]
+k -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+x -> state86
+[]
+c -> state104
+
+state3 = 
+g -> state46
+[]
+s -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+k -> state68
+[]
+x -> state86
+[]
+c -> state104
+
+state4 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state5 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state6 = 
+z -> state9
+[]
+x -> state9
+[]
+c -> state10
+[]
+t -> state11
+[]
+k -> state12
+[]
+g -> state50
+[]
+s -> state56
+
+state7 = 
+c -> state10
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state8 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state9 = 
+z -> state9
+[]
+t -> state11
+[]
+k -> state12
+[]
+x -> state21
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state10 = 
+g -> state46
+[]
+s -> state46
+[]
+k -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+x -> state83
+[]
+c -> state104
+
+state11 = 
+z -> state9
+[]
+k -> state12
+[]
+x -> state21
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state12 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state13 = 
+g -> state46
+[]
+s -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+k -> state68
+[]
+x -> state83
+[]
+c -> state104
+
+state14 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state15 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state22
+[]
+c -> state104
+
+state16 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state17 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state18 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state43
+[]
+c -> state104
+
+state19 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state20 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state21 = 
+z -> state9
+[]
+t -> state11
+[]
+k -> state12
+[]
+x -> state21
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state22 = 
+z -> state9
+[]
+k -> state12
+[]
+x -> state21
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state23 = 
+c -> state10
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state24 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state25 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state26 = 
+c -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state27 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state22
+[]
+c -> state55
+
+state28 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state43
+[]
+c -> state53
+
+state29 = 
+g -> state29
+[]
+s -> state30
+[]
+k -> state67
+[]
+z -> state83
+[]
+t -> state83
+[]
+c -> state83
+[]
+x -> state83
+
+state30 = 
+g -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+k -> state68
+[]
+s -> state69
+[]
+x -> state83
+
+state31 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state43
+[]
+c -> state83
+
+state32 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state33 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state34 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state35 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state36 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+c -> state104
+
+state37 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state38 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+[]
+c -> state104
+
+state39 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state40 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state41 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state42 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state43 = 
+z -> state9
+[]
+k -> state12
+[]
+x -> state21
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state44 = 
+g -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+k -> state68
+[]
+s -> state69
+[]
+x -> state86
+
+state45 = 
+g -> state46
+[]
+s -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+k -> state68
+[]
+x -> state86
+
+state46 = 
+g -> state46
+[]
+s -> state46
+[]
+k -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+x -> state46
+
+state47 = 
+g -> state47
+[]
+z -> state53
+[]
+t -> state53
+[]
+c -> state53
+[]
+x -> state53
+[]
+k -> state84
+[]
+s -> state85
+
+state48 = 
+c -> state46
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state49 = 
+c -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state50 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state22
+[]
+c -> state55
+
+state51 = 
+g -> state29
+[]
+s -> state30
+[]
+c -> state53
+[]
+k -> state67
+[]
+z -> state83
+[]
+t -> state83
+[]
+x -> state83
+
+state52 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state43
+[]
+c -> state53
+
+state53 = 
+x -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state54 = 
+x -> state54
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state55 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state56 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state57 = 
+g -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+k -> state68
+[]
+s -> state69
+[]
+x -> state83
+[]
+c -> state104
+
+state58 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state59 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state60 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state61 = 
+c -> state46
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state62 = 
+z -> state9
+[]
+t -> state11
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+c -> state104
+
+state63 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+g -> state50
+[]
+t -> state96
+[]
+c -> state104
+
+state64 = 
+c -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+x -> state104
+
+state65 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state22
+[]
+c -> state55
+
+state66 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+t -> state43
+[]
+c -> state53
+
+state67 = 
+g -> state46
+[]
+s -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+k -> state68
+[]
+x -> state83
+
+state68 = 
+g -> state46
+[]
+s -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+x -> state46
+[]
+k -> state68
+
+state69 = 
+g -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+x -> state46
+[]
+k -> state68
+[]
+s -> state69
+
+state70 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+c -> state46
+[]
+t -> state96
+
+state71 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state72 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+c -> state46
+[]
+t -> state96
+
+state73 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state74 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state75 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state76 = 
+g -> state47
+[]
+z -> state53
+[]
+t -> state53
+[]
+c -> state53
+[]
+x -> state53
+[]
+s -> state81
+[]
+k -> state82
+
+state77 = 
+g -> state47
+[]
+z -> state53
+[]
+t -> state53
+[]
+c -> state53
+[]
+x -> state53
+[]
+k -> state82
+[]
+s -> state85
+
+state78 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state79 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state80 = 
+s -> state88
+[]
+g -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state81 = 
+x -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state82 = 
+x -> state53
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state83 = 
+g -> state46
+[]
+s -> state46
+[]
+k -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+x -> state83
+
+state84 = 
+x -> state53
+[]
+k -> state87
+[]
+g -> state104
+[]
+s -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state85 = 
+x -> state53
+[]
+k -> state87
+[]
+s -> state88
+[]
+g -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state86 = 
+g -> state46
+[]
+s -> state46
+[]
+k -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+c -> state46
+[]
+x -> state86
+
+state87 = 
+k -> state87
+[]
+g -> state104
+[]
+s -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state88 = 
+k -> state87
+[]
+s -> state88
+[]
+g -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state89 = 
+c -> state46
+[]
+t -> state89
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+x -> state104
+
+state90 = 
+c -> state46
+[]
+t -> state89
+[]
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+x -> state104
+
+state91 = 
+g -> state15
+[]
+s -> state16
+[]
+k -> state17
+[]
+z -> state21
+[]
+x -> state21
+[]
+c -> state46
+[]
+t -> state96
+
+state92 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state93 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state94 = 
+z -> state9
+[]
+x -> state21
+[]
+s -> state35
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+t -> state96
+
+state95 = 
+z -> state9
+[]
+x -> state21
+[]
+k -> state36
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state96 = 
+z -> state9
+[]
+k -> state12
+[]
+x -> state21
+[]
+c -> state46
+[]
+g -> state50
+[]
+s -> state56
+[]
+t -> state96
+
+state97 = 
+g -> state46
+[]
+z -> state46
+[]
+t -> state46
+[]
+k -> state68
+[]
+s -> state69
+[]
+x -> state86
+[]
+c -> state104
+
+state98 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state99 = 
+k -> state87
+[]
+s -> state88
+[]
+g -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state100 = 
+k -> state87
+[]
+g -> state104
+[]
+s -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state101 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state102 = 
+x -> state53
+[]
+s -> state88
+[]
+g -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+
+state103 = 
+s -> state88
+[]
+g -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+state104 = 
+g -> state104
+[]
+s -> state104
+[]
+k -> state104
+[]
+z -> state104
+[]
+t -> state104
+[]
+c -> state104
+[]
+x -> state104
+
+WCST = state6 -- Main Process, starts the recursion in state6
+
+assert state6; RUN(Events) :[deadlock free]:
+assert state6 :[deterministic]:
+assert state6 :[divergence free]:

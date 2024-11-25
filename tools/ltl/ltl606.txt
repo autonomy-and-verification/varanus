@@ -1,0 +1,1 @@
+F((q <-> v) | Gh) & XG(FGh -> (a R v))

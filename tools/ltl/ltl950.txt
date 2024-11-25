@@ -1,0 +1,1 @@
+X(Ge & (n | (f <-> (!X(a M Xn) xor (w M (Xm W p))))))

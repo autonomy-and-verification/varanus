@@ -1,0 +1,19 @@
+u matches { event: 'u' };
+k matches { event: 'k' };
+h matches { event: 'h' };
+w matches { event: 'w' };
+a matches { event: 'a' };
+y matches { event: 'y' };
+n matches { event: 'n' };
+q matches { event: 'q' };
+
+state0 = u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;
+state1 = u state1 \/ k state1 \/ h state1 \/ w state1 \/ a state1 \/ y state1 \/ n state1 \/ q state1;
+state2 = u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;
+Main = k state1 \/ u Main \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;
+state4 = n state8 \/ q state8 \/ u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9;
+state5 = u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;
+state6 = k state1 \/ u Main \/ n state8 \/ q state8 \/ h state9 \/ w state9 \/ a state9 \/ y state9;
+state7 = k state1 \/ u Main \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;
+state8 = n state8 \/ q state8 \/ u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9;
+state9 = u state9 \/ k state9 \/ h state9 \/ w state9 \/ a state9 \/ y state9 \/ n state9 \/ q state9;

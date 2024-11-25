@@ -1,0 +1,15 @@
+w matches { event: 'w' };
+t matches { event: 't' };
+m matches { event: 'm' };
+y matches { event: 'y' };
+q matches { event: 'q' };
+j matches { event: 'j' };
+
+state0 = q state0 \/ w state7 \/ t state7 \/ m state7 \/ y state7 \/ j state7;
+state1 = w state1 \/ t state1 \/ m state1 \/ y state1 \/ q state1 \/ j state7;
+state2 = w state2 \/ t state2 \/ m state2 \/ q state2 \/ j state2 \/ y state7;
+state3 = y state1 \/ j state2 \/ w state3 \/ t state3 \/ m state3 \/ q state3;
+state4 = w state2 \/ t state2 \/ m state2 \/ j state2 \/ q state4 \/ y state7;
+Main = w state6 \/ t state6 \/ m state7 \/ y state7 \/ q state7 \/ j state7;
+state6 = w state6 \/ t state6 \/ m state6 \/ y state6 \/ q state6 \/ j state6;
+state7 = w state7 \/ t state7 \/ m state7 \/ y state7 \/ q state7 \/ j state7;

@@ -1,0 +1,13 @@
+b matches { event: 'b' };
+v matches { event: 'v' };
+c matches { event: 'c' };
+e matches { event: 'e' };
+k matches { event: 'k' };
+
+state0 = e state0 \/ b state5 \/ v state5 \/ c state5 \/ k state6;
+Main = c Main \/ e Main \/ k Main \/ v state5 \/ b state6;
+state2 = k Main \/ e state2 \/ b state5 \/ v state5 \/ c state5;
+state3 = e state3 \/ k state5 \/ b state6 \/ v state6 \/ c state6;
+state4 = c Main \/ e state4 \/ v state5 \/ k state5 \/ b state6;
+state5 = b state5 \/ v state5 \/ c state5 \/ e state5 \/ k state5;
+state6 = b state6 \/ v state6 \/ c state6 \/ e state6 \/ k state6;

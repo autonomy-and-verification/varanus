@@ -1,0 +1,12 @@
+a matches { event: 'a' };
+y matches { event: 'y' };
+n matches { event: 'n' };
+
+state0 = n state3 \/ a state7 \/ y state7;
+state1 = a state3 \/ y state3 \/ n state7;
+Main = y state0 \/ a state6 \/ n state6;
+state3 = a state3 \/ y state3 \/ n state3;
+state4 = a state4 \/ n state4 \/ y state7;
+state5 = n state3 \/ a state4 \/ y state7;
+state6 = a state3 \/ y state3 \/ n state4;
+state7 = a state7 \/ y state7 \/ n state7;

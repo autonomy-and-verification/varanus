@@ -1,0 +1,13 @@
+f matches { event: 'f' };
+v matches { event: 'v' };
+m matches { event: 'm' };
+s matches { event: 's' };
+u matches { event: 'u' };
+
+Main = m state4 \/ f state5 \/ v state5 \/ s state6 \/ u state6;
+state1 = f state1 \/ v state1 \/ m state1 \/ s state1 \/ u state1;
+state2 = m state1 \/ f state6 \/ v state6 \/ s state6 \/ u state6;
+state3 = m state2 \/ f state6 \/ v state6 \/ s state6 \/ u state6;
+state4 = m state1 \/ f state5 \/ v state5 \/ s state6 \/ u state6;
+state5 = m state4 \/ f state5 \/ v state5 \/ s state6 \/ u state6;
+state6 = f state6 \/ v state6 \/ m state6 \/ s state6 \/ u state6;

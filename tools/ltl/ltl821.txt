@@ -1,0 +1,1 @@
+((c xor (F(g -> c) R w)) -> X((k | (e <-> Fa)) W Gh)) -> y

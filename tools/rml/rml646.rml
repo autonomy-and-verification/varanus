@@ -1,0 +1,12 @@
+n matches { event: 'n' };
+r matches { event: 'r' };
+a matches { event: 'a' };
+y matches { event: 'y' };
+z matches { event: 'z' };
+c matches { event: 'c' };
+
+state0 = c state0 \/ n state4 \/ r state4 \/ a state4 \/ y state4 \/ z state4;
+Main = a Main \/ y Main \/ z Main \/ c Main \/ n state2 \/ r state4;
+state2 = a Main \/ y Main \/ z Main \/ c Main \/ n state2 \/ r state3;
+state3 = n state3 \/ r state3 \/ a state3 \/ y state3 \/ z state3 \/ c state3;
+state4 = n state4 \/ r state4 \/ a state4 \/ y state4 \/ z state4 \/ c state4;

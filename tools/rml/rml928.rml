@@ -1,0 +1,21 @@
+s matches { event: 's' };
+x matches { event: 'x' };
+i matches { event: 'i' };
+j matches { event: 'j' };
+q matches { event: 'q' };
+k matches { event: 'k' };
+c matches { event: 'c' };
+f matches { event: 'f' };
+
+state0 = s state0 \/ x state0 \/ i state0 \/ j state0 \/ q state0 \/ c state0 \/ f state0 \/ k state11;
+state1 = s state1 \/ j state1 \/ q state1 \/ k state1 \/ c state1 \/ f state1 \/ i state10 \/ x state11;
+state2 = j state0 \/ q state0 \/ s state2 \/ x state2 \/ i state2 \/ k state2 \/ c state2 \/ f state2;
+state3 = j state0 \/ s state2 \/ x state2 \/ i state2 \/ k state2 \/ c state2 \/ f state2 \/ q state4;
+state4 = s state0 \/ x state0 \/ i state0 \/ j state0 \/ c state0 \/ f state0 \/ q state4 \/ k state11;
+Main = s state6 \/ x state10 \/ i state10 \/ j state10 \/ q state10 \/ k state10 \/ c state10 \/ f state10;
+state6 = x state2 \/ s state6 \/ k state6 \/ c state6 \/ f state6 \/ j state7 \/ q state7 \/ i state10;
+state7 = x state0 \/ k state1 \/ s state7 \/ j state7 \/ q state7 \/ c state7 \/ f state7 \/ i state10;
+state8 = x state2 \/ s state6 \/ k state6 \/ c state6 \/ f state6 \/ j state7 \/ q state9 \/ i state10;
+state9 = x state0 \/ k state1 \/ s state7 \/ j state7 \/ c state7 \/ f state7 \/ q state9 \/ i state10;
+state10 = s state10 \/ x state10 \/ i state10 \/ j state10 \/ q state10 \/ k state10 \/ c state10 \/ f state10;
+state11 = s state11 \/ x state11 \/ i state11 \/ j state11 \/ q state11 \/ k state11 \/ c state11 \/ f state11;

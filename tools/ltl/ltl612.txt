@@ -1,0 +1,1 @@
+((s | (g R (p M q))) & (p | Gw)) xor (Fk R z)

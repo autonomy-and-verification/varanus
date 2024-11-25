@@ -1,0 +1,262 @@
+channel l, o, d, u, n, w, k
+
+state0 = 
+w -> state0
+[]
+d -> state2
+[]
+l -> state5
+[]
+o -> state5
+[]
+u -> state5
+[]
+n -> state5
+[]
+k -> state16
+
+state1 = 
+w -> state1
+[]
+d -> state2
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+k -> state16
+
+state2 = 
+l -> state2
+[]
+o -> state2
+[]
+d -> state2
+[]
+u -> state2
+[]
+n -> state2
+[]
+w -> state2
+[]
+k -> state2
+
+state3 = 
+l -> state2
+[]
+u -> state10
+[]
+o -> state11
+[]
+d -> state12
+[]
+n -> state12
+[]
+w -> state12
+[]
+k -> state12
+
+state4 = 
+l -> state4
+[]
+o -> state4
+[]
+d -> state4
+[]
+n -> state4
+[]
+w -> state4
+[]
+u -> state5
+[]
+k -> state16
+
+state5 = 
+w -> state0
+[]
+d -> state2
+[]
+l -> state5
+[]
+o -> state5
+[]
+u -> state5
+[]
+n -> state5
+[]
+k -> state16
+
+state6 = 
+d -> state2
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state7 = 
+d -> state12
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state8 = 
+d -> state2
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state9 = 
+w -> state0
+[]
+d -> state2
+[]
+l -> state5
+[]
+o -> state5
+[]
+u -> state5
+[]
+n -> state5
+[]
+k -> state16
+
+state10 = 
+w -> state0
+[]
+d -> state2
+[]
+l -> state5
+[]
+o -> state5
+[]
+u -> state5
+[]
+n -> state5
+[]
+k -> state16
+
+state11 = 
+l -> state4
+[]
+o -> state4
+[]
+n -> state4
+[]
+w -> state4
+[]
+u -> state5
+[]
+d -> state12
+[]
+k -> state16
+
+state12 = 
+l -> state4
+[]
+o -> state4
+[]
+n -> state4
+[]
+w -> state4
+[]
+u -> state5
+[]
+d -> state12
+[]
+k -> state16
+
+state13 = 
+d -> state15
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state14 = 
+d -> state14
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state15 = 
+d -> state15
+[]
+l -> state16
+[]
+o -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+state16 = 
+l -> state16
+[]
+o -> state16
+[]
+d -> state16
+[]
+u -> state16
+[]
+n -> state16
+[]
+w -> state16
+[]
+k -> state16
+
+WCST = state3 -- Main Process, starts the recursion in state3
+
+assert state3; RUN(Events) :[deadlock free]:
+assert state3 :[deterministic]:
+assert state3 :[divergence free]:

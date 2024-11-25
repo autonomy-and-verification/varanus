@@ -1,0 +1,1 @@
+!F((F(Gz xor (p W 0)) xor X(s R d)) R (Xh -> j))

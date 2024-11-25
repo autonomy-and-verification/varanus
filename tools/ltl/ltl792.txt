@@ -1,0 +1,1 @@
+(s W m) | (G((!m W i) xor (b -> Fu)) M !Xi)

@@ -1,0 +1,20 @@
+q matches { event: 'q' };
+j matches { event: 'j' };
+w matches { event: 'w' };
+u matches { event: 'u' };
+m matches { event: 'm' };
+
+state0 = q state9 \/ j state9 \/ w state9 \/ u state9 \/ m state13;
+state1 = q state9 \/ j state9 \/ w state9 \/ u state9 \/ m state13;
+state2 = q state10 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+state3 = q state11 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+Main = w state0 \/ q state2 \/ j state13 \/ u state13 \/ m state13;
+state5 = w state9 \/ q state10 \/ j state13 \/ u state13 \/ m state13;
+state6 = w state9 \/ q state10 \/ j state13 \/ u state13 \/ m state13;
+state7 = q state10 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+state8 = q state11 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+state9 = q state9 \/ j state9 \/ w state9 \/ u state9 \/ m state9;
+state10 = q state10 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+state11 = q state11 \/ j state13 \/ w state13 \/ u state13 \/ m state13;
+state12 = w state9 \/ q state10 \/ j state13 \/ u state13 \/ m state13;
+state13 = q state13 \/ j state13 \/ w state13 \/ u state13 \/ m state13;

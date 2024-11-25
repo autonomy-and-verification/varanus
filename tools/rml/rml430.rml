@@ -1,0 +1,21 @@
+u matches { event: 'u' };
+b matches { event: 'b' };
+f matches { event: 'f' };
+l matches { event: 'l' };
+r matches { event: 'r' };
+
+Main = b state6 \/ f state9 \/ l state9 \/ r state10 \/ u state11;
+state1 = r state7 \/ u state14 \/ b state14 \/ f state14 \/ l state14;
+state2 = r state7 \/ u state14 \/ b state14 \/ f state14 \/ l state14;
+state3 = u state14 \/ b state14 \/ f state14 \/ l state14 \/ r state14;
+state4 = u state14 \/ b state14 \/ f state14 \/ l state14 \/ r state14;
+state5 = u state14 \/ b state14 \/ f state14 \/ l state14 \/ r state14;
+state6 = b state6 \/ f state9 \/ l state9 \/ r state10 \/ u state11;
+state7 = r state7 \/ u state14 \/ b state14 \/ f state14 \/ l state14;
+state8 = b state6 \/ f state9 \/ l state9 \/ r state10 \/ u state11;
+state9 = b state6 \/ f state9 \/ l state9 \/ r state10 \/ u state11;
+state10 = b state6 \/ f state9 \/ l state9 \/ r state10 \/ u state11;
+state11 = u state14 \/ b state14 \/ f state14 \/ l state14 \/ r state14;
+state12 = r state7 \/ u state14 \/ b state14 \/ f state14 \/ l state14;
+state13 = r state7 \/ u state14 \/ b state14 \/ f state14 \/ l state14;
+state14 = u state14 \/ b state14 \/ f state14 \/ l state14 \/ r state14;

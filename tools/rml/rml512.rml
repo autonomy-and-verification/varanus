@@ -1,0 +1,13 @@
+t matches { event: 't' };
+y matches { event: 'y' };
+z matches { event: 'z' };
+w matches { event: 'w' };
+l matches { event: 'l' };
+s matches { event: 's' };
+
+state0 = t state2 \/ y state3 \/ z state3 \/ w state4 \/ l state4 \/ s state4;
+Main = t state2 \/ z state3 \/ y state4 \/ w state4 \/ l state4 \/ s state4;
+state2 = t state2 \/ z state3 \/ y state4 \/ w state4 \/ l state4 \/ s state4;
+state3 = t state3 \/ y state3 \/ z state3 \/ w state3 \/ l state3 \/ s state3;
+state4 = z state3 \/ t state4 \/ y state4 \/ w state4 \/ l state4 \/ s state4;
+state5 = t state5 \/ y state5 \/ z state5 \/ w state5 \/ l state5 \/ s state5;

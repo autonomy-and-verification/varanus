@@ -1,0 +1,7 @@
+n matches { event: 'n' };
+p matches { event: 'p' };
+s matches { event: 's' };
+
+Main = n state1 \/ p state1 \/ s state1;
+state1 = s state1 \/ n state2 \/ p state2;
+state2 = n state2 \/ p state2 \/ s state2;

@@ -1,0 +1,9 @@
+u matches { event: 'u' };
+b matches { event: 'b' };
+q matches { event: 'q' };
+
+state0 = q state0 \/ u state4 \/ b state4;
+state1 = q state1 \/ u state2 \/ b state2;
+state2 = u state2 \/ b state2 \/ q state2;
+Main = u state0 \/ b state1 \/ q state1;
+state4 = u state4 \/ b state4 \/ q state4;

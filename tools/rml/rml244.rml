@@ -1,0 +1,17 @@
+u matches { event: 'u' };
+x matches { event: 'x' };
+d matches { event: 'd' };
+g matches { event: 'g' };
+
+Main = u state7 \/ d state8 \/ g state8 \/ x state9;
+state1 = g state1 \/ d state4 \/ x state5 \/ u state11;
+state2 = g state1 \/ d state4 \/ x state5 \/ u state11;
+state3 = g state8 \/ u state11 \/ x state11 \/ d state11;
+state4 = d state4 \/ g state4 \/ x state5 \/ u state11;
+state5 = d state4 \/ g state4 \/ x state5 \/ u state11;
+state6 = u state11 \/ x state11 \/ d state11 \/ g state11;
+state7 = g state8 \/ u state11 \/ x state11 \/ d state11;
+state8 = g state1 \/ u state11 \/ x state11 \/ d state11;
+state9 = g state1 \/ u state11 \/ x state11 \/ d state11;
+state10 = g state8 \/ u state11 \/ x state11 \/ d state11;
+state11 = u state11 \/ x state11 \/ d state11 \/ g state11;

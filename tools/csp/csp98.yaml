@@ -1,0 +1,8 @@
+---
+alphabet: [b, g, f]
+common_alphabet: [b, g, f]
+main_process: "state1"
+model: "csp98.csp" 
+trace_file: "log.txt" 
+name: "random_csp"
+mode: "strict"

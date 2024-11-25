@@ -1,0 +1,10 @@
+w matches { event: 'w' };
+e matches { event: 'e' };
+m matches { event: 'm' };
+p matches { event: 'p' };
+b matches { event: 'b' };
+
+state0 = b state0 \/ e Main \/ w state3 \/ m state3 \/ p state3;
+Main = e Main \/ b Main \/ w state3 \/ m state3 \/ p state3;
+state2 = b state2 \/ w state3 \/ e state3 \/ m state3 \/ p state3;
+state3 = w state3 \/ e state3 \/ m state3 \/ p state3 \/ b state3;

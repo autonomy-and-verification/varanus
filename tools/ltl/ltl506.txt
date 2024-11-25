@@ -1,0 +1,1 @@
+F(d | Fr) U (g & (c xor o) & Go)

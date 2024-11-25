@@ -1,0 +1,1 @@
+!b M GF(X(w | ((!e <-> k) <-> (c xor y))) U ((a -> Fw) -> y))

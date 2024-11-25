@@ -1,0 +1,10 @@
+w matches { event: 'w' };
+u matches { event: 'u' };
+e matches { event: 'e' };
+
+state0 = w state0 \/ u state0 \/ e state0;
+state1 = u state1 \/ w state5 \/ e state5;
+state2 = w state2 \/ u state5 \/ e state5;
+state3 = u state1 \/ w state2 \/ e state5;
+Main = u state0 \/ e state0 \/ w state2;
+state5 = w state5 \/ u state5 \/ e state5;

@@ -1,0 +1,9 @@
+s matches { event: 's' };
+m matches { event: 'm' };
+p matches { event: 'p' };
+w matches { event: 'w' };
+c matches { event: 'c' };
+
+state0 = s state0 \/ m state0 \/ p state0 \/ w state0 \/ c state0;
+Main = m state0 \/ p state0 \/ c state0 \/ s state2 \/ w state2;
+state2 = s state2 \/ m state2 \/ p state2 \/ w state2 \/ c state2;

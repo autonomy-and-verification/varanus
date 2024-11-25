@@ -1,0 +1,1 @@
+(Fu R (i M a)) <-> (((f xor (g M t)) U r) & Xm)

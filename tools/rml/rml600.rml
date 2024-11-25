@@ -1,0 +1,13 @@
+q matches { event: 'q' };
+b matches { event: 'b' };
+h matches { event: 'h' };
+w matches { event: 'w' };
+
+state0 = q state3 \/ b state7 \/ h state7 \/ w state7;
+state1 = b state1 \/ h state5 \/ q state7 \/ w state7;
+state2 = b state1 \/ q state4 \/ h state5 \/ w state7;
+state3 = q state3 \/ b state7 \/ h state7 \/ w state7;
+state4 = q state4 \/ b state7 \/ h state7 \/ w state7;
+state5 = q state5 \/ b state5 \/ h state5 \/ w state5;
+Main = q state3 \/ w state5 \/ b state7 \/ h state7;
+state7 = q state7 \/ b state7 \/ h state7 \/ w state7;

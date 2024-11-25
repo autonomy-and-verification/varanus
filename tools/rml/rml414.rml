@@ -1,0 +1,10 @@
+b matches { event: 'b' };
+k matches { event: 'k' };
+s matches { event: 's' };
+w matches { event: 'w' };
+j matches { event: 'j' };
+
+state0 = b state0 \/ k state0 \/ s state0 \/ w state0 \/ j state3;
+Main = w state0 \/ k state2 \/ s state2 \/ j state2 \/ b state3;
+state2 = b state2 \/ k state2 \/ s state2 \/ w state2 \/ j state2;
+state3 = b state3 \/ k state3 \/ s state3 \/ w state3 \/ j state3;

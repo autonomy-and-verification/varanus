@@ -1,0 +1,1 @@
+G!F!XF!(x xor G(b & x))

@@ -1,0 +1,9 @@
+g matches { event: 'g' };
+r matches { event: 'r' };
+y matches { event: 'y' };
+f matches { event: 'f' };
+
+state0 = g state0 \/ r state0 \/ y state0 \/ f state0;
+Main = f state0 \/ r state2 \/ y state2 \/ g state3;
+state2 = f state0 \/ r state2 \/ y state2 \/ g state3;
+state3 = g state3 \/ r state3 \/ y state3 \/ f state3;

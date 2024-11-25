@@ -1,0 +1,1 @@
+(y <-> z) -> (g & ((a xor (h xor F(b xor v))) <-> (X(m | z) W r)))

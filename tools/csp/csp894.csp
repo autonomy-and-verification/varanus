@@ -1,0 +1,228 @@
+channel s, u, o, z, d, q
+
+state0 = 
+q -> state0
+[]
+u -> state10
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+s -> state13
+
+state1 = 
+o -> state0
+[]
+q -> state0
+[]
+d -> state2
+[]
+u -> state4
+[]
+z -> state10
+[]
+s -> state13
+
+state2 = 
+q -> state2
+[]
+u -> state10
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+s -> state13
+
+state3 = 
+s -> state3
+[]
+d -> state3
+[]
+q -> state3
+[]
+z -> state10
+[]
+u -> state16
+[]
+o -> state16
+
+state4 = 
+q -> state0
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+u -> state12
+[]
+s -> state13
+
+state5 = 
+o -> state0
+[]
+q -> state0
+[]
+d -> state2
+[]
+u -> state4
+[]
+z -> state10
+[]
+s -> state13
+
+state6 = 
+o -> state0
+[]
+d -> state2
+[]
+q -> state2
+[]
+u -> state4
+[]
+z -> state10
+[]
+s -> state13
+
+state7 = 
+q -> state2
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+u -> state12
+[]
+s -> state13
+
+state8 = 
+s -> state10
+[]
+u -> state10
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+q -> state10
+
+state9 = 
+s -> state8
+[]
+u -> state8
+[]
+o -> state8
+[]
+z -> state8
+[]
+d -> state8
+[]
+q -> state8
+
+state10 = 
+u -> state10
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+q -> state10
+[]
+s -> state13
+
+state11 = 
+o -> state0
+[]
+z -> state0
+[]
+d -> state0
+[]
+q -> state0
+[]
+s -> state1
+[]
+u -> state4
+
+state12 = 
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+q -> state10
+[]
+u -> state12
+[]
+s -> state13
+
+state13 = 
+o -> state0
+[]
+d -> state2
+[]
+q -> state2
+[]
+u -> state4
+[]
+z -> state10
+[]
+s -> state13
+
+state14 = 
+q -> state2
+[]
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+u -> state12
+[]
+s -> state13
+
+state15 = 
+o -> state10
+[]
+z -> state10
+[]
+d -> state10
+[]
+q -> state10
+[]
+u -> state12
+[]
+s -> state13
+
+state16 = 
+s -> state16
+[]
+u -> state16
+[]
+o -> state16
+[]
+z -> state16
+[]
+d -> state16
+[]
+q -> state16
+
+WCST = state9 -- Main Process, starts the recursion in state9
+
+assert state9; RUN(Events) :[deadlock free]:
+assert state9 :[deterministic]:
+assert state9 :[divergence free]:

@@ -1,0 +1,1 @@
+F((((n & s) R !v) -> X(j -> (a U (j <-> k)))) xor (o <-> (s M Xh)))

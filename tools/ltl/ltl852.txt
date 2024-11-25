@@ -1,0 +1,1 @@
+F(p xor (G(o R Xx) | !(F!X!y R n)))

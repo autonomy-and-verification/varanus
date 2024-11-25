@@ -1,0 +1,1 @@
+((Gi -> n) R (!f <-> Xr)) xor (X!(t R Xb) <-> (t U k))

@@ -1,0 +1,18 @@
+x matches { event: 'x' };
+a matches { event: 'a' };
+q matches { event: 'q' };
+y matches { event: 'y' };
+f matches { event: 'f' };
+r matches { event: 'r' };
+t matches { event: 't' };
+
+state0 = q state0 \/ x state9 \/ a state9 \/ y state9 \/ f state9 \/ r state9 \/ t state9;
+state1 = x state1 \/ a state1 \/ q state1 \/ f state1 \/ r state1 \/ t state1 \/ y state9;
+Main = f state1 \/ r state1 \/ t state1 \/ x state5 \/ a state8 \/ q state8 \/ y state9;
+state3 = q state0 \/ f state8 \/ x state9 \/ a state9 \/ y state9 \/ r state9 \/ t state9;
+state4 = f state1 \/ x state8 \/ a state8 \/ q state8 \/ y state8 \/ r state8 \/ t state8;
+state5 = x state1 \/ a state1 \/ r state1 \/ t state1 \/ q state7 \/ f state8 \/ y state9;
+state6 = x state8 \/ a state8 \/ q state8 \/ y state8 \/ r state8 \/ t state8 \/ f state9;
+state7 = x state1 \/ a state1 \/ f state1 \/ r state1 \/ t state1 \/ q state7 \/ y state9;
+state8 = x state8 \/ a state8 \/ q state8 \/ y state8 \/ f state8 \/ r state8 \/ t state8;
+state9 = x state9 \/ a state9 \/ q state9 \/ y state9 \/ f state9 \/ r state9 \/ t state9;

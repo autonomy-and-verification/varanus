@@ -1,0 +1,13 @@
+x matches { event: 'x' };
+l matches { event: 'l' };
+o matches { event: 'o' };
+j matches { event: 'j' };
+
+Main = o state1 \/ l state2 \/ x state4 \/ j state7;
+state1 = o state1 \/ x state7 \/ l state7 \/ j state7;
+state2 = o state1 \/ l state2 \/ x state4 \/ j state7;
+state3 = o state1 \/ l state2 \/ x state4 \/ j state7;
+state4 = l state2 \/ x state4 \/ o state7 \/ j state7;
+state5 = l state2 \/ x state4 \/ o state7 \/ j state7;
+state6 = x state7 \/ l state7 \/ o state7 \/ j state7;
+state7 = x state7 \/ l state7 \/ o state7 \/ j state7;

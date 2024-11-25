@@ -1,0 +1,23 @@
+m matches { event: 'm' };
+n matches { event: 'n' };
+u matches { event: 'u' };
+k matches { event: 'k' };
+w matches { event: 'w' };
+i matches { event: 'i' };
+
+Main = n state2 \/ u state2 \/ k state2 \/ w state2 \/ i state2 \/ m state3;
+state1 = m state1 \/ n state15 \/ u state15 \/ k state15 \/ w state15 \/ i state15;
+state2 = u state6 \/ k state7 \/ m state15 \/ n state15 \/ w state15 \/ i state15;
+state3 = m state1 \/ u state6 \/ k state7 \/ n state15 \/ w state15 \/ i state15;
+state4 = m state4 \/ n state10 \/ u state10 \/ k state10 \/ w state15 \/ i state15;
+state5 = k state10 \/ u state11 \/ m state15 \/ n state15 \/ w state15 \/ i state15;
+state6 = u state6 \/ k state7 \/ m state15 \/ n state15 \/ w state15 \/ i state15;
+state7 = u state7 \/ k state7 \/ m state10 \/ n state10 \/ i state10 \/ w state15;
+state8 = m state1 \/ u state6 \/ k state7 \/ n state15 \/ w state15 \/ i state15;
+state9 = u state7 \/ k state7 \/ n state10 \/ i state10 \/ m state14 \/ w state15;
+state10 = m state10 \/ n state10 \/ u state10 \/ k state10 \/ i state10 \/ w state15;
+state11 = k state10 \/ u state11 \/ m state15 \/ n state15 \/ w state15 \/ i state15;
+state12 = n state10 \/ u state10 \/ k state10 \/ m state12 \/ w state15 \/ i state15;
+state13 = m state1 \/ k state10 \/ u state11 \/ n state15 \/ w state15 \/ i state15;
+state14 = n state10 \/ u state10 \/ k state10 \/ i state10 \/ m state14 \/ w state15;
+state15 = m state15 \/ n state15 \/ u state15 \/ k state15 \/ w state15 \/ i state15;

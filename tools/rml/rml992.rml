@@ -1,0 +1,24 @@
+v matches { event: 'v' };
+z matches { event: 'z' };
+y matches { event: 'y' };
+b matches { event: 'b' };
+c matches { event: 'c' };
+o matches { event: 'o' };
+
+state0 = z state2 \/ y state2 \/ v state16 \/ b state16 \/ c state16 \/ o state16;
+state1 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state2 = z state2 \/ y state2 \/ v state16 \/ b state16 \/ c state16 \/ o state16;
+state3 = z state2 \/ y state2 \/ v state16 \/ b state16 \/ c state16 \/ o state16;
+state4 = z state2 \/ y state2 \/ v state16 \/ b state16 \/ c state16 \/ o state16;
+Main = z state6 \/ y state6 \/ v state7 \/ b state16 \/ c state16 \/ o state16;
+state6 = v state9 \/ z state12 \/ y state12 \/ b state16 \/ c state16 \/ o state16;
+state7 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state8 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state9 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state10 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state11 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state12 = v state9 \/ z state12 \/ y state12 \/ b state16 \/ c state16 \/ o state16;
+state13 = v state9 \/ z state12 \/ y state12 \/ b state16 \/ c state16 \/ o state16;
+state14 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;
+state15 = v state9 \/ z state12 \/ y state12 \/ b state16 \/ c state16 \/ o state16;
+state16 = v state16 \/ z state16 \/ y state16 \/ b state16 \/ c state16 \/ o state16;

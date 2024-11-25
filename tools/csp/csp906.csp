@@ -1,0 +1,296 @@
+channel p, o, z, w, k, q, s, m
+
+state0 = 
+w -> state0
+[]
+p -> state16
+[]
+o -> state16
+[]
+z -> state16
+[]
+k -> state16
+[]
+q -> state16
+[]
+s -> state16
+[]
+m -> state16
+
+state1 = 
+p -> state9
+[]
+o -> state16
+[]
+z -> state16
+[]
+w -> state16
+[]
+k -> state16
+[]
+q -> state16
+[]
+s -> state16
+[]
+m -> state16
+
+state2 = 
+p -> state2
+[]
+z -> state2
+[]
+w -> state2
+[]
+k -> state2
+[]
+q -> state2
+[]
+s -> state2
+[]
+m -> state2
+[]
+o -> state16
+
+state3 = 
+m -> state3
+[]
+p -> state16
+[]
+o -> state16
+[]
+z -> state16
+[]
+w -> state16
+[]
+k -> state16
+[]
+q -> state16
+[]
+s -> state16
+
+state4 = 
+m -> state4
+[]
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+
+state5 = 
+m -> state4
+[]
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+
+state6 = 
+m -> state10
+[]
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+
+state7 = 
+w -> state0
+[]
+m -> state3
+[]
+p -> state16
+[]
+o -> state16
+[]
+z -> state16
+[]
+k -> state16
+[]
+q -> state16
+[]
+s -> state16
+
+state8 = 
+p -> state2
+[]
+z -> state2
+[]
+k -> state2
+[]
+q -> state2
+[]
+s -> state2
+[]
+w -> state9
+[]
+m -> state11
+[]
+o -> state16
+
+state9 = 
+p -> state2
+[]
+z -> state2
+[]
+k -> state2
+[]
+q -> state2
+[]
+s -> state2
+[]
+m -> state2
+[]
+w -> state9
+[]
+o -> state16
+
+state10 = 
+m -> state10
+[]
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+
+state11 = 
+p -> state2
+[]
+z -> state2
+[]
+w -> state2
+[]
+k -> state2
+[]
+q -> state2
+[]
+s -> state2
+[]
+m -> state11
+[]
+o -> state16
+
+state12 = 
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+[]
+m -> state12
+
+state13 = 
+m -> state6
+[]
+p -> state12
+[]
+o -> state12
+[]
+z -> state12
+[]
+w -> state12
+[]
+k -> state12
+[]
+q -> state12
+[]
+s -> state12
+
+state14 = 
+m -> state8
+[]
+p -> state9
+[]
+w -> state9
+[]
+k -> state9
+[]
+q -> state9
+[]
+s -> state9
+[]
+o -> state15
+[]
+z -> state15
+
+state15 = 
+p -> state9
+[]
+w -> state9
+[]
+k -> state9
+[]
+q -> state9
+[]
+s -> state9
+[]
+m -> state9
+[]
+o -> state15
+[]
+z -> state15
+
+state16 = 
+p -> state16
+[]
+o -> state16
+[]
+z -> state16
+[]
+w -> state16
+[]
+k -> state16
+[]
+q -> state16
+[]
+s -> state16
+[]
+m -> state16
+
+WCST = state1 -- Main Process, starts the recursion in state1
+
+assert state1; RUN(Events) :[deadlock free]:
+assert state1 :[deterministic]:
+assert state1 :[divergence free]:

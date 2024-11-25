@@ -1,0 +1,1 @@
+i xor (((p <-> Fj) M r) & (!y R s))

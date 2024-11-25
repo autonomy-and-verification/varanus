@@ -1,0 +1,1 @@
+F((Fq xor Xt) M Gy) | !((s R v) W !k)

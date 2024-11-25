@@ -1,0 +1,1 @@
+(Xm -> (u & Xj)) R ((j R q) W w)

@@ -1,0 +1,319 @@
+channel h, n, t, z, o, s
+
+state0 = 
+h -> state0
+[]
+n -> state0
+[]
+z -> state0
+[]
+o -> state0
+[]
+s -> state0
+[]
+t -> state23
+
+state1 = 
+s -> state19
+[]
+h -> state23
+[]
+n -> state23
+[]
+t -> state23
+[]
+z -> state23
+[]
+o -> state23
+
+state2 = 
+h -> state0
+[]
+n -> state0
+[]
+z -> state0
+[]
+o -> state0
+[]
+s -> state19
+[]
+t -> state23
+
+state3 = 
+s -> state0
+[]
+h -> state19
+[]
+n -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+
+state4 = 
+n -> state19
+[]
+h -> state23
+[]
+t -> state23
+[]
+z -> state23
+[]
+o -> state23
+[]
+s -> state23
+
+state5 = 
+z -> state0
+[]
+o -> state2
+[]
+h -> state3
+[]
+s -> state3
+[]
+n -> state22
+[]
+t -> state22
+
+state6 = 
+s -> state7
+[]
+t -> state8
+[]
+o -> state9
+[]
+z -> state11
+[]
+h -> state15
+[]
+n -> state22
+
+state7 = 
+s -> state0
+[]
+h -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+[]
+n -> state23
+
+state8 = 
+h -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+[]
+n -> state23
+[]
+s -> state23
+
+state9 = 
+h -> state0
+[]
+z -> state0
+[]
+o -> state0
+[]
+n -> state19
+[]
+s -> state19
+[]
+t -> state23
+
+state10 = 
+n -> state19
+[]
+s -> state19
+[]
+h -> state23
+[]
+t -> state23
+[]
+z -> state23
+[]
+o -> state23
+
+state11 = 
+h -> state0
+[]
+z -> state0
+[]
+o -> state0
+[]
+s -> state0
+[]
+n -> state19
+[]
+t -> state23
+
+state12 = 
+n -> state5
+[]
+t -> state5
+[]
+z -> state5
+[]
+o -> state5
+[]
+s -> state5
+[]
+h -> state6
+
+state13 = 
+t -> state4
+[]
+z -> state4
+[]
+o -> state4
+[]
+s -> state4
+[]
+h -> state13
+[]
+n -> state19
+
+state14 = 
+t -> state4
+[]
+z -> state11
+[]
+o -> state11
+[]
+s -> state11
+[]
+h -> state14
+[]
+n -> state19
+
+state15 = 
+s -> state11
+[]
+h -> state20
+[]
+t -> state21
+[]
+z -> state21
+[]
+o -> state21
+[]
+n -> state23
+
+state16 = 
+s -> state4
+[]
+h -> state20
+[]
+t -> state21
+[]
+z -> state21
+[]
+o -> state21
+[]
+n -> state23
+
+state17 = 
+t -> state4
+[]
+z -> state11
+[]
+o -> state11
+[]
+h -> state14
+[]
+n -> state19
+[]
+s -> state21
+
+state18 = 
+t -> state4
+[]
+z -> state4
+[]
+o -> state4
+[]
+h -> state13
+[]
+n -> state19
+[]
+s -> state21
+
+state19 = 
+h -> state19
+[]
+n -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+[]
+s -> state19
+
+state20 = 
+h -> state20
+[]
+t -> state21
+[]
+z -> state21
+[]
+o -> state21
+[]
+s -> state21
+[]
+n -> state23
+
+state21 = 
+h -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+[]
+s -> state19
+[]
+n -> state23
+
+state22 = 
+h -> state19
+[]
+n -> state19
+[]
+t -> state19
+[]
+z -> state19
+[]
+o -> state19
+[]
+s -> state23
+
+state23 = 
+h -> state23
+[]
+n -> state23
+[]
+t -> state23
+[]
+z -> state23
+[]
+o -> state23
+[]
+s -> state23
+
+WCST = state12 -- Main Process, starts the recursion in state12
+
+assert state12; RUN(Events) :[deadlock free]:
+assert state12 :[deterministic]:
+assert state12 :[divergence free]:

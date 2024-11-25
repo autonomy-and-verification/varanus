@@ -1,0 +1,562 @@
+channel j, i, z, n, y, h, r
+
+state0 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+
+state1 = 
+h -> state0
+[]
+r -> state0
+[]
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+y -> state36
+
+state2 = 
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+n -> state36
+
+state3 = 
+h -> state0
+[]
+r -> state0
+[]
+i -> state7
+[]
+z -> state7
+[]
+n -> state10
+[]
+y -> state10
+[]
+j -> state29
+
+state4 = 
+h -> state0
+[]
+r -> state0
+[]
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+y -> state36
+
+state5 = 
+h -> state0
+[]
+r -> state0
+[]
+n -> state10
+[]
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+
+state6 = 
+n -> state0
+[]
+j -> state6
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state7 = 
+n -> state10
+[]
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state8 = 
+j -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+i -> state12
+[]
+y -> state36
+
+state9 = 
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state10 = 
+h -> state0
+[]
+r -> state0
+[]
+i -> state7
+[]
+z -> state7
+[]
+j -> state10
+[]
+y -> state10
+[]
+n -> state36
+
+state11 = 
+h -> state0
+[]
+r -> state0
+[]
+i -> state7
+[]
+z -> state7
+[]
+j -> state10
+[]
+y -> state10
+[]
+n -> state36
+
+state12 = 
+j -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+i -> state12
+[]
+y -> state36
+
+state13 = 
+j -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+i -> state12
+[]
+y -> state36
+
+state14 = 
+z -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+i -> state12
+[]
+n -> state36
+[]
+y -> state36
+
+state15 = 
+n -> state0
+[]
+j -> state6
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state16 = 
+j -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+i -> state12
+[]
+y -> state36
+
+state17 = 
+z -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+i -> state12
+[]
+n -> state36
+[]
+y -> state36
+
+state18 = 
+n -> state0
+[]
+j -> state6
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state19 = 
+n -> state0
+[]
+j -> state6
+[]
+i -> state36
+[]
+z -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state20 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+n -> state29
+[]
+h -> state36
+[]
+r -> state36
+
+state21 = 
+n -> state0
+[]
+i -> state27
+[]
+z -> state27
+[]
+j -> state29
+[]
+y -> state29
+[]
+h -> state36
+[]
+r -> state36
+
+state22 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+y -> state0
+[]
+h -> state36
+[]
+r -> state36
+
+state23 = 
+y -> state0
+[]
+i -> state25
+[]
+j -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state24 = 
+y -> state0
+[]
+i -> state25
+[]
+j -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state25 = 
+y -> state0
+[]
+i -> state25
+[]
+j -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state26 = 
+y -> state0
+[]
+i -> state25
+[]
+j -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state27 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+n -> state29
+
+state28 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+
+state29 = 
+n -> state0
+[]
+i -> state27
+[]
+z -> state27
+[]
+j -> state29
+[]
+y -> state29
+[]
+h -> state36
+[]
+r -> state36
+
+state30 = 
+j -> state0
+[]
+i -> state0
+[]
+z -> state0
+[]
+n -> state0
+[]
+y -> state0
+[]
+h -> state36
+[]
+r -> state36
+
+state31 = 
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+n -> state36
+
+state32 = 
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+n -> state36
+
+state33 = 
+i -> state0
+[]
+z -> state0
+[]
+y -> state0
+[]
+h -> state0
+[]
+r -> state0
+[]
+j -> state2
+[]
+n -> state36
+
+state34 = 
+n -> state0
+[]
+y -> state0
+[]
+j -> state6
+[]
+i -> state25
+[]
+z -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state35 = 
+n -> state0
+[]
+y -> state0
+[]
+j -> state6
+[]
+i -> state25
+[]
+z -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+state36 = 
+j -> state36
+[]
+i -> state36
+[]
+z -> state36
+[]
+n -> state36
+[]
+y -> state36
+[]
+h -> state36
+[]
+r -> state36
+
+WCST = state3 -- Main Process, starts the recursion in state3
+
+assert state3; RUN(Events) :[deadlock free]:
+assert state3 :[deterministic]:
+assert state3 :[divergence free]:

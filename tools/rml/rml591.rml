@@ -1,0 +1,12 @@
+q matches { event: 'q' };
+w matches { event: 'w' };
+a matches { event: 'a' };
+x matches { event: 'x' };
+u matches { event: 'u' };
+
+state0 = u state0 \/ q state5 \/ w state5 \/ a state5 \/ x state5;
+state1 = u state0 \/ q state5 \/ w state5 \/ a state5 \/ x state5;
+state2 = q state4 \/ a state4 \/ x state4 \/ u state4 \/ w state5;
+Main = q state1 \/ w state2 \/ a state2 \/ x state2 \/ u state2;
+state4 = q state4 \/ w state4 \/ a state4 \/ x state4 \/ u state4;
+state5 = q state5 \/ w state5 \/ a state5 \/ x state5 \/ u state5;

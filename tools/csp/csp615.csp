@@ -1,0 +1,857 @@
+channel a, i, u, f, g, t, r, m
+
+state0 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+
+state1 = 
+t -> state1
+[]
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state2 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+t -> state42
+[]
+r -> state49
+
+state3 = 
+r -> state0
+[]
+f -> state3
+[]
+t -> state43
+[]
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+g -> state49
+[]
+m -> state49
+
+state4 = 
+r -> state0
+[]
+f -> state4
+[]
+a -> state20
+[]
+i -> state20
+[]
+g -> state20
+[]
+m -> state20
+[]
+t -> state44
+[]
+u -> state49
+
+state5 = 
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+m -> state0
+[]
+r -> state6
+[]
+f -> state7
+[]
+a -> state22
+[]
+t -> state25
+
+state6 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state49
+
+state7 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+
+state8 = 
+m -> state0
+[]
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+
+state9 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+
+state10 = 
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state11 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+u -> state49
+
+state12 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+
+state13 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+
+state14 = 
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state15 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+u -> state49
+
+state16 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+
+state17 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+
+state18 = 
+m -> state0
+[]
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+r -> state20
+[]
+u -> state49
+
+state19 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+a -> state22
+[]
+m -> state49
+
+state20 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+u -> state49
+
+state21 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+a -> state23
+[]
+m -> state49
+
+state22 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+
+state23 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+
+state24 = 
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state25 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+
+state26 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+u -> state49
+
+state27 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+
+state28 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+
+state29 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+r -> state49
+
+state30 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+t -> state30
+
+state31 = 
+r -> state0
+[]
+f -> state3
+[]
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+m -> state49
+
+state32 = 
+r -> state0
+[]
+f -> state4
+[]
+a -> state20
+[]
+i -> state20
+[]
+g -> state20
+[]
+t -> state20
+[]
+m -> state20
+[]
+u -> state49
+
+state33 = 
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+a -> state22
+[]
+r -> state49
+
+state34 = 
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+t -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+a -> state23
+[]
+r -> state49
+
+state35 = 
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+a -> state22
+[]
+t -> state42
+[]
+r -> state49
+
+state36 = 
+i -> state0
+[]
+u -> state0
+[]
+g -> state0
+[]
+m -> state0
+[]
+f -> state2
+[]
+a -> state23
+[]
+t -> state42
+[]
+r -> state49
+
+state37 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+t -> state37
+[]
+u -> state49
+
+state38 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+t -> state38
+
+state39 = 
+t -> state1
+[]
+a -> state41
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state40 = 
+t -> state1
+[]
+a -> state41
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state41 = 
+a -> state41
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state42 = 
+a -> state0
+[]
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+t -> state42
+
+state43 = 
+t -> state43
+[]
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+state44 = 
+a -> state20
+[]
+i -> state20
+[]
+f -> state20
+[]
+g -> state20
+[]
+r -> state20
+[]
+m -> state20
+[]
+t -> state44
+[]
+u -> state49
+
+state45 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+[]
+t -> state42
+
+state46 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+[]
+t -> state42
+
+state47 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state22
+[]
+t -> state30
+
+state48 = 
+i -> state0
+[]
+u -> state0
+[]
+f -> state0
+[]
+g -> state0
+[]
+r -> state0
+[]
+m -> state0
+[]
+a -> state23
+[]
+t -> state30
+
+state49 = 
+a -> state49
+[]
+i -> state49
+[]
+u -> state49
+[]
+f -> state49
+[]
+g -> state49
+[]
+t -> state49
+[]
+r -> state49
+[]
+m -> state49
+
+WCST = state5 -- Main Process, starts the recursion in state5
+
+assert state5; RUN(Events) :[deadlock free]:
+assert state5 :[deterministic]:
+assert state5 :[divergence free]:

@@ -1,0 +1,11 @@
+s matches { event: 's' };
+j matches { event: 'j' };
+q matches { event: 'q' };
+f matches { event: 'f' };
+i matches { event: 'i' };
+m matches { event: 'm' };
+
+Main = j state1 \/ f state1 \/ i state1 \/ s state2 \/ q state2 \/ m state3;
+state1 = j state1 \/ s state2 \/ q state2 \/ f state2 \/ i state2 \/ m state3;
+state2 = s state2 \/ j state2 \/ q state2 \/ f state2 \/ i state2 \/ m state2;
+state3 = s state3 \/ j state3 \/ q state3 \/ f state3 \/ i state3 \/ m state3;

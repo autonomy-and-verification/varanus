@@ -1,0 +1,11 @@
+h matches { event: 'h' };
+n matches { event: 'n' };
+r matches { event: 'r' };
+t matches { event: 't' };
+x matches { event: 'x' };
+
+state0 = h state3 \/ n state4 \/ r state4 \/ t state4 \/ x state4;
+state1 = h state0 \/ n state0 \/ r state0 \/ t state0 \/ x state0;
+Main = h state1 \/ n state1 \/ r state1 \/ t state1 \/ x state1;
+state3 = h state3 \/ n state3 \/ r state3 \/ t state3 \/ x state3;
+state4 = h state4 \/ n state4 \/ r state4 \/ t state4 \/ x state4;

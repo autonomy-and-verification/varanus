@@ -1,0 +1,12 @@
+n matches { event: 'n' };
+l matches { event: 'l' };
+o matches { event: 'o' };
+z matches { event: 'z' };
+j matches { event: 'j' };
+
+state0 = n state0 \/ l state0 \/ o state0 \/ z state0 \/ j state0;
+state1 = n state0 \/ o state0 \/ z state0 \/ j state0 \/ l state5;
+state2 = n state2 \/ l state2 \/ o state2 \/ z state2 \/ j state5;
+state3 = n state2 \/ o state2 \/ z state2 \/ l state5 \/ j state5;
+Main = n state0 \/ l state3 \/ o state3 \/ z state3 \/ j state5;
+state5 = n state5 \/ l state5 \/ o state5 \/ z state5 \/ j state5;

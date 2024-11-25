@@ -1,0 +1,1 @@
+(v & !(c xor (e W k))) R !b

@@ -1,0 +1,1 @@
+(x <-> F!b) | ((!F((h <-> (!q xor t)) R Fu) R Fa) W !l)

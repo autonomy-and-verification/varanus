@@ -1,0 +1,18 @@
+z matches { event: 'z' };
+d matches { event: 'd' };
+e matches { event: 'e' };
+q matches { event: 'q' };
+k matches { event: 'k' };
+m matches { event: 'm' };
+p matches { event: 'p' };
+
+Main = q state1 \/ z state2 \/ d state2 \/ p state3 \/ m state4 \/ k state5 \/ e state8;
+state1 = z state1 \/ q state1 \/ k state1 \/ m state1 \/ p state1 \/ e state8 \/ d state9;
+state2 = z state8 \/ d state8 \/ e state8 \/ q state8 \/ k state8 \/ m state8 \/ p state9;
+state3 = p state1 \/ z state8 \/ d state8 \/ e state8 \/ q state8 \/ k state8 \/ m state8;
+state4 = p state1 \/ d state2 \/ z state3 \/ q state3 \/ m state4 \/ k state5 \/ e state8;
+state5 = p state1 \/ d state2 \/ z state3 \/ q state3 \/ m state3 \/ k state5 \/ e state8;
+state6 = z state2 \/ d state2 \/ e state2 \/ q state2 \/ m state6 \/ k state7 \/ p state9;
+state7 = z state2 \/ d state2 \/ e state2 \/ q state2 \/ m state2 \/ k state7 \/ p state9;
+state8 = z state8 \/ d state8 \/ e state8 \/ q state8 \/ k state8 \/ m state8 \/ p state8;
+state9 = z state9 \/ d state9 \/ e state9 \/ q state9 \/ k state9 \/ m state9 \/ p state9;

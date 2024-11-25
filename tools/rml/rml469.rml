@@ -1,0 +1,13 @@
+h matches { event: 'h' };
+f matches { event: 'f' };
+e matches { event: 'e' };
+v matches { event: 'v' };
+
+state0 = f state5 \/ h state7 \/ e state7 \/ v state7;
+state1 = e state3 \/ v state3 \/ f state5 \/ h state7;
+state2 = e state2 \/ f state4 \/ v state5 \/ h state7;
+state3 = e state3 \/ v state3 \/ f state4 \/ h state7;
+state4 = v state2 \/ h state5 \/ f state5 \/ e state5;
+state5 = h state5 \/ f state5 \/ e state5 \/ v state5;
+Main = e state3 \/ v state3 \/ f state5 \/ h state7;
+state7 = h state7 \/ f state7 \/ e state7 \/ v state7;

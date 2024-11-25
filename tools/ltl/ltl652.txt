@@ -1,0 +1,1 @@
+((s -> c) W (!d xor GFu)) U XX(x R e)

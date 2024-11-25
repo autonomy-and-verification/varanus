@@ -1,0 +1,16 @@
+g matches { event: 'g' };
+h matches { event: 'h' };
+r matches { event: 'r' };
+j matches { event: 'j' };
+y matches { event: 'y' };
+s matches { event: 's' };
+l matches { event: 'l' };
+
+state0 = r state0 \/ h state5 \/ j state5 \/ y state5 \/ s state5 \/ l state5 \/ g state7;
+state1 = l state1 \/ g state7 \/ h state7 \/ r state7 \/ j state7 \/ y state7 \/ s state7;
+Main = r state3 \/ g state5 \/ h state5 \/ j state5 \/ y state7 \/ s state7 \/ l state7;
+state3 = r state3 \/ g state5 \/ h state7 \/ j state7 \/ y state7 \/ s state7 \/ l state7;
+state4 = l state1 \/ r state3 \/ g state5 \/ h state7 \/ j state7 \/ y state7 \/ s state7;
+state5 = g state5 \/ h state5 \/ r state5 \/ j state5 \/ y state5 \/ s state5 \/ l state5;
+state6 = g state6 \/ h state6 \/ r state6 \/ j state6 \/ s state6 \/ l state6 \/ y state7;
+state7 = g state7 \/ h state7 \/ r state7 \/ j state7 \/ y state7 \/ s state7 \/ l state7;

@@ -1,0 +1,13 @@
+d matches { event: 'd' };
+q matches { event: 'q' };
+b matches { event: 'b' };
+c matches { event: 'c' };
+y matches { event: 'y' };
+
+state0 = d state0 \/ q state0 \/ b state0 \/ c state0 \/ y state6;
+state1 = d state0 \/ q state0 \/ b state0 \/ c state0 \/ y state0;
+state2 = c state0 \/ d state4 \/ q state4 \/ b state4 \/ y state4;
+state3 = d state0 \/ q state0 \/ b state0 \/ y state0 \/ c state4;
+state4 = d state4 \/ q state4 \/ b state4 \/ c state4 \/ y state4;
+Main = b state1 \/ c state1 \/ y state1 \/ q state2 \/ d state4;
+state6 = d state6 \/ q state6 \/ b state6 \/ c state6 \/ y state6;

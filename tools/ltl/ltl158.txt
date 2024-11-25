@@ -1,0 +1,1 @@
+XGi -> (d xor q)

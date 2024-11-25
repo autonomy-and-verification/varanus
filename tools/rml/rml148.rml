@@ -1,0 +1,6 @@
+z matches { event: 'z' };
+o matches { event: 'o' };
+
+state0 = z state0 \/ o state2;
+Main = z state0 \/ o Main;
+state2 = z state2 \/ o state2;

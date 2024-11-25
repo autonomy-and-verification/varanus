@@ -1,0 +1,19 @@
+i matches { event: 'i' };
+h matches { event: 'h' };
+b matches { event: 'b' };
+e matches { event: 'e' };
+z matches { event: 'z' };
+g matches { event: 'g' };
+
+state0 = z state0 \/ i state2 \/ h state2 \/ b state2 \/ g state2 \/ e state11;
+state1 = z state0 \/ i state2 \/ h state2 \/ b state2 \/ g Main \/ e state11;
+state2 = i state2 \/ h state2 \/ b state2 \/ e state2 \/ z state2 \/ g state2;
+state3 = h state2 \/ b state5 \/ e state5 \/ z state5 \/ g state5 \/ i state11;
+state4 = h state2 \/ g state4 \/ b state5 \/ e state5 \/ z state5 \/ i state11;
+state5 = h state2 \/ b state5 \/ e state5 \/ z state5 \/ g state5 \/ i state11;
+Main = i state2 \/ h state2 \/ b state2 \/ e state2 \/ z state2 \/ g Main;
+state7 = i state2 \/ h state2 \/ b state2 \/ e state2 \/ z state2 \/ g state2;
+state8 = i state2 \/ h state2 \/ b state2 \/ g state2 \/ e state5 \/ z state10;
+state9 = i state2 \/ h state2 \/ b state2 \/ e state5 \/ g Main \/ z state10;
+state10 = i state2 \/ h state2 \/ b state2 \/ g state2 \/ e state5 \/ z state10;
+state11 = i state11 \/ h state11 \/ b state11 \/ e state11 \/ z state11 \/ g state11;

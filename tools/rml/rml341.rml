@@ -1,0 +1,14 @@
+v matches { event: 'v' };
+x matches { event: 'x' };
+y matches { event: 'y' };
+l matches { event: 'l' };
+
+state0 = l state6 \/ v state8 \/ x state8 \/ y state8;
+state1 = y Main \/ x state5 \/ l state6 \/ v state8;
+Main = v state0 \/ x state1 \/ y Main \/ l state3;
+state3 = v state0 \/ x state1 \/ y Main \/ l state6;
+state4 = y Main \/ l state3 \/ x state5 \/ v state8;
+state5 = y Main \/ x state5 \/ l state6 \/ v state8;
+state6 = v state6 \/ x state6 \/ y state6 \/ l state6;
+state7 = y state6 \/ l state6 \/ x state7 \/ v state8;
+state8 = v state8 \/ x state8 \/ y state8 \/ l state8;

@@ -1,0 +1,9 @@
+a matches { event: 'a' };
+n matches { event: 'n' };
+
+state0 = n state4 \/ a state5;
+state1 = a state1 \/ n state5;
+state2 = a state1 \/ n state4;
+Main = n state0 \/ a state2;
+state4 = a state4 \/ n state4;
+state5 = a state5 \/ n state5;

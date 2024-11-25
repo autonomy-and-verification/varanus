@@ -1,0 +1,1 @@
+g xor F(!m xor (!XFq -> Fh))

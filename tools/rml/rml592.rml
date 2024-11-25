@@ -1,0 +1,13 @@
+j matches { event: 'j' };
+d matches { event: 'd' };
+u matches { event: 'u' };
+o matches { event: 'o' };
+k matches { event: 'k' };
+
+state0 = k state3 \/ j state6 \/ d state6 \/ u state6 \/ o state6;
+state1 = j state1 \/ o state1 \/ k state1 \/ d state6 \/ u state6;
+state2 = j state1 \/ o state1 \/ k state3 \/ d state6 \/ u state6;
+state3 = j state3 \/ d state3 \/ u state3 \/ o state3 \/ k state3;
+state4 = o state1 \/ k state1 \/ j state4 \/ d state6 \/ u state6;
+Main = o state1 \/ k state3 \/ j state4 \/ d state6 \/ u state6;
+state6 = j state6 \/ d state6 \/ u state6 \/ o state6 \/ k state6;

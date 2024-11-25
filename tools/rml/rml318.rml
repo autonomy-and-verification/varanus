@@ -1,0 +1,11 @@
+e matches { event: 'e' };
+i matches { event: 'i' };
+p matches { event: 'p' };
+
+Main = i state1 \/ e state2 \/ p state4;
+state1 = i state1 \/ p state3 \/ e state6;
+state2 = i state1 \/ e state2 \/ p state6;
+state3 = i state1 \/ e state6 \/ p state6;
+state4 = i state1 \/ p state5 \/ e state6;
+state5 = p state5 \/ e state6 \/ i state6;
+state6 = e state6 \/ i state6 \/ p state6;

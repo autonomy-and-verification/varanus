@@ -1,0 +1,9 @@
+f matches { event: 'f' };
+d matches { event: 'd' };
+i matches { event: 'i' };
+
+state0 = d state0 \/ i state3 \/ f state4;
+state1 = f state1 \/ d state1 \/ i state1;
+Main = d state0 \/ i state0 \/ f state1;
+state3 = i state3 \/ f state4 \/ d state4;
+state4 = f state4 \/ d state4 \/ i state4;

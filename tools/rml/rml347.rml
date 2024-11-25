@@ -1,0 +1,20 @@
+v matches { event: 'v' };
+t matches { event: 't' };
+j matches { event: 'j' };
+w matches { event: 'w' };
+y matches { event: 'y' };
+
+state0 = y state0 \/ v state13 \/ t state13 \/ j state13 \/ w state13;
+state1 = v state1 \/ t state1 \/ j state1 \/ w state1 \/ y state1;
+state2 = v state2 \/ t state2 \/ w state2 \/ y state2 \/ j state13;
+state3 = v state4 \/ t state13 \/ j state13 \/ w state13 \/ y state13;
+state4 = v state4 \/ t state13 \/ j state13 \/ w state13 \/ y state13;
+state5 = v state2 \/ t state2 \/ w state2 \/ y state5 \/ j state13;
+Main = v state1 \/ t state1 \/ j state1 \/ y state1 \/ w state2;
+state7 = t state2 \/ w state2 \/ y state2 \/ v state8 \/ j state13;
+state8 = t state2 \/ w state2 \/ y state2 \/ v state8 \/ j state13;
+state9 = t state2 \/ w state2 \/ y state5 \/ v state8 \/ j state13;
+state10 = t state2 \/ w state2 \/ y state5 \/ v state8 \/ j state13;
+state11 = y state0 \/ v state4 \/ t state13 \/ j state13 \/ w state13;
+state12 = y state0 \/ v state4 \/ t state13 \/ j state13 \/ w state13;
+state13 = v state13 \/ t state13 \/ j state13 \/ w state13 \/ y state13;

@@ -1,0 +1,1 @@
+!m & (Fs xor (!(m -> b) xor X(d -> !b)))

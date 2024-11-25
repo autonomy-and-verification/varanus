@@ -1,0 +1,1 @@
+G(g -> (!h W m)) xor G(j xor (h W ((!j W q) | (h U r))))

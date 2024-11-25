@@ -1,0 +1,13 @@
+e matches { event: 'e' };
+y matches { event: 'y' };
+c matches { event: 'c' };
+j matches { event: 'j' };
+t matches { event: 't' };
+
+state0 = y state1 \/ e state6 \/ c state6 \/ j state6 \/ t state6;
+state1 = y state1 \/ t state2 \/ e state6 \/ c state6 \/ j state6;
+state2 = t state2 \/ e state6 \/ y state6 \/ c state6 \/ j state6;
+Main = y state1 \/ t state2 \/ e Main \/ c state6 \/ j state6;
+state4 = t state2 \/ e state6 \/ y state6 \/ c state6 \/ j state6;
+state5 = y state1 \/ e Main \/ c state6 \/ j state6 \/ t state6;
+state6 = e state6 \/ y state6 \/ c state6 \/ j state6 \/ t state6;

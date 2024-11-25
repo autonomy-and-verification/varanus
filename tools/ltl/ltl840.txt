@@ -1,0 +1,1 @@
+u & (X(G(d xor Xv) xor (Xc | Fc)) U XX(s R Xt))

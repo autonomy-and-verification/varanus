@@ -1,0 +1,1 @@
+FG(Xd M (d xor y)) W (FG(z <-> Fy) M (Gf xor Gx))

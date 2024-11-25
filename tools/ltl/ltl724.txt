@@ -1,0 +1,1 @@
+((f U g) xor (a R d)) M (c xor (F(a -> (a <-> !p)) R w))

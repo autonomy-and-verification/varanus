@@ -1,0 +1,18 @@
+m matches { event: 'm' };
+c matches { event: 'c' };
+s matches { event: 's' };
+y matches { event: 'y' };
+
+state0 = m state0 \/ c state0 \/ s state0 \/ y state0;
+Main = m state4 \/ c state12 \/ s state12 \/ y state12;
+state2 = s state2 \/ m state12 \/ c state12 \/ y state12;
+state3 = s state2 \/ y state9 \/ m state12 \/ c state12;
+state4 = c state0 \/ s state0 \/ y state0 \/ m state4;
+state5 = c state0 \/ s state0 \/ y state0 \/ m state4;
+state6 = s state2 \/ y state9 \/ m state12 \/ c state12;
+state7 = s state2 \/ m state12 \/ c state12 \/ y state12;
+state8 = y state9 \/ m state12 \/ c state12 \/ s state12;
+state9 = y state9 \/ m state12 \/ c state12 \/ s state12;
+state10 = y state9 \/ m state12 \/ c state12 \/ s state12;
+state11 = y state9 \/ m state12 \/ c state12 \/ s state12;
+state12 = m state12 \/ c state12 \/ s state12 \/ y state12;

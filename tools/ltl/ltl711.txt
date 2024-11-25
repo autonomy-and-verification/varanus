@@ -1,0 +1,1 @@
+!(GXt M (!(Xp R z) xor ((!e <-> f) U s)))

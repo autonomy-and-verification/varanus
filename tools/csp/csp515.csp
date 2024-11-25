@@ -1,0 +1,249 @@
+channel c, z, e, r, b
+
+state0 = 
+c -> state0
+[]
+z -> state0
+[]
+r -> state0
+[]
+b -> state0
+[]
+e -> state21
+
+state1 = 
+b -> state1
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state2 = 
+b -> state2
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state3 = 
+b -> state4
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+[]
+c -> state19
+
+state4 = 
+b -> state4
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state5 = 
+b -> state4
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+[]
+c -> state20
+
+state6 = 
+b -> state4
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state7 = 
+b -> state2
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state8 = 
+b -> state2
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state9 = 
+b -> state1
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state10 = 
+b -> state1
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state11 = 
+r -> state17
+[]
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+b -> state21
+
+state12 = 
+r -> state17
+[]
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+b -> state21
+
+state13 = 
+r -> state17
+[]
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+b -> state21
+
+state14 = 
+r -> state17
+[]
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+b -> state21
+
+state15 = 
+c -> state0
+[]
+z -> state0
+[]
+b -> state0
+[]
+r -> state17
+[]
+e -> state21
+
+state16 = 
+c -> state0
+[]
+z -> state0
+[]
+b -> state0
+[]
+r -> state17
+[]
+e -> state21
+
+state17 = 
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+[]
+b -> state17
+
+state18 = 
+b -> state1
+[]
+c -> state17
+[]
+z -> state17
+[]
+e -> state17
+[]
+r -> state17
+
+state19 = 
+r -> state17
+[]
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+b -> state21
+
+state20 = 
+c -> state0
+[]
+z -> state0
+[]
+b -> state0
+[]
+r -> state17
+[]
+e -> state21
+
+state21 = 
+c -> state21
+[]
+z -> state21
+[]
+e -> state21
+[]
+r -> state21
+[]
+b -> state21
+
+WCST = state3 -- Main Process, starts the recursion in state3
+
+assert state3; RUN(Events) :[deadlock free]:
+assert state3 :[deterministic]:
+assert state3 :[divergence free]:

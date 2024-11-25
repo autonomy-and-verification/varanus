@@ -1,0 +1,1 @@
+i & (Gf xor (r xor Gy))

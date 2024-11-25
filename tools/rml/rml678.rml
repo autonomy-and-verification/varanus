@@ -1,0 +1,19 @@
+h matches { event: 'h' };
+e matches { event: 'e' };
+i matches { event: 'i' };
+m matches { event: 'm' };
+c matches { event: 'c' };
+
+Main = e state1 \/ i state1 \/ m state1 \/ c state1 \/ h state3;
+state1 = e state9 \/ h state12 \/ i state12 \/ m state12 \/ c state12;
+state2 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state3 = e state9 \/ h state10 \/ i state12 \/ m state12 \/ c state12;
+state4 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state5 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state6 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state7 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state8 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state9 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state10 = h state10 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state11 = h state10 \/ e state12 \/ i state12 \/ m state12 \/ c state12;
+state12 = h state12 \/ e state12 \/ i state12 \/ m state12 \/ c state12;

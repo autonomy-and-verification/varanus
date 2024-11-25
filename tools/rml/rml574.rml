@@ -1,0 +1,28 @@
+o matches { event: 'o' };
+x matches { event: 'x' };
+v matches { event: 'v' };
+w matches { event: 'w' };
+p matches { event: 'p' };
+
+state0 = o state21 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+Main = x state2 \/ p state2 \/ v state3 \/ w state8 \/ o state10;
+state2 = p state2 \/ o state21 \/ x state21 \/ v state21 \/ w state21;
+state3 = p state2 \/ o state21 \/ x state21 \/ v state21 \/ w state21;
+state4 = p state2 \/ w state5 \/ v state19 \/ o state21 \/ x state21;
+state5 = o state5 \/ x state5 \/ v state5 \/ w state5 \/ p state5;
+state6 = o state6 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+state7 = p state2 \/ o state21 \/ x state21 \/ v state21 \/ w state21;
+state8 = p state8 \/ o state21 \/ x state21 \/ v state21 \/ w state21;
+state9 = p state2 \/ o state21 \/ x state21 \/ v state21 \/ w state21;
+state10 = p state2 \/ o state15 \/ x state21 \/ v state21 \/ w state21;
+state11 = o state6 \/ p state8 \/ x state21 \/ v state21 \/ w state21;
+state12 = p state2 \/ o state15 \/ x state21 \/ v state21 \/ w state21;
+state13 = p state2 \/ w state5 \/ v state19 \/ o state21 \/ x state21;
+state14 = p state2 \/ w state5 \/ o state15 \/ v state19 \/ x state21;
+state15 = o state15 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+state16 = o state6 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+state17 = o state15 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+state18 = o state15 \/ x state21 \/ v state21 \/ w state21 \/ p state21;
+state19 = w state5 \/ v state19 \/ o state21 \/ x state21 \/ p state21;
+state20 = w state5 \/ o state15 \/ v state19 \/ x state21 \/ p state21;
+state21 = o state21 \/ x state21 \/ v state21 \/ w state21 \/ p state21;

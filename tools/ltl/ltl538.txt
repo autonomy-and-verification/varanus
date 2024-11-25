@@ -1,0 +1,1 @@
+(r & ((q xor r) xor Xx)) <-> (Gw <-> XGh)

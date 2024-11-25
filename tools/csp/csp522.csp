@@ -1,0 +1,95 @@
+channel h, l, q, m, u
+
+state0 = 
+h -> state0
+[]
+l -> state0
+[]
+q -> state0
+[]
+u -> state0
+[]
+m -> state7
+
+state1 = 
+h -> state2
+[]
+l -> state2
+[]
+m -> state2
+[]
+q -> state3
+[]
+u -> state7
+
+state2 = 
+m -> state2
+[]
+q -> state3
+[]
+h -> state6
+[]
+l -> state6
+[]
+u -> state7
+
+state3 = 
+m -> state2
+[]
+q -> state3
+[]
+h -> state5
+[]
+l -> state5
+[]
+u -> state7
+
+state4 = 
+u -> state0
+[]
+m -> state2
+[]
+q -> state4
+[]
+h -> state5
+[]
+l -> state5
+
+state5 = 
+u -> state0
+[]
+m -> state2
+[]
+q -> state4
+[]
+h -> state6
+[]
+l -> state6
+
+state6 = 
+h -> state6
+[]
+l -> state6
+[]
+q -> state6
+[]
+m -> state6
+[]
+u -> state6
+
+state7 = 
+h -> state7
+[]
+l -> state7
+[]
+q -> state7
+[]
+m -> state7
+[]
+u -> state7
+
+WCST = state1 -- Main Process, starts the recursion in state1
+
+assert state1; RUN(Events) :[deadlock free]:
+assert state1 :[deterministic]:
+assert state1 :[divergence free]:

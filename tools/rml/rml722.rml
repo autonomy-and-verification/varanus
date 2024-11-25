@@ -1,0 +1,12 @@
+l matches { event: 'l' };
+y matches { event: 'y' };
+o matches { event: 'o' };
+
+state0 = o state5 \/ l state7 \/ y state7;
+state1 = l state5 \/ y state5 \/ o state7;
+state2 = l state2 \/ o state2 \/ y state7;
+state3 = l state2 \/ o state5 \/ y state7;
+state4 = o state2 \/ l state5 \/ y state5;
+state5 = l state5 \/ y state5 \/ o state5;
+Main = y state0 \/ o state3 \/ l state4;
+state7 = l state7 \/ y state7 \/ o state7;

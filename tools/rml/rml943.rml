@@ -1,0 +1,27 @@
+h matches { event: 'h' };
+b matches { event: 'b' };
+x matches { event: 'x' };
+o matches { event: 'o' };
+r matches { event: 'r' };
+v matches { event: 'v' };
+
+state0 = h state0 \/ b state0 \/ o state0 \/ r state0 \/ v state0 \/ x state19;
+state1 = x state1 \/ o state1 \/ r state4 \/ h state19 \/ b state19 \/ v state19;
+state2 = h state2 \/ x state2 \/ r state2 \/ v state2 \/ o state3 \/ b state13;
+state3 = b state0 \/ h state3 \/ x state3 \/ o state3 \/ r state3 \/ v state3;
+state4 = h state4 \/ b state4 \/ x state4 \/ o state4 \/ r state4 \/ v state4;
+Main = r state4 \/ b state6 \/ v state7 \/ x state9 \/ o state9 \/ h state17;
+state6 = x state7 \/ b state13 \/ h state14 \/ r state14 \/ v state14 \/ o state19;
+state7 = h state2 \/ x state2 \/ r state2 \/ v state2 \/ b state13 \/ o state19;
+state8 = o state1 \/ r state4 \/ b state6 \/ h state7 \/ v state7 \/ x state9;
+state9 = o state1 \/ h state2 \/ v state2 \/ r state4 \/ b state13 \/ x state15;
+state10 = o state1 \/ r state4 \/ b state6 \/ v state7 \/ x state9 \/ h state17;
+state11 = o state1 \/ r state4 \/ x state9 \/ b state13 \/ h state14 \/ v state14;
+state12 = h state0 \/ b state0 \/ v state0 \/ x state1 \/ r state4 \/ o state12;
+state13 = o state0 \/ x state7 \/ b state13 \/ h state14 \/ r state14 \/ v state14;
+state14 = o state0 \/ h state2 \/ x state2 \/ r state2 \/ v state2 \/ b state13;
+state15 = h state2 \/ v state2 \/ r state4 \/ b state13 \/ x state15 \/ o state16;
+state16 = b state0 \/ h state3 \/ v state3 \/ r state4 \/ x state16 \/ o state16;
+state17 = b state6 \/ x state7 \/ r state7 \/ v state7 \/ h state17 \/ o state19;
+state18 = b state6 \/ h state7 \/ x state7 \/ r state7 \/ v state7 \/ o state19;
+state19 = h state19 \/ b state19 \/ x state19 \/ o state19 \/ r state19 \/ v state19;

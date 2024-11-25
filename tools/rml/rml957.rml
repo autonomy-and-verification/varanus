@@ -1,0 +1,17 @@
+s matches { event: 's' };
+j matches { event: 'j' };
+q matches { event: 'q' };
+f matches { event: 'f' };
+i matches { event: 'i' };
+m matches { event: 'm' };
+z matches { event: 'z' };
+
+state0 = z state0 \/ j state1 \/ s state7 \/ q state7 \/ f state7 \/ i state7 \/ m state8;
+state1 = j state1 \/ z state1 \/ s state7 \/ q state7 \/ f state7 \/ i state7 \/ m state8;
+state2 = z state2 \/ s state8 \/ j state8 \/ q state8 \/ f state8 \/ i state8 \/ m state8;
+state3 = s state2 \/ j state2 \/ q state2 \/ f state2 \/ i state2 \/ m state2 \/ z state2;
+state4 = j state0 \/ z state0 \/ m state2 \/ s state7 \/ q state7 \/ f state7 \/ i state7;
+state5 = m state3 \/ j state4 \/ f state4 \/ i state4 \/ z state4 \/ s state7 \/ q state7;
+Main = s state5 \/ j state5 \/ q state5 \/ f state5 \/ i state5 \/ m state5 \/ z state5;
+state7 = s state7 \/ j state7 \/ q state7 \/ f state7 \/ i state7 \/ m state7 \/ z state7;
+state8 = s state8 \/ j state8 \/ q state8 \/ f state8 \/ i state8 \/ m state8 \/ z state8;

@@ -1,0 +1,1 @@
+(X!(f xor i) -> (s xor (!j & q))) M !m

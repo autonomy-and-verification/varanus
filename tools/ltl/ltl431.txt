@@ -1,0 +1,1 @@
+h xor ((a & (q xor y)) xor (Gr M Ge))

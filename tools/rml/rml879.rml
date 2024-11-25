@@ -1,0 +1,11 @@
+c matches { event: 'c' };
+f matches { event: 'f' };
+v matches { event: 'v' };
+r matches { event: 'r' };
+p matches { event: 'p' };
+
+state0 = c state0 \/ f state0 \/ v state0 \/ r state0 \/ p state0;
+state1 = c state0 \/ f state0 \/ r state0 \/ v state1 \/ p state4;
+Main = c state0 \/ v state0 \/ r state0 \/ p state0 \/ f state4;
+state3 = p state0 \/ v state3 \/ c state4 \/ f state4 \/ r state4;
+state4 = c state4 \/ f state4 \/ v state4 \/ r state4 \/ p state4;
