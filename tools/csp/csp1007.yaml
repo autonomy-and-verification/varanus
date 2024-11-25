@@ -1,8 +1,0 @@
----
-alphabet: [d, e, w, b, k, m, j, i, t]
-common_alphabet: [d, e, w, b, k, m, j, i, t]
-main_process: "state0"
-model: "csp1007.csp" 
-trace_file: "log.txt" 
-name: "random_csp"
-mode: "strict"

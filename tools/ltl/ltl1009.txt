@@ -1,1 +1,0 @@
-(Fs W (r xor X!b)) | (G(m R Xt) <-> (((a -> g) W f) -> Gx))

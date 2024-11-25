@@ -1,1 +1,0 @@
-((u | (c xor x)) R ((l -> Xj) R (i R z))) U (c xor ((Gl W Fj) xor Xc))

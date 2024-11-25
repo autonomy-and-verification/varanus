@@ -2,7 +2,7 @@ import os
 import spot
 import time
 
-N = 1024
+N = 1000
 
 with open('./ltl_res.csv', 'w') as file:
     file.write('')

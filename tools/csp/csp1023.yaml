@@ -1,8 +1,0 @@
----
-alphabet: [g, e, d, n, i, h, z]
-common_alphabet: [g, e, d, n, i, h, z]
-main_process: "state3"
-model: "csp1023.csp" 
-trace_file: "log.txt" 
-name: "random_csp"
-mode: "strict"

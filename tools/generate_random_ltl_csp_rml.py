@@ -4,7 +4,7 @@ import string
 import shutil
 import os
 
-N = 1200
+N = 1000
 S = 100
 
 if os.path.exists('./ltl/'):
