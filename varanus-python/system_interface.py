@@ -164,14 +164,22 @@ class OfflineInterface(SystemInterface):
 
                     continue
                 try:
-                    # TODO This is messy, needs better structure for individual parsing methods
-                    if self.simple:
-                        event = self.parse_simple_ROSMon_event(json_line)
-                    else:
-                        event = self.parse_ROSMon_event(json_line)
-
+                    # TODO Improve this structure, maybe pre-check the trace file instead of doing this check for each event. Eventually, surely, we have to conclude that we can do nothing with the file using the main method
+                    event = self.parse_ROSMon_event(json_line)
                     if event is not None:
+                        varanus_logger.debug("appending event " + event )
                         self.events.append(event)
+                    elif event is None:
+                        varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
+                        event = self.parse_simple_ROSMon_event(json_line)
+                        if event is not None:
+                            self.events.append(event)
+                        else:
+                            #Catchall for if the two parsing methods fail
+                            varanus_logger.error("Unknown error when parsing trace file on line " + str(line_num) + ": " + str(e))
+                            varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
+                            return False
+
                 except ValueError as e:
                     varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
                     varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
