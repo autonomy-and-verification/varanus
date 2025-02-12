@@ -617,9 +617,9 @@ class Monitor(object):
         for event in scenario3_events:
             self.process.transition(event)
 
-    def check_monitorable(self, main_process, model_alpha=set(), system_alpha=set()):
-        """Checks if the main_process is monitorable given the alphabet of the model and system under analysis"""
-        varanus_logger.info("+++ checking that "+ main_process + " is monitorable with given alphabets +++")
+    def check_for_non_determinism(self, main_process, model_alpha=set(), system_alpha=set()):
+        """Checks if the main_process is deterministic given the alphabet of the model and system under analysis"""
+        varanus_logger.info("+++ checking that "+ main_process + " is deterministic with given alphabets +++")
 
         if model_alpha == system_alpha:
             varanus_logger.debug("Alphabets match")

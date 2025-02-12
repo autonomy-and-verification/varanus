@@ -182,7 +182,7 @@ def run(check_type):
             mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
 
-        continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
+        continue_monitoring = mon.check_for_non_determinism(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
 
         if continue_monitoring:
             varanus_logger.error("+++ starting monitoring against" + MAIN_PROCESS + " +++")
@@ -190,7 +190,7 @@ def run(check_type):
             mon.run_offline_stress_test(MAIN_PROCESS, stress_events, stress_reps)
             check_end = time.time()
         else:
-            varanus_logger.error("+++ " + MAIN_PROCESS + " is not monitorable ABORTING +++")
+            varanus_logger.error("+++ " + MAIN_PROCESS + " is not deterministic ABORTING +++")
             check_start = time.time()
             check_end = time.time()
 
@@ -214,7 +214,7 @@ def run(check_type):
             mon.build_state_machine(MAIN_PROCESS)
         build_end = time.time()
 
-        continue_monitoring = mon.check_monitorable(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
+        continue_monitoring = mon.check_for_non_determinism(MAIN_PROCESS, ALPHABET, set(COMMON_ALPHA))
 
         if continue_monitoring:
             varanus_logger.info("+++ starting monitoring against " + MAIN_PROCESS + " +++")
@@ -222,7 +222,7 @@ def run(check_type):
             mon.run_offline_state_machine(MAIN_PROCESS, TRACE_FILE)
             check_end = time.time()
         else:
-            varanus_logger.error("+++ " + MAIN_PROCESS + " is not monitorable ABORTING +++")
+            varanus_logger.error("+++ " + MAIN_PROCESS + " is not deterministic ABORTING +++")
             check_start = time.time()
             check_end = time.time()
 
