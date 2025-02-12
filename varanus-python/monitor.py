@@ -153,8 +153,6 @@ class Monitor(object):
         #transition_times = []
         #number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
-        self.monitored_system.events = []
-
         passed = True
 
         while self.monitored_system.has_event():

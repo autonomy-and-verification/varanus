@@ -173,6 +173,7 @@ class OfflineInterface(SystemInterface):
                         varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
                         event = self.parse_simple_ROSMon_event(json_line)
                         if event is not None:
+                            varanus_logger.debug("appending event " + event)
                             self.events.append(event)
                         else:
                             #Catchall for if the two parsing methods fail
