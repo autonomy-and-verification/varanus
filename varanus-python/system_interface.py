@@ -153,12 +153,13 @@ class OfflineInterface(SystemInterface):
     def connect(self):
         varanus_logger.info("Parsing trace file at: " + self.trace_file_path)
         try:
+            # Open the file
             self.trace_file = open(self.trace_file_path)
             self._file_open = True
 
             line_num = 0
             for json_line in self.trace_file:
-
+                # Loop through, trying to parse using parse_ROSMon_event()
                 line_num += 1
                 if json_line == '\n':
 
@@ -172,14 +173,15 @@ class OfflineInterface(SystemInterface):
                     varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
                     varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
                     return False
-
+            # If parse_ROSMon_event() has not added any events to the list...
             if len(self.events) == 0 :
+                # ... try again with parse_simple_ROSMon_event()
                 varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
-                self.trace_file.seek(0)
+                self.trace_file.seek(0) # have to 'seek' to the beginning because Python is a little sly
                 line_num = 0
                 varanus_logger.debug("Looping through file " + str(self.trace_file))
                 for json_line in self.trace_file:
-
+                    # Loop through again, trying the simple parser
                     line_num += 1
                     varanus_logger.debug("Trying simple parser on line  " + str(line_num))
                     if json_line == '\n':
