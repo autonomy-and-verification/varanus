@@ -131,7 +131,7 @@ class SystemInterface(object):
             parsed_event = Event(channel_name, [event_list["data"]])
         else:
             parsed_event = Event(channel_name)
-
+        varanus_logger.debug("parsed_event = " + str(parsed_event))
         return parsed_event.to_fdr()
 
 
@@ -164,32 +164,45 @@ class OfflineInterface(SystemInterface):
 
                     continue
                 try:
-                    # TODO Improve this structure, maybe pre-check the trace file instead of doing this check for each event. Eventually, surely, we have to conclude that we can do nothing with the file using the main method
                     event = self.parse_ROSMon_event(json_line)
                     if event is not None:
                         varanus_logger.debug("appending event " + event )
                         self.events.append(event)
-                    elif event is None:
-                        varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
-                        event = self.parse_simple_ROSMon_event(json_line)
-                        if event is not None:
-                            varanus_logger.debug("appending event " + event)
-                            self.events.append(event)
-                        else:
-                            #Catchall for if the two parsing methods fail
-                            varanus_logger.error("Unknown error when parsing trace file on line " + str(line_num) + ": " + str(e))
-                            varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
-                            return False
-
                 except ValueError as e:
                     varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
                     varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
                     return False
+
+            if len(self.events) == 0 :
+                varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
+                self.trace_file.seek(0)
+                line_num = 0
+                varanus_logger.debug("Looping through file " + str(self.trace_file))
+                for json_line in self.trace_file:
+
+                    line_num += 1
+                    varanus_logger.debug("Trying simple parser on line  " + str(line_num))
+                    if json_line == '\n':
+                        continue
+                    try:
+                        event = self.parse_simple_ROSMon_event(json_line)
+                        if event is not None:
+                            varanus_logger.debug("appending event " + event)
+                            self.events.append(event)
+                    except ValueError as e:
+                        varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
+                        varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
+                        return False
+            elif len(self.events) == 0 :
+                # Catchall for if the two parsing methods fail
+                varanus_logger.error("Unknown error when parsing trace file: " + self.trace_file_path )
+                varanus_logger.error("Aborting")
+                return False
         except OSError:
             varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
             return False
-
+        varanus_logger.debug("events len = " + str(len(self.events)))
         varanus_logger.info("Parsed trace file OK")
         return True # Connected ok
 
