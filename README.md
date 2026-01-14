@@ -150,14 +150,13 @@ This means that the trace in `hello_goodbye.json` is valid, because `HI_BYE` can
 ## Generic Components
 
 * `event_converter.py`
- - Reads the event map JSON file, passed to the `Monitor()` constructor, to convert incoming SUA events to model events.
+  - Reads the event map JSON file, passed to the `Monitor()` constructor, to convert incoming SUA events to model events.
 * `fdr_interface.py`
- - Connects Varanus to FDR. Based on FDR example file from https://cocotec.io/fdr/manual/_downloads/ffcc2113bd60df5a33677f5bbe5193da/command_line.py and modified.
+  - Connects Varanus to FDR. Based on FDR example file from https://cocotec.io/fdr/manual/_downloads/ffcc2113bd60df5a33677f5bbe5193da/command_line.py and modified.
 * `system_interface.py`
- - Connects the monitor to the system being monitored.
+  - Connects the monitor to the system being monitored.
 * `monitor.py`
- - Controls the monitoring program.
- - Should be generic, but the methods it currently provides may be a little specific.
+  - Controls the monitoring program.
 
 ## Specific Components
 
