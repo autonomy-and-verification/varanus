@@ -140,10 +140,10 @@ class Monitor(object):
         result = {}
 
         # Extract the Traces and start the loop
-        #if trace_path =="rosmon-test/hello_goodbye.json":
-        #    self.monitored_system = OfflineInterface(trace_path, self.event_map, simple = True)
-        #else:
-        self.monitored_system = OfflineInterface(trace_path, self.event_map)
+        if trace_path =="rosmon-test/hello_goodbye.json":
+            self.monitored_system = OfflineInterface(trace_path, self.event_map, simple = True)
+        else:
+            self.monitored_system = OfflineInterface(trace_path, self.event_map)
         is_connected = self.monitored_system.connect()
         if not is_connected:
             varanus_logger.error("Could not parse trace_file at: " + trace_path)
@@ -153,8 +153,8 @@ class Monitor(object):
         #transition_times = []
         #number_of_events = 0
         varanus_logger.info("Checking trace file: " + trace_path)
+        print (self.monitored_system.has_event())
         passed = True
-
         while self.monitored_system.has_event():
             varanus_logger.debug("self.event_map is None = " + str(self.event_map is None))
             self.number_of_events += 1
@@ -188,16 +188,11 @@ class Monitor(object):
             #transition_end = time.time()
             #transition_times.append(transition_end-transition_start)
 
-        #TODO this is a little messy sand could do with a better structure.
-        if passed and len(self.monitored_system.events)>0:
+        print("! TRANSITION TIMES = " + str(self.transition_times))
+        if passed:
             varanus_logger.info("Trace file finished with no violations")
-        elif not passed:
-            varanus_logger.info("Trace file finished with violations")
-        elif len(self.monitored_system.events) <= 0:
-            varanus_logger.error("Trace file empty")
 
-        if len(self.transition_times) > 0:
-            varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
+        varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
         varanus_times.add_extra_information("num_events", len(self.transition_times))
         return result  # this is not caught, not sure if I need to return anything
 
@@ -515,6 +510,9 @@ class Monitor(object):
                 #result[old_state].append((event, resulting_state.name))
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
+                answer = json.loads(message)
+                answer["verdict"] = "currently_true"
+                server.send_message(client, json.dumps(answer))
             else:
                 #result[old_state].append((event, resulting_state))
                 varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
@@ -524,6 +522,9 @@ class Monitor(object):
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
                 passed = False
+                answer = json.loads(message)
+                answer["verdict"] = "false"
+                server.send_message(client, json.dumps(answer))
 
 
 
@@ -617,9 +618,9 @@ class Monitor(object):
         for event in scenario3_events:
             self.process.transition(event)
 
-    def check_for_non_determinism(self, main_process, model_alpha=set(), system_alpha=set()):
-        """Checks if the main_process is deterministic given the alphabet of the model and system under analysis"""
-        varanus_logger.info("+++ checking that "+ main_process + " is deterministic with given alphabets +++")
+    def check_monitorable(self, main_process, model_alpha=set(), system_alpha=set()):
+        """Checks if the main_process is monitorable given the alphabet of the model and system under analysis"""
+        varanus_logger.info("+++ checking that "+ main_process + " is monitorable with given alphabets +++")
 
         if model_alpha == system_alpha:
             varanus_logger.debug("Alphabets match")
@@ -634,7 +635,6 @@ class Monitor(object):
             return self.fdr.check_determinism(main_process, extra_events)
         else:
             varanus_logger.debug("oops?")
-
 
 
 
