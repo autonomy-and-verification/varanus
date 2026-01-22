@@ -5,7 +5,7 @@
 -- Guarantee B: And, if the Robot is at waypoint i and it has not been inspected, then the Robot will inspect it.
 
 -- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
-include "rover_defs3.csp"
+include "rover_defs4.csp"
 transparent diamond
 
 ---------------------------------------------------------------------------------------------
