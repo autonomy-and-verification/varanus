@@ -16,8 +16,11 @@ This solves the problem and allows the installation to continue.
 
 ## Cannot run: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
 
-It seems this can just be installed:
-`sudo apt-get install libtinfo5`
+It seems this can just be installed
+
+```
+sudo apt-get install libtinfo5
+```
 
 ## Cannot run: Could not connect to FDR licensing server; please check your internet connection
 
