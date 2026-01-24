@@ -149,6 +149,9 @@ class Monitor(object):
             varanus_logger.error("Could not parse trace_file at: " + trace_path)
             return False # Not caught.
 
+        if len(self.monitored_system.events) <= 0:
+            varanus_logger.error("No events parsed from: " + trace_path)
+
         #trace = Trace()
         #transition_times = []
         #number_of_events = 0
@@ -189,13 +192,11 @@ class Monitor(object):
             #transition_end = time.time()
             #transition_times.append(transition_end-transition_start)
 
-        #TODO this is a little messy sand could do with a better structure.
-        if passed and len(self.monitored_system.events)>0:
+        if passed:
             varanus_logger.info("Trace file finished with no violations")
         elif not passed:
             varanus_logger.info("Trace file finished with violations")
-        elif len(self.monitored_system.events) <= 0:
-            varanus_logger.error("Trace file empty")
+
 
         if len(self.transition_times) > 0:
             varanus_times.add_time("avg_transition", sum(self.transition_times) / len(self.transition_times))
