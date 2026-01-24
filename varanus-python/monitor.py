@@ -180,9 +180,13 @@ class Monitor(object):
                 self.transition_times.append(transition_end - transition_start)
             else:
                 result[old_state].append((event, resulting_state))
+                print("")
+                print("++++++")
                 varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
-                varanus_logger.error("This node expected the following events: " + str(
-                    self.process.get_outgoing_transitions()))  # TODO make this even prettier
+                print("")
+                varanus_logger.error("The permissible events were: " + str(self.process.get_outgoing_transition_names()))
+                print("++++++")
+                print("")
                 #return result  # So far, return because a None means it's bad.
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
@@ -193,9 +197,15 @@ class Monitor(object):
             #transition_times.append(transition_end-transition_start)
 
         if passed:
+            print("")
+            print("++++++")
             varanus_logger.info("Trace file finished with no violations")
+            print("++++++")
         elif not passed:
+            print("")
+            print("++++++")
             varanus_logger.info("Trace file finished with violations")
+            print("++++++")
 
 
         if len(self.transition_times) > 0:

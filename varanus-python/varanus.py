@@ -298,7 +298,7 @@ if __name__ == "__main__":
 
     run(TYPE)
 
-    print(varanus_times.times)
+    #print(varanus_times.times)
 
     print("")
     print("")
