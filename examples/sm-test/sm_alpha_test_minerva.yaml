@@ -1,0 +1,8 @@
+---
+alphabet: [a, b, c]
+common_alphabet: [a, b, c]
+#main_process: "ALPHABET_TEST"
+main_process: "ALPHABET_TEST2"
+model: "/home/matt/work/varanus/sm-test/simple.csp" 
+trace_file: "/home/matt/work/varanus/sm-test/test-traces/alphabetsPass.json"
+name: "alphabet_test"
