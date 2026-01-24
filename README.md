@@ -13,9 +13,11 @@ I chose the name _Varanus_ for two reasons:
 1. Varanus is the genus of [Monitor Lizards](https://en.wikipedia.org/wiki/Monitor_lizard)
 2. I have a poor sense of humour.
 
+For the avoidance of doubt, I have been pronouncing the name _var-ar-nus_.
+
 ## Prerequisites
 
-Varanus has been built and (only) tested on Ubuntu 19.10/20.04 using Python 2.7.17/18
+Varanus has been built and (only) tested on Ubuntu 19.10/20.04/22.04/24.04 using Python 2.7.17/18
 
 ### Python
 
@@ -172,36 +174,6 @@ This means that the trace in `hello_goodbye.json` is valid, because `HI_BYE` can
 Here are some troubleshooting tips for problems with Varanus itself.
 
 If you have problems installing or running **FDR4** please check the [FDR Troubleshooting](docs/fdr-troubleshooting.md) document.
-
-## Cannot Install FDR: Depends: libpng12-0 but it is not installable
-
-Using the instructions from: https://www.linuxuprising.com/2018/05/fix-libpng12-0-missing-in-ubuntu-1804.html
-
-The instructions below work for **Ubuntu 22.10, 22.04, 21.10 or 20.04** (for 18.04, check https://www.linuxuprising.com/2018/05/fix-libpng12-0-missing-in-ubuntu-1804.html )
-
-```
-sudo add-apt-repository ppa:linuxuprising/libpng12
-sudo apt update
-sudo apt install libpng12-0
-```
-
-## Cannot run FDR: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
-
-It seems this can just be installed directly
-```
-sudo apt-get install libtinfo5
-```
-
-## Cannot run FDR: Could not connect to FDR licensing server; please check your internet connection
-
-This error happens on the License Application dialogue, when trying to validate the license.
-Some Linux distributions have moved the TLS certificate store, and FDR cannot find it, so it can't connect. FDR 4.2.7 says it fixes an issue with not being able to connect to the licensing server, but this error still sometimes appears.
-
-The fix that seems to work is to copy the TLS certificates to the location that FDR is expecting them to be at:
-```
-sudo mkdir -p /etc/pki/tls/certs/
-sudo cp /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
-```
 
 ## ImportError: libpython2.6.so.1.0: cannot open shared object file: No such file or directory
 
