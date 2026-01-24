@@ -1,0 +1,92 @@
+-- 5.2 Emergency/Protective Stop and 5.3 Safe State Key
+
+epsAlpha = {| reset, safe_state_key, enter_safe_state, protective_stop, restart,
+ leave_safe_state, emergency_stop, safe_stop_cat1, system_init,
+ enter_master_commissioning_state, systemStateIs,
+ enter_slave_commissioning_state, leave_slave_commissioning_state,
+ master_commissioning_switch, leave_master_commissioning_state, get_mcmState |}
+
+EPS_SAFE_STATE =
+  reset -> EPS_RESET_STATE
+  []
+  --Becasue of 5.3.1
+  safe_state_key.Removed -> EPS_SAFE_STATE'
+  --[]
+  --safe_state_key.PresentOn -> EPS_SAFE_STATE
+  []
+  safe_state_key.PresentOff -> EPS_RESET_STATE
+
+EPS_SAFE_STATE' =
+  safe_state_key.Replaced -> EPS_SAFE_STATE
+
+EPS_RESET_STATE =
+  get_mcmState?mcmSwitchOn ->
+  (
+    (mcmSwitchOn == False)&restart -> leave_safe_state -> EPS_ENABLED_STATE
+    []
+    enter_master_commissioning_state -> leave_safe_state-> EPS_ENABLED_STATE
+  )
+
+channel get_mcmState : Bool
+
+EPS_MCM_CHECK(mcmSwitchOn) =
+  master_commissioning_switch.MCM_On -> EPS_MCM_CHECK(True)
+  []
+  master_commissioning_switch.MCM_Off -> EPS_MCM_CHECK(False)
+  []
+  -- Because leaving M/C state implies turning the key off, right now
+  -- But this is an assumption
+  leave_master_commissioning_state -> EPS_MCM_CHECK(False)
+  []
+  get_mcmState!mcmSwitchOn -> EPS_MCM_CHECK(mcmSwitchOn)
+
+EPS_ENABLED_STATE =
+--Assumes key starts off
+--  safe_state_key.PresentOff -> EPS_ENABLED_STATE
+--  []
+  --From 5.3.1
+  safe_state_key.PresentOn -> emergency_stop -> safe_stop_cat1-> enter_safe_state -> EPS_SAFE_STATE
+  []
+  -- Comes from SSM
+  protective_stop -> safe_stop_cat1 -> enter_safe_state -> EPS_SAFE_STATE
+  []
+  --To allow the salve commissioning mode to happen
+  safe_stop_cat1 -> enter_slave_commissioning_state -> EPS_SLAVE_COMM
+
+EPS_SLAVE_COMM =
+  leave_slave_commissioning_state -> EPS_ENABLED_STATE
+
+
+
+SystemStateInterface = {|enter_safe_state, leave_safe_state,
+enter_master_commissioning_state, enter_slave_commissioning_state,
+leave_slave_commissioning_state  |}
+
+EPS_SYSTEM_STATE(systemState) =
+  enter_master_commissioning_state -> EPS_SYSTEM_STATE(NotSafeState)
+  []
+  enter_safe_state -> EPS_SYSTEM_STATE(SafeState)
+  []
+  systemStateIs.systemState -> EPS_SYSTEM_STATE(systemState)
+  []
+  leave_safe_state -> EPS_SYSTEM_STATE(NotSafeState)
+  []
+  enter_slave_commissioning_state -> EPS_SYSTEM_STATE(NotSafeState)
+  []
+  leave_slave_commissioning_state -> EPS_SYSTEM_STATE(NotSafeState)
+
+
+
+EMERGANCY_PROTECTIVE_STOP =
+(
+  system_init ->
+    (
+      (EPS_ENABLED_STATE  [| SystemStateInterface |]  EPS_SYSTEM_STATE(NotSafeState) )
+          [| {| get_mcmState |} |]
+      EPS_MCM_CHECK(False)
+    )--\{| get_mcmState |}
+)
+
+assert EMERGANCY_PROTECTIVE_STOP :[deadlock free]
+assert EMERGANCY_PROTECTIVE_STOP :[divergence free]
+assert EMERGANCY_PROTECTIVE_STOP :[deterministic]

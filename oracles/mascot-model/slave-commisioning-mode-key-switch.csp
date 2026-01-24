@@ -1,0 +1,47 @@
+-- 5.5 Slave Commissioning Mode Key Switch
+
+scmAlpha = {| slave_commissioning_switch,  enter_slave_commissioning_state,
+leave_slave_commissioning_state, system_init, safe_stop_cat1, enter_safe_state,
+leave_safe_state, enter_master_commissioning_state |}
+
+SCM_SLAVE_COMMISSIONING_STATE =
+  slave_commissioning_switch.SCM_Off -> leave_slave_commissioning_state -> SCM_ENABLED_STATE
+  []
+  -- letting the safe state key be used
+  safe_stop_cat1 -> enter_safe_state -> SCM_PAUSE
+  -- Assumes that the safe state key should be active in the slave commissioning state
+
+SCM_ENABLED_STATE =
+  slave_commissioning_switch.SCM_On -> safe_stop_cat1 -> enter_slave_commissioning_state -> SCM_SLAVE_COMMISSIONING_STATE
+  []
+  -- letting the safe state key be used
+  safe_stop_cat1 -> enter_safe_state -> SCM_PAUSE
+  []
+  --Letting this happen
+  leave_safe_state -> SCM_ENABLED_STATE
+
+
+SCM_PAUSE =
+   leave_safe_state -> SCM_ENABLED_STATE
+
+
+scmSwitchInterface = {| slave_commissioning_switch |}
+
+SCM_SWITCH_LIVE  =
+slave_commissioning_switch?_ -> SCM_SWITCH_LIVE
+[]
+enter_master_commissioning_state -> SCM_SWITCH_PAUSED
+
+SCM_SWITCH_PAUSED =
+leave_master_commissioning_state -> SCM_SWITCH_LIVE
+
+
+SLAVE_COMMISSIONING_MODE =
+  system_init ->
+  (SCM_ENABLED_STATE
+    [| scmSwitchInterface |]
+  SCM_SWITCH_LIVE)
+
+assert SLAVE_COMMISSIONING_MODE :[deadlock free]
+assert SLAVE_COMMISSIONING_MODE :[divergence free]
+assert SLAVE_COMMISSIONING_MODE :[deterministic]

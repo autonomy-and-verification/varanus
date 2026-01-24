@@ -1,0 +1,68 @@
+-- 5.4 Master Commissioning Mode Key Switch
+
+mcmAlpha = {| master_commissioning_switch, reset, enter_master_commissioning_state,
+leave_master_commissioning_state, system_init, enter_safe_state, leave_safe_state,
+enter_slave_commissioning_state, leave_slave_commissioning_state|}
+
+MCM_MASTER_COMMISSIONING_STATE =
+  enter_safe_state -> leave_master_commissioning_state -> reset -> leave_safe_state ->MCM_ENABLED_STATE
+  []
+  -- Just letting it happen
+  reset -> MCM_MASTER_COMMISSIONING_STATE
+
+MCM_SWITCH_ON =
+  master_commissioning_switch.MCM_Off -> MCM_ENABLED_STATE
+  []
+  reset -> enter_master_commissioning_state ->
+  leave_safe_state ->
+   MCM_MASTER_COMMISSIONING_STATE
+  []
+  -- letting bad speeds trigger EPS
+  enter_safe_state -> MCM_SWITCH_ON
+
+
+MCM_ENABLED_STATE =
+  --Becasue of 5.4.1(2)
+  master_commissioning_switch.MCM_On -> MCM_SWITCH_ON
+  []
+  reset -> MCM_ENABLED_STATE
+  []
+  -- letting bad speeds trigger EPS
+  enter_safe_state -> MCM_ENABLED_STATE
+  []
+  leave_safe_state -> MCM_ENABLED_STATE
+
+
+MCM_PAUSE =
+  master_commissioning_switch.MCM_On -> MCM_SWITCH_ON
+
+
+mcmSwitchInterface = {|master_commissioning_switch, reset,
+leave_safe_state |}
+
+MCM_SWITCH_LIVE =
+leave_safe_state -> MCM_SWITCH_LIVE
+[]
+enter_slave_commissioning_state -> MCM_SWITCH_PAUSED
+[]
+master_commissioning_switch?_ -> MCM_SWITCH_LIVE
+[]
+reset -> MCM_SWITCH_LIVE
+
+MCM_SWITCH_PAUSED =
+leave_slave_commissioning_state -> MCM_SWITCH_LIVE
+[]
+leave_safe_state -> MCM_SWITCH_LIVE
+[]
+reset -> MCM_SWITCH_LIVE
+
+
+MASTER_COMMISSIONING_MODE =
+  system_init ->
+    (MCM_ENABLED_STATE
+      [| mcmSwitchInterface |]
+    MCM_SWITCH_LIVE)
+
+assert MASTER_COMMISSIONING_MODE :[deadlock free]
+assert MASTER_COMMISSIONING_MODE :[divergence free]
+assert MASTER_COMMISSIONING_MODE :[deterministic]

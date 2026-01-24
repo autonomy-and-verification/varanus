@@ -1,0 +1,8 @@
+---
+alphabet: [system_init, speed, speed_ok, foot_pedal_pressed]
+common_alphabet: [system_init, speed, speed_ok, foot_pedal_pressed]
+main_process: "MASCOT_SAFETY_SYSTEM"
+model: "mascot-safety-system.csp" #  
+map:   "event_map.json" 
+trace_file: "rosmon-mascot-pass.json"
+name: "rosmon_test"

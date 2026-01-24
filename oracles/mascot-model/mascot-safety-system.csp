@@ -1,0 +1,88 @@
+include "channels.csp"
+include "emergancy-and-protective-stop.csp"
+include "hands-on-mode-monitor.csp"
+include "master-commisioning-mode-key-switch.csp"
+include "slave-commisioning-mode-key-switch.csp"
+include "safe-speed-monitor.csp"
+
+
+
+datatype MascotState = Safe | MasterCommissioning | EnabedAutonomous | EnabedHandsOn | SlaveCommissioning
+
+channel getState : MascotState
+
+mssAlpha = {| getState, enter_safe_state, enter_hands_on_mode, enter_autonomous_mode, enter_master_commissioning_state, enter_slave_commissioning_state, system_init |}
+
+-- I think this doesn't work...
+-- I don't think all these states are mutually exclusive.
+MASCOT_SYSTEM_STATE(state) =
+  enter_safe_state -> MASCOT_SYSTEM_STATE(Safe)
+  []
+  enter_master_commissioning_state -> MASCOT_SYSTEM_STATE(MasterCommissioning)
+  []
+  enter_autonomous_mode -> MASCOT_SYSTEM_STATE(EnabedAutonomous)
+  []
+  enter_hands_on_mode -> MASCOT_SYSTEM_STATE(EnabedHandsOn)
+  []
+  enter_slave_commissioning_state -> MASCOT_SYSTEM_STATE(SlaveCommissioning)
+  []
+  getState!state -> MASCOT_SYSTEM_STATE(state)
+
+epsPrecedenceAlpha = Events
+
+ATOM_CHAINS =
+  (speed?_ -> (protective_stop -> safe_stop_cat1 -> enter_safe_state -> ATOM_CHAINS [] speed_ok -> ATOM_CHAINS))
+  []
+  ([] e : diff(Events, {|system_init, speed, protective_stop, speed_ok,
+        safe_state_key.PresentOn,emergency_stop, safe_stop_cat1, enter_safe_state,
+         foot_pedal_pressed, enter_hands_on_mode, slave_commissioning_switch,
+          enter_slave_commissioning_state, leave_slave_commissioning_state  |})  @ e->ATOM_CHAINS)
+  []
+  (safe_state_key.PresentOn -> emergency_stop -> safe_stop_cat1->enter_safe_state -> ATOM_CHAINS)
+  []
+  (foot_pedal_pressed?_ -> (enter_autonomous_mode -> ATOM_CHAINS [] enter_hands_on_mode -> ATOM_CHAINS ) )
+  []
+  slave_commissioning_switch.SCM_On -> safe_stop_cat1 -> enter_slave_commissioning_state -> ATOM_CHAINS
+  []
+  slave_commissioning_switch.SCM_Off -> leave_slave_commissioning_state -> ATOM_CHAINS
+
+MASCOT_SAFETY_SYSTEM =
+  (system_init -> MASCOT_SYSTEM_STATE(EnabedAutonomous)
+  [ mssAlpha || Union({hmmAlpha, ssmAlpha, epsAlpha, mcmAlpha, scmAlpha}) ]
+  (
+    (
+      HANDS_ON_MODE_MONITOR
+        [ hmmAlpha || ssmAlpha]
+      SAFE_SPEED_MONITOR
+    )
+
+    [ union(hmmAlpha, ssmAlpha) || Union({epsAlpha, mcmAlpha, scmAlpha})]
+    (
+      (
+        EMERGANCY_PROTECTIVE_STOP
+          [ epsAlpha || mcmAlpha]
+        MASTER_COMMISSIONING_MODE
+        )
+          [ union(epsAlpha, mcmAlpha) || scmAlpha]
+        SLAVE_COMMISSIONING_MODE
+      )
+  ))
+ [| Events |]
+  system_init -> ATOM_CHAINS
+
+
+
+
+assert MASCOT_SAFETY_SYSTEM :[deadlock free]
+assert MASCOT_SAFETY_SYSTEM :[divergence free]
+assert MASCOT_SAFETY_SYSTEM :[deterministic]
+
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[deadlock free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[divergence free]
+assert MASCOT_SAFETY_SYSTEM\diff(Events, {|system_init, speed, foot_pedal_pressed, speed_ok|}) :[deterministic]
+
+
+
+--include "safety-properties.csp"
+--include "monitorTest.csp"
+--include "scenarios.csp"

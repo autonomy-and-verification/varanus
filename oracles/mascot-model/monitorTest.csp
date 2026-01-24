@@ -1,0 +1,22 @@
+
+
+
+assert MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>
+
+assert MASCOT_SAFETY_SYSTEM :[has trace]: <system_init, speed.1250, protective_stop>
+
+-- Should Fail
+assert MASCOT_SAFETY_SYSTEM :[has trace]: <system_init, speed.100, protective_stop>
+
+
+assert MASCOT_SAFETY_SYSTEM :[has trace]: <system_init, speed.100, speed_ok, speed.100, speed_ok,
+ speed.500, speed_ok, speed.500, speed_ok, speed.500>
+
+-- Trace checking the MCM
+ assert MASCOT_SAFETY_SYSTEM :[has trace]: <system_init, master_commissioning_switch.MCM_On, safe_state_key.PresentOn,
+ emergency_stop, safe_stop_cat1, enter_safe_state, reset, get_mcmState.true, enter_master_commissioning_state, leave_safe_state,
+ speed.1250, speed_ok, safe_state_key.PresentOn,  emergency_stop, safe_stop_cat1, enter_safe_state, leave_master_commissioning_state,
+ reset, get_mcmState.false, restart, leave_safe_state, speed.100, speed_ok,  speed.1250, protective_stop >
+
+assert MASCOT_SAFETY_SYSTEM  :[has trace]: <system_init, slave_commissioning_switch.SCM_On, safe_stop_cat1, enter_slave_commissioning_state,
+getState.SlaveCommissioning, slave_commissioning_switch.SCM_Off, leave_slave_commissioning_state, speed.100, speed_ok>

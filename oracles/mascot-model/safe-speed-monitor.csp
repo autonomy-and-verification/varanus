@@ -1,0 +1,92 @@
+--5.6 Master Safe Speed Monitoring
+
+AutonomousSafeSpeed = 500
+HandsOnSafeSpeed = 1000
+
+AutonomousSafeSpeeds = { s | s  <- Speed, s<=AutonomousSafeSpeed}
+AutonomousUnSafeSpeeds = { s | s <- Speed, s > AutonomousSafeSpeed}
+
+HandsOnSafeSpeeds = {s | s <- Speed, s <= HandsOnSafeSpeed }
+HandsOnUnSafeSpeeds = {s | s <- Speed, s > HandsOnSafeSpeed}
+
+ssmAlpha = {| enter_hands_on_mode, enter_autonomous_mode, speed,
+              enter_master_commissioning_state,
+              protective_stop, speed_ok, leave_safe_state, system_init,
+              enter_safe_state, enter_slave_commissioning_state, leave_slave_commissioning_state|}
+
+SSM_AUTONOMOUS_MODE =
+  enter_hands_on_mode -> SSM_HANDS_ON_MODE
+  []
+  speed?s:AutonomousSafeSpeeds -> speed_ok -> SSM_AUTONOMOUS_MODE
+  []
+  speed?s:AutonomousUnSafeSpeeds -> protective_stop -> enter_safe_state ->  SSM_SAFE_STATE(AM)
+  []
+  enter_safe_state -> SSM_SAFE_STATE(AM)
+  -- assumes that we don't allow speed in the safe state
+  []
+  enter_slave_commissioning_state -> SSM_SAFE_STATE(AM)
+
+
+
+SSM_HANDS_ON_MODE =
+  enter_autonomous_mode -> SSM_AUTONOMOUS_MODE
+  []
+  speed?s:HandsOnSafeSpeeds -> speed_ok -> SSM_HANDS_ON_MODE
+  []
+  speed?s:HandsOnUnSafeSpeeds -> protective_stop -> enter_safe_state -> SSM_SAFE_STATE(HOM)
+  []
+  enter_safe_state -> SSM_SAFE_STATE(HOM)
+  -- assumes that we don't allow speed in the safe state
+  []
+  enter_slave_commissioning_state -> SSM_SAFE_STATE(HOM)
+
+-- Becasue of 5.4.1(4.a)
+SSM_UNMONITORED_MODE(lastMode) =
+  speed?_ -> speed_ok -> SSM_UNMONITORED_MODE(lastMode)
+  []
+  (
+  if lastMode == HOM then
+    enter_safe_state -> SSM_SAFE_STATE(HOM)
+
+  else if lastMode == AM then
+    enter_safe_state -> SSM_SAFE_STATE(AM)
+
+  else
+    SKIP
+  )
+  []
+  enter_autonomous_mode ->  SSM_UNMONITORED_MODE(AM)
+  []
+  enter_hands_on_mode ->  SSM_UNMONITORED_MODE(HOM)
+
+--SAFE STATE Assumes there are no Speed events in the safe state
+  SSM_SAFE_STATE(lastMode) =
+    (
+      (leave_safe_state -> SKIP [] leave_slave_commissioning_state -> SKIP)
+      ;
+      (
+        if lastMode == HOM then
+          SSM_HANDS_ON_MODE
+
+        else if lastMode == AM then
+            SSM_AUTONOMOUS_MODE
+        else
+          SKIP
+      )
+    )
+    []
+  -- Becasue of 5.4.1(4a)
+    enter_master_commissioning_state -> leave_safe_state -> SSM_UNMONITORED_MODE(lastMode)
+
+SAFE_SPEED_MONITOR =
+  system_init ->  SSM_AUTONOMOUS_MODE
+
+
+  assert SAFE_SPEED_MONITOR :[deadlock free]
+  assert SAFE_SPEED_MONITOR :[divergence free]
+  assert SAFE_SPEED_MONITOR :[deterministic]
+
+
+assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[deadlock free]
+  assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[divergence free]
+  assert SAFE_SPEED_MONITOR\diff(Events, {|system_init, speed, foot_pedal_pressed|})  :[deterministic]
