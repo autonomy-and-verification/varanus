@@ -3,8 +3,8 @@ alphabet: [inspect, inspected, arrived_at, radiation_level, mission_complete, mi
 common_alphabet: [inspect, inspected, arrived_at, radiation_level, move]
 #  mission_complete, mission_abort, mission_start
 main_process: "ROVER_SYSTEM"
-model: "rover_model4.csp" 
-trace_file: "log.json" 
-#trace_file: "log3.json" #no mission_complete or mission_start
+model: "rover_model.csp" 
+trace_file: "trace-json-good.txt"
+trace_file: "trace-json-bad.txt"
 name: "rover_model4_test"
 mode: "permissive"
