@@ -184,6 +184,7 @@ class Monitor(object):
                 print("++++++")
                 varanus_logger.error("System Violated the Specification with Trace: " + str(self.trace.to_list()))
                 print("")
+                print("++++++")
                 varanus_logger.error("The permissible events were: " + str(self.process.get_outgoing_transition_names()))
                 print("++++++")
                 print("")
