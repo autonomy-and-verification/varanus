@@ -4,6 +4,6 @@ common_alphabet: [inspect, inspected, arrived_at, radiation_level, move]
 #  mission_complete, mission_abort, mission_start
 main_process: "ROVER_SYSTEM"
 model: "rover_model.csp" 
-trace_file: "trace-json-pass.txt"
-name: "rover_model_ras_pass"
+trace_file: "trace-json-fail-param-mismatch.txt"
+name: "rover_model4_test"
 mode: "permissive"
