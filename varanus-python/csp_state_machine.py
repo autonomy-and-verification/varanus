@@ -343,6 +343,7 @@ class CSPStateMachine(object):
         depth = 0
         state_to_check = self.current_state
         while depth <= self._TAU_DEPTH:
+            varanus_logger.DEBUG("explore taus loop, depth = " + str(depth))
             # should handle this better, but it shouldn't fail if the input files are right.
             assert(state_to_check.has_tau)
             tau_transition = state_to_check.transitions[Transition._TAU]
