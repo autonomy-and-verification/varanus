@@ -1,7 +1,6 @@
 ---
-alphabet: [inspect, inspected, arrived_at, radiation_level, mission_complete, mission_abort, mission_start, move]
-common_alphabet: [inspect, inspected, arrived_at, radiation_level, move]
-#  mission_complete, mission_abort, mission_start
+alphabet: [inspect, inspected, arrived_at, radiation_level,  mission_abort, mission_complete, move] #mission_start
+common_alphabet: [inspect, inspected, arrived_at, radiation_level, move,  mission_abort, mission_complete]
 main_process: "ROVER_SYSTEM"
 model: "rover_model.csp" 
 trace_file: "trace-json-fail-param-mismatch.txt"

@@ -1,0 +1,10 @@
+[
+{ "name": "stm0 is deadlock free (A0) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "stm0 is deterministic (A1) [failures divergences model]",
+  "type": "deterministic",
+  "negated": false 
+}
+			]

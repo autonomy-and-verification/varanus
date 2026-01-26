@@ -2,9 +2,9 @@
 alphabet: [inspect, inspected, arrived_at, radiation_level, mission_complete, mission_abort, mission_start, move]
 common_alphabet: [inspect, inspected, arrived_at, radiation_level, move, mission_complete, mission_abort, mission_start]
 #  
-main_process: "RCSystem"
+main_process: "RoboChartRover"
 model: "robochart-version/comparison.csp" 
-#trace_file: "trace-json-good.txt" # Wont work withouth mission_start
-trace_file: "../inspection-rover-taros/log.json"
+#trace_file: "trace-json-good.txt" # Wont work without mission_start
+trace_file: "trace-json-pass.txt"
 name: "rover_robochart_model_ras_pass"
 mode: "permissive"
