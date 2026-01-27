@@ -1,41 +1,8 @@
 .~lock.*
 *.pyc
 
-<<<<<<< HEAD
 *.*~
 
-mascot-test/scenarios/scenario0-10-assertion.csp
-
-mascot-test/scenarios/scenario0-10-stress.json
-
-mascot-test/scenarios/scenario0-100-assertion.csp
-
-mascot-test/scenarios/scenario0-100-stress.json
-
-mascot-test/scenarios/scenario1-assertion.csp
-
-mascot-test/scenarios/scenario1.json
-
-mascot-test/scenarios/scenario2-assertion.csp
-
-mascot-test/scenarios/scenario2.json
-
-mascot-test/scenarios/scenario3-assertion.csp
-
-mascot-test/scenarios/scenario3.json
-
-mascot-test/scenarios/scenario4-assertion.csp
-
-mascot-test/scenarios/scenario4.json
-
-mascot-test/scenarios/scenario5-assertion.csp
-
-mascot-test/scenarios/scenario5.json
-
-mascot-test/scenarios/scenario6-assertion.csp
-
-mascot-test/scenarios/scenario6.json
-=======
 mascot-test/scenarios/
 log/
->>>>>>> bec718e0e89e6b705bf650a443f1599c1226cde6
+
