@@ -1,6 +1,8 @@
 .~lock.*
 *.pyc
 
+*.*~
+
 mascot-test/scenarios/scenario0-10-assertion.csp
 
 mascot-test/scenarios/scenario0-10-stress.json
