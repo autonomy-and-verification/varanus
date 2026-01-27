@@ -1,0 +1,51 @@
+
+include "rover_model4.csp"
+include "file_main.csp"
+
+RC = stm0::D__(0,const_stm0_first,const_stm0_WPs)[[
+    stm0::mission_start.out <- mission_start,
+    stm0::mission_complete.out <- mission_complete,
+    stm0::mission_abort.out <- mission_abort,
+    stm0::move.in <- move,
+    stm0::inspect.out <- inspect,
+    stm0::arrived_at.in <- arrived_at,
+    stm0::radiation_level.in <- radiation_level,
+    stm0::inspected.in <- inspected
+]]
+
+RCSystem = 
+    let 
+    	MoveArrive = move?wp -> (arrived_at.wp -> MoveArrive [] MoveArrive)
+    	Inspect = inspect?wp -> (inspected.wp -> Inspect [] Inspect)
+    	RadNoGreen = radiation_level?x:{Radiation_Red,Radiation_Orange} -> MoveInit [] move?wp -> RadNoGreen
+    	MoveInit = radiation_level?x:{Radiation_Red,Radiation_Orange} -> MoveInit [] move.0 -> MoveInit        
+    	Environment = (MoveArrive [| {| move |} |] RadNoGreen) ||| Inspect
+    within
+        (RC [| {| inspect, arrived_at, inspected, stm0::terminate, move, radiation_level.Radiation_Red, radiation_level.Radiation_Orange |} |] (Environment /\ stm0::terminate -> SKIP))\{|stm0::terminate|}
+
+transparent chase 
+transparent normal
+
+assert RCSystem [T= ROVER_SYSTEM
+assert ROVER_SYSTEM [T= RCSystem
+
+assert RCSystem [FD= ROVER_SYSTEM
+assert ROVER_SYSTEM [FD= RCSystem
+
+assert diamond(RCSystem) :[deterministic]:
+assert chase(RCSystem) :[deterministic]:
+assert normal(RCSystem) :[deterministic]:
+
+assert RCSystem :[has trace [T]]: <move.0, arrived_at.0, radiation_level.Radiation_Green>
+assert diamond(RCSystem) :[has trace [T]]: <move.0, arrived_at.0, radiation_level.Radiation_Green>
+
+
+assert RCSystem :[has trace]: <mission_start>
+assert RCSystem :[has trace]: <stm0::mission_start.out>
+
+
+assert RCSystem [T= chase(ROVER_SYSTEM)
+assert chase(ROVER_SYSTEM) [T= RCSystem
+
+assert RCSystem [T= chase(RCSystem)
+assert chase(RCSystem) [T= RCSystem

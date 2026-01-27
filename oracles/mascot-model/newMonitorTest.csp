@@ -1,0 +1,8 @@
+
+
+-- rosmon-mascot-pass
+-- should pass, we need to be able to ignore the speed_ok, etc
+
+assert MASCOT_SAFETY_SYSTEM\(diff(Events,{|system_init, speed, foot_pedal_pressed|})) :[has trace]: <system_init, speed.100, foot_pedal_pressed.true, speed.500, speed.750, speed.1000>
+
+
