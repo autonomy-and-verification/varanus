@@ -32,3 +32,7 @@ assert ROVER_SYSTEM [FD= RCSystem
 transparent chase
 
 RoboChartRover = chase(RCSystem)
+
+assert RCSystem :[has trace]: <mission_start>
+assert RCSystem :[has trace]: <stm0::mission_start.out>
+
