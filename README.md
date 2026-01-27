@@ -1,4 +1,4 @@
-# Varanus 0.9.5
+# Varanus 0.9.6
 ### Matt Luckcuck
 ### Runtime Verification Toolchain using CSP and FDR
 
