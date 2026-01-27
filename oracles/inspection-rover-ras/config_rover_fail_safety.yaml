@@ -4,5 +4,5 @@ common_alphabet: [inspect, inspected, arrived_at, radiation_level, move,  missio
 main_process: "ROVER_SYSTEM"
 model: "rover_model.csp" 
 trace_file: "trace-json-fail-safety.txt"
-name: "rover_model4_test"
-mode: "permissive"
+name: "rover_model_ras_fail_safety"
+mode: "strict"

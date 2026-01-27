@@ -1,7 +1,7 @@
 ---
 alphabet: [inspect, inspected, arrived_at, radiation_level, move, mission_complete, mission_abort]
 common_alphabet: [inspect, inspected, arrived_at, radiation_level, move, mission_complete, mission_abort]
-main_process: "RoboChartRover"
+main_process: "normal(RCSystem)"
 model: "robochart-version/comparison.csp" 
 trace_file: "trace-json-fail-message-order.txt"
 name: "rover_robochart_model_ras_fail_ordering"

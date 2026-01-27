@@ -29,3 +29,11 @@ There are config files for both the RoboChart and CSP versions of the model.
 ## Experiments
 
 The experiments are timed runs of Varanus using each of the eight config files, four for the RoboChart version of the model and four for the CSP version. Varanus was run 10 times for each config file, with the results logged into `log/ras-results`. The paper reports the average of the build, checking, and total times.
+
+An example of the command to run these experiments is
+
+```
+python2 varanus-python/varanus.py offline oracles/inspection-rover-ras/config_rover_pass.yaml -l log/ras-results 
+```
+
+Which runs `varanus.py` in `offline` mode, using the `config_rover_pass.yaml` config file. The `-l` switch overrides the default log file path.
