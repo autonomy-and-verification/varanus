@@ -12,12 +12,17 @@ sudo apt update
 sudo apt install libpng12-0
 ```
 
-This solves the problem and allows the installation to continue.
+**Note for Ubuntu 24 onwards**: This fix doesn't seem to work on Ubutnu 24, because the `linuxuprising/libpng12` repository does not have this package for newer versions of Ubutnu. In this case you should manually set the "suites" attribute to the latest Ubuntu version in the repository (Kinetic, a the time of writing). 
+
+Once libpng12-0 is installed, you should be able to complete the installation.
 
 ## Cannot run: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
 
-It seems this can just be installed:
-`sudo apt-get install libtinfo5`
+It seems this can just be installed
+
+```
+sudo apt-get install libtinfo5
+```
 
 ## Cannot run: Could not connect to FDR licensing server; please check your internet connection
 

@@ -108,10 +108,10 @@ class FDRInterface(object):
         assertion = self._run_assertion(assertion_string)
 
         if assertion.passed():
-            varanus_logger.info("+++ " + process + " is monitorable, continuing +++")
+            varanus_logger.info("+++ " + process + " is deterministic, continuing +++")
             return True
         else:
-            varanus_logger.error("+++ " + process + " is not monitorable, while hiding " +  events_list + "+++")
+            varanus_logger.error("+++ " + process + " is not deterministic, while hiding " +  events_list + "+++")
             return False
 
 

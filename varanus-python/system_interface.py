@@ -70,8 +70,18 @@ class SystemInterface(object):
                 if "name" not in event_list:
                     raise ValueError("Event is missing name")
 
-                parsed_event = Event(event_list["name"], [event_list["location"]]) # Event is either move or inspect (or inspected)
-                print ("SUA Event -> " + topic_name)
+                parsed_event = Event(event_list["name"], [event_list["location"]]) 
+                print ("SUA Event -> " + topic_name + " with name: " + event_list["name"] + " and location: " + str(event_list["location"]))
+            elif topic_name == "/inspected":
+
+                if "location" not in event_list:
+                    raise ValueError("Event is missing location")
+
+                parsed_event = Event("inspected", [event_list["location"]]) 
+                print ("SUA Event -> " + topic_name + " with location: " + str(event_list["location"]))
+            elif topic_name == "/currentLoc":
+                parsed_event = Event("arrived_at", [event_list["data"]]) 
+                print ("SUA Event -> " + topic_name + " with location: " + str(event_list["data"]))
             elif topic_name == "/radiation_sensor_plugin/sensor_0":
                 if "value" not in event_list:
                     raise ValueError("Event is missing value field.")
@@ -153,34 +163,61 @@ class OfflineInterface(SystemInterface):
     def connect(self):
         varanus_logger.info("Parsing trace file at: " + self.trace_file_path)
         try:
+            # Open the file
             self.trace_file = open(self.trace_file_path)
             self._file_open = True
 
             line_num = 0
             for json_line in self.trace_file:
-
+                # Loop through, trying to parse using parse_ROSMon_event()
                 line_num += 1
                 if json_line == '\n':
 
                     continue
                 try:
-                    # TODO This is messy, needs better structure for individual parsing methods
-                    if self.simple:
-                        event = self.parse_simple_ROSMon_event(json_line)
-                    else:
-                        event = self.parse_ROSMon_event(json_line)
+                    event = self.parse_ROSMon_event(json_line)
 
                     if event is not None:
+                        varanus_logger.debug("appending event " + event)
                         self.events.append(event)
                 except ValueError as e:
                     varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
                     varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
                     return False
+
+            # If parse_ROSMon_event() has not added any events to the list...
+            if len(self.events) == 0 :
+                # ... try again with parse_simple_ROSMon_event()
+                varanus_logger.debug("parse_ROSMon_event() failed, trying parse_simple_ROSMon_event()")
+                self.trace_file.seek(0) # have to 'seek' to the beginning because Python is a little sly
+                line_num = 0
+                varanus_logger.debug("Looping through file " + str(self.trace_file))
+                for json_line in self.trace_file:
+                    # Loop through again, trying the simple parser
+                    line_num += 1
+                    varanus_logger.debug("Trying simple parser on line  " + str(line_num))
+                    if json_line == '\n':
+                        continue
+                    try:
+                        event = self.parse_simple_ROSMon_event(json_line)
+                        if event is not None:
+                            varanus_logger.debug("appending event " + event)
+                            self.events.append(event)
+                    except ValueError as e:
+                        varanus_logger.error("Error parsing trace file on line " + str(line_num) + ": " + str(e))
+                        varanus_logger.error("Trace file path: " + self.trace_file_path + "\nAborting")
+                        return False
+            #Checking again!
+            if len(self.events) == 0 :
+                # Catchall for if the two parsing methods fail
+                varanus_logger.error("Unknown error when parsing trace file: " + self.trace_file_path )
+                varanus_logger.error("Aborting")
+                return False
         except OSError:
             varanus_logger.error("Trace Path not found during Offline Runtime Verification. trace_file_path=" + str(
                 self.trace_file_path))
             return False
-
+        varanus_logger.debug("events len = " + str(len(self.events)))
         varanus_logger.info("Parsed trace file OK")
         return True # Connected ok
 

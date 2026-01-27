@@ -1,6 +1,7 @@
 .~lock.*
 *.pyc
 
+<<<<<<< HEAD
 *.*~
 
 mascot-test/scenarios/scenario0-10-assertion.csp
@@ -34,3 +35,7 @@ mascot-test/scenarios/scenario5.json
 mascot-test/scenarios/scenario6-assertion.csp
 
 mascot-test/scenarios/scenario6.json
+=======
+mascot-test/scenarios/
+log/
+>>>>>>> bec718e0e89e6b705bf650a443f1599c1226cde6

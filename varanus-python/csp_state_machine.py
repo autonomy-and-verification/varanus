@@ -225,6 +225,17 @@ class CSPStateMachine(object):
 
         return returned_transitions
 
+    def get_outgoing_transition_names(self):
+        """From the current state, return the outgoing transitions"""
+        assert (self.current_state is not None)
+
+        outgoing_transitions = self.current_state.transitions
+        returned_names = []
+        for name, destination in outgoing_transitions.items():
+            returned_names.append(name)
+
+        return returned_names
+
     def transition(self, transition_name):
         """Takes the transition called transition_name, from the current state"""
         varanus_logger.debug("Transition method. Current State = " + self.current_state.name + " and transition_name = " + transition_name)
@@ -332,6 +343,7 @@ class CSPStateMachine(object):
         depth = 0
         state_to_check = self.current_state
         while depth <= self._TAU_DEPTH:
+            varanus_logger.DEBUG("explore taus loop, depth = " + str(depth))
             # should handle this better, but it shouldn't fail if the input files are right.
             assert(state_to_check.has_tau)
             tau_transition = state_to_check.transitions[Transition._TAU]

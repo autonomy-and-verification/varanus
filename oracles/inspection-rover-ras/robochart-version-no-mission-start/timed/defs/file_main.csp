@@ -1,0 +1,2333 @@
+
+--
+-- RoboChart generator version 3.0.0.202601080915
+-- Automatically generated on 23-01-2026 15:55:02
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+
+
+
+module stm0
+exports
+	transparent diamond
+	transparent sbisim
+	transparent dbisim
+	transparent chase
+
+	-- Transition identifiers
+	-- declaring identifiers of transitions
+	datatype NIDS = 
+	              NID_i0|
+	              NID_Idle|
+	              NID_j2|
+	              NID_Aborting|
+	              NID_AtWaypoint|
+	              NID_j0|
+	              NID_Moving|
+	              NID_Inspecting|
+	              NID_j1|
+	              NID_j3|
+	              NID_j4|
+	              NID_j5|
+	              NID_Aborted|
+	              NID_f0|
+	              NID_Ending|
+	              NID_j6|
+	              NID_Fail|
+	              NID_j7|
+	              NID_j8
+	
+	channel internal__ : NIDS
+	
+	-- Flow channels		
+	channel interrupt
+	channel exited
+	channel exit
+	channel terminate
+	
+	-- Variable channels
+	channel get_currentWP, set_currentWP, setL_currentWP, setR_currentWP: Waypoint
+	channel get_wp, set_wp, setL_wp, setR_wp: Waypoint
+	channel get_radiation, set_radiation, setL_radiation, setR_radiation: Radiation
+	channel get_inspectedWPs, set_inspectedWPs, setL_inspectedWPs, setR_inspectedWPs: Set(Waypoint)
+	
+	-- Shared variable channels
+	
+	-- Local variable channels for defined operations that are required by the state machine
+	
+	-- Declaring state machine events
+	channel mission_start__: NIDS.InOut
+	channel mission_start: InOut
+	channel mission_complete__: NIDS.InOut
+	channel mission_complete: InOut
+	channel mission_abort__: NIDS.InOut
+	channel mission_abort: InOut
+	channel inspect__: NIDS.InOut.Waypoint
+	channel inspect: InOut.Waypoint
+	channel move__: NIDS.InOut.Waypoint
+	channel move: InOut.Waypoint
+	channel radiation_level__: NIDS.InOut.Radiation
+	channel radiation_level: InOut.Radiation
+	channel inspected__: NIDS.InOut.Waypoint
+	channel inspected: InOut.Waypoint
+	channel arrived_at__: NIDS.InOut.Waypoint
+	channel arrived_at: InOut.Waypoint
+	
+	-- Declaring call and ret events for undefined operations
+	
+	enterSS = {|
+	i0::enter,
+	Idle::enter,
+	j2::enter,
+	Aborting::enter,
+	AtWaypoint::enter,
+	j0::enter,
+	Moving::enter,
+	Inspecting::enter,
+	j1::enter,
+	j3::enter,
+	j4::enter,
+	j5::enter,
+	Aborted::enter,
+	f0::enter,
+	Ending::enter,
+	j6::enter,
+	Fail::enter,
+	j7::enter,
+	j8::enter
+	|}
+	
+	enteredSS = 	{|
+	Idle::entered,
+	Aborting::entered,
+	AtWaypoint::entered,
+	Moving::entered,
+	Inspecting::entered,
+	Aborted::entered,
+	f0::entered,
+	Ending::entered,
+	Fail::entered
+	|}
+	
+	internal_events = union(enteredSS,union(enterSS,{|interrupt,exited|}))
+	
+	shared_variable_events = {|
+	|}
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	mission_start,
+		mission_complete,
+		mission_abort,
+		inspect,
+		move,
+		radiation_level,
+		inspected,
+		arrived_at
+		|}
+	
+	channel clockReset, clockResetL, clockResetR 
+	
+	localClockResets = {||}
+	
+	
+	channel get_CLID_AtWaypoint : core_clock_type 
+	channel get_CLID_Idle : core_clock_type 
+	channel get_CLID_Ending : core_clock_type 
+	channel get_CLID_Aborting : core_clock_type 
+	channel get_CLID_Moving : core_clock_type 
+	channel get_CLID_Fail : core_clock_type 
+	channel get_CLID_f0 : core_clock_type 
+	channel get_CLID_Inspecting : core_clock_type 
+	channel get_CLID_Aborted : core_clock_type 
+	--channel increment__
+	
+	CLID_AtWaypoint_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Idle_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Ending_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Aborting_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Moving_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Fail_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_f0_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Inspecting_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Aborted_clock_type(id__,
+			          const_stm0_first,
+			          const_stm0_WPs) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	
+
+		-- Nodes --
+		-- declaring all nodes
+		
+		----------------------------------------------------------------------
+		-- Initial: i0
+		module i0
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Termination = terminate -> SKIP
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+				
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Idle
+		module Idle
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j2
+		module j2
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Aborting
+		module Aborting
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: AtWaypoint
+		module AtWaypoint
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j0
+		module j0
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Moving
+		module Moving
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Inspecting
+		module Inspecting
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j1
+		module j1
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j3
+		module j3
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j4
+		module j4
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j5
+		module j5
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Aborted
+		module Aborted
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Final state: f0
+		module f0
+		
+		exports
+		
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Entering
+						
+						Entering 	= entered -> SKIP ; Active
+						Active		= share__choice(terminate -> SKIP [] interrupt -> SKIP) ; Interrupted
+						Interrupted	= share__choice(exit -> exited -> Inactive)
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Ending
+		module Ending
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j6
+		module j6
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- State: Fail
+		module Fail
+		
+		enterSS = {}
+		
+		enteredSS = {}
+		
+		exports
+		
+			--  Declarations
+			
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+							
+			
+			--channel increment__
+			
+			
+			--	Nodes
+			-- declaring all nodes
+			
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				--  Note that FDR has problems with efficiently compiling the process below
+				-- 	if using a different recursion pattern.
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					-- IMPLEMENTATION NOTE: 
+					-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+					-- however FDR struggles with that form in certain cases. So we use the exception operator
+					-- instead to 'terminate'.
+					
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+				dbisim(let
+					Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+					
+					Termination = terminate -> SKIP
+					
+					Active 		= SKIP ; 
+							 	  Behaviour ; 
+							 	  share__choice(exit -> SKIP) ; SKIP ; 
+							 	  share__choice(exited -> SKIP) ; Inactive
+				
+					Behaviour 	= entered -> During
+					During 		= ((SKIP ; SStop) /\ interrupt -> SKIP)
+				within
+					Inactive [| {terminate} |> SKIP)
+				
+				
+				-- Clocks
+				
+				StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs) = terminate -> SKIP
+				
+				stateClockSync = {||}
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j7
+		module j7
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Junction: j8
+		module j8
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) = D__(id__,
+						    const_stm0_first,
+						    const_stm0_WPs)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		-- END of Nodes --
+		
+		Timed(OneStep) {
+		-- Operation calls --
+		-- Only the undefined operations are declared here.
+		-- If the state machine is in isolation, all required operations will be undefined.
+		-- If it is in the context of a controller, the required operations not provided by the
+		-- controller will be declared here, and the defined operations will be defined in the
+		-- context of the Controller module, and therefore within scope of the state machine module.
+		
+		-- END of Operation calls --
+	
+		-- STM processes
+		STM(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+		( 
+			(
+				(
+					(IteratedStateful(id__,
+							    const_stm0_first,
+							    const_stm0_WPs) \ {terminate} ; share__choice(terminate -> SKIP))
+				 	[[ share__ <- x__ | x__ <- {||} ]]
+				)
+			[| {share__} |]
+			SKIP
+			)
+			[| union(sharedVarSync,{terminate}) |]
+			dbisim(sharedVarMemory(id__,
+					    const_stm0_first,
+					    const_stm0_WPs))
+		)\sharedVarHide
+		
+		STM_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+		( 
+			(
+				(
+					(IteratedStateful_VS_O(id__,
+							    const_stm0_first,
+							    const_stm0_WPs) \ {terminate} ; share__choice(terminate -> SKIP))
+				 	[[ share__ <- x__ | x__ <- {||} ]]
+				)
+			[| {share__} |]
+			SKIP
+			)
+			[| union(sharedVarSync,{terminate}) |]
+			dbisim(sharedVarMemory(id__,
+					    const_stm0_first,
+					    const_stm0_WPs))
+		)\sharedVarHide
+		
+		-- Transitions
+		Transitions(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = ((let
+			Trans = share__choice(get_inspectedWPs?inspectedWPs -> get_wp?wp -> get_currentWP?currentWP -> get_radiation?radiation -> TimeOut_1(
+				 (share__ -> SKIP
+				 [] dbisim((true)&(internal__!NID_i0 -> SKIP ;  ((SKIP ; Idle::enter -> SKIP))))
+				 [] dbisim((true)&(radiation_level__!NID_Idle.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j2::enter -> SKIP)))
+				 [] dbisim(((radiation==Radiation_Green))&(internal__!NID_j2 -> SKIP ;  ((SKIP ; Idle::enter -> SKIP))))
+				 [] dbisim(((radiation!=Radiation_Green))&(internal__!NID_j2 -> SKIP ;  ((SKIP ; Aborting::enter -> SKIP))))
+				 [] dbisim((true)&(move__!NID_Idle.in?currentWP:{currentWP|currentWP <- Waypoint, true} -> share__choice(set_currentWP!currentWP -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; Moving::enter -> SKIP)))
+				 [] dbisim((true)&(radiation_level__!NID_AtWaypoint.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j0::enter -> SKIP)))
+				 [] dbisim(((radiation==Radiation_Green))&(internal__!NID_j0 -> SKIP ;  ((SKIP ; AtWaypoint::enter -> SKIP))))
+				 [] dbisim(((radiation!=Radiation_Green))&(internal__!NID_j0 -> SKIP ;  ((SKIP ; Aborting::enter -> SKIP))))
+				 [] dbisim((true)&(internal__!NID_AtWaypoint -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(get_currentWP?currentWP -> true&(share__choice(inspect.out.currentWP -> SKIP))) ; Inspecting::enter -> SKIP)))
+				 [] dbisim((true)&(radiation_level__!NID_Moving.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j1::enter -> SKIP)))
+				 [] dbisim(((radiation!=Radiation_Green))&(internal__!NID_j1 -> SKIP ;  ((SKIP ; Aborting::enter -> SKIP))))
+				 [] dbisim(((radiation==Radiation_Green))&(internal__!NID_j1 -> SKIP ;  ((SKIP ; Moving::enter -> SKIP))))
+				 [] dbisim((true)&(radiation_level__!NID_Aborting.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; Aborting::enter -> SKIP)))
+				 [] dbisim((true)&(arrived_at__!NID_Moving.in?wp:{wp|wp <- Waypoint, true} -> share__choice(set_wp!wp -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j3::enter -> SKIP)))
+				 [] dbisim(((wp==currentWP))&(internal__!NID_j3 -> SKIP ;  ((SKIP ; AtWaypoint::enter -> SKIP))))
+				 [] dbisim((true)&(inspected__!NID_Inspecting.in?wp:{wp|wp <- Waypoint, true} -> share__choice(set_wp!wp -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j6::enter -> SKIP)))
+				 [] dbisim((true)&(radiation_level__!NID_Inspecting.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j5::enter -> SKIP)))
+				 [] dbisim(((radiation==Radiation_Green))&(internal__!NID_j5 -> SKIP ;  ((SKIP ; Inspecting::enter -> SKIP))))
+				 [] dbisim(((radiation!=Radiation_Green))&(internal__!NID_j5 -> SKIP ;  ((SKIP ; Aborting::enter -> SKIP))))
+				 [] dbisim((true)&(move__!NID_Aborting.in?wp:{wp|wp <- Waypoint, true} -> share__choice(set_wp!wp -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j7::enter -> SKIP)))
+				 [] dbisim((true)&(internal__!NID_Aborted -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; true&(share__choice(mission_abort.out -> SKIP)) ; f0::enter -> SKIP)))
+				 [] dbisim(((set_toolkit_diff(const_stm0_WPs,set_toolkit_union(inspectedWPs,{wp}))=={}))&(internal__!NID_j4 -> SKIP ;  ((SKIP ; Ending::enter -> SKIP))))
+				 [] dbisim((true)&(internal__!NID_Ending -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; true&(share__choice(mission_complete.out -> SKIP)) ; f0::enter -> SKIP)))
+				 [] dbisim(((set_toolkit_diff(const_stm0_WPs,set_toolkit_union(inspectedWPs,{wp}))!={}))&(internal__!NID_j4 -> SKIP ;  ((share__choice(share__choice(get_inspectedWPs?inspectedWPs -> share__choice(get_wp?wp -> true & (share__choice(set_inspectedWPs!set_toolkit_union(inspectedWPs,{wp}) -> SKIP))))) ; Idle::enter -> SKIP))))
+				 [] dbisim(((wp==currentWP))&(internal__!NID_j6 -> SKIP ;  ((SKIP ; j4::enter -> SKIP))))
+				 [] dbisim(((wp!=currentWP))&(internal__!NID_j6 -> SKIP ;  ((SKIP ; Fail::enter -> SKIP))))
+				 [] dbisim(((wp!=currentWP))&(internal__!NID_j3 -> SKIP ;  ((SKIP ; Fail::enter -> SKIP))))
+				 [] dbisim(((wp==const_stm0_first))&(internal__!NID_j7 -> SKIP ;  ((SKIP ; Aborted::enter -> SKIP))))
+				 [] dbisim(((wp!=const_stm0_first))&(internal__!NID_j7 -> SKIP ;  ((SKIP ; Fail::enter -> SKIP))))
+				 [] dbisim((true)&(radiation_level__!NID_Ending.in?radiation:{radiation|radiation <- Radiation, true} -> share__choice(set_radiation!radiation -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j8::enter -> SKIP)))
+				 [] dbisim(((radiation!=Radiation_Green))&(internal__!NID_j8 -> SKIP ;  ((SKIP ; Aborting::enter -> SKIP))))
+				 [] dbisim(((radiation==Radiation_Green))&(internal__!NID_j8 -> SKIP ;  ((SKIP ; Ending::enter -> SKIP))))
+				 []
+				 (interrupt -> share__choice(exit -> SKIP) ; share__choice(exited -> terminate -> SKIP))
+				 []
+				 terminate -> SKIP
+				 )
+			,SKIP);Trans
+			)
+		within
+			Trans [|{terminate}|> SKIP
+		)
+		)
+		
+		-- Stateful
+		-- RULE: Stateful(stm:StateMachineBody) : CSPProcess
+		
+		-- Named process definitions
+		MachineBody(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((
+			let
+				finalNodesEntered = {|f0::entered|}
+			within
+				(dbisim((dbisim((let
+					-- IMPLEMENTATION NOTE:
+					-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+					-- modules for defining the semantics of each node.
+					enterSS = {|
+					i0::enter,
+					Idle::enter,
+					j2::enter,
+					Aborting::enter,
+					AtWaypoint::enter,
+					j0::enter,
+					Moving::enter,
+					Inspecting::enter,
+					j1::enter,
+					j3::enter,
+					j4::enter,
+					j5::enter,
+					Aborted::enter,
+					f0::enter,
+					Ending::enter,
+					j6::enter,
+					Fail::enter,
+					j7::enter,
+					j8::enter
+					|}
+					hideSet = union(enterSS,{|exit,exited,internal__|})
+				within 
+					((let
+						-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+						-- because CSPM modules are used for the semantics of Node.
+						flowevts = union(enterSS,{|exit,exited,interrupt|})
+						transSync = {|internal__.NID_i0,radiation_level__.NID_Idle.in,internal__.NID_j2,internal__.NID_j2,move__.NID_Idle.in,radiation_level__.NID_AtWaypoint.in,internal__.NID_j0,internal__.NID_j0,internal__.NID_AtWaypoint,radiation_level__.NID_Moving.in,internal__.NID_j1,internal__.NID_j1,radiation_level__.NID_Aborting.in,arrived_at__.NID_Moving.in,internal__.NID_j3,inspected__.NID_Inspecting.in,radiation_level__.NID_Inspecting.in,internal__.NID_j5,internal__.NID_j5,move__.NID_Aborting.in,internal__.NID_Aborted,internal__.NID_j4,internal__.NID_Ending,internal__.NID_j4,internal__.NID_j6,internal__.NID_j6,internal__.NID_j3,internal__.NID_j7,internal__.NID_j7,radiation_level__.NID_Ending.in,internal__.NID_j8,internal__.NID_j8|}
+					within
+						((
+						 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+						   i0::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Idle::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j2::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Aborting::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   AtWaypoint::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j0::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Moving::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Inspecting::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j1::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j3::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j4::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j5::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Aborted::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   f0::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Ending::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j6::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Fail::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j7::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j8::D__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						 )
+						 [[Idle::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Idle.in,move__.NID_Idle.in|}]]
+						 [[Aborting::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Aborting.in,move__.NID_Aborting.in|}]]
+						 [[AtWaypoint::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_AtWaypoint.in,internal__.NID_AtWaypoint|}]]
+						 [[Moving::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Moving.in,arrived_at__.NID_Moving.in|}]]
+						 [[Inspecting::interrupt <- x__ | x__ <- {|interrupt,inspected__.NID_Inspecting.in,radiation_level__.NID_Inspecting.in|}]]
+						 [[Aborted::interrupt <- x__ | x__ <- {|interrupt,internal__.NID_Aborted|}]]
+						 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[Ending::interrupt <- x__ | x__ <- {|interrupt,internal__.NID_Ending,radiation_level__.NID_Ending.in|}]]
+						 [[Fail::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+						 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
+						 [[j0::interrupt <- x__ | x__ <- {|internal__.NID_j0,internal__.NID_j0|}]]
+						 [[j1::interrupt <- x__ | x__ <- {|internal__.NID_j1,internal__.NID_j1|}]]
+						 [[j3::interrupt <- x__ | x__ <- {|internal__.NID_j3,internal__.NID_j3|}]]
+						 [[j4::interrupt <- x__ | x__ <- {|internal__.NID_j4,internal__.NID_j4|}]]
+						 [[j5::interrupt <- x__ | x__ <- {|internal__.NID_j5,internal__.NID_j5|}]]
+						 [[j6::interrupt <- x__ | x__ <- {|internal__.NID_j6,internal__.NID_j6|}]]
+						 [[j7::interrupt <- x__ | x__ <- {|internal__.NID_j7,internal__.NID_j7|}]]
+						 [[j8::interrupt <- x__ | x__ <- {|internal__.NID_j8,internal__.NID_j8|}]]
+						 )
+						  [[ share__ <- x__ | x__ <- {| share__,setR_wp,setR_currentWP,setR_radiation |} ]] 
+						  [[set_inspectedWPs <- setL_inspectedWPs,set_wp <- setL_wp,set_currentWP <- setL_currentWP,set_radiation <- setL_radiation]]
+						 )
+						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+						 			,setL_inspectedWPs
+						 			,setL_wp
+						 			,setL_currentWP
+						 			,setL_radiation
+						 			,setR_wp
+						 			 			,setR_currentWP
+						 			 			,setR_radiation
+						 			|}) |]
+						 ((i0::enter -> Transitions(id__,
+						 		    const_stm0_first,
+						 		    const_stm0_WPs))
+						  [[ share__ <- x__ | x__ <- {| share__,setL_inspectedWPs,setL_wp,setL_currentWP,setL_radiation |} ]]
+						  [[set_wp <- setR_wp,set_currentWP <- setR_currentWP,set_radiation <- setR_radiation]]
+						 )
+						)[[setL_inspectedWPs <- set_inspectedWPs,setL_wp <- set_wp,setL_currentWP <- set_currentWP,setL_radiation <- set_radiation]]
+						 [[setR_wp <- set_wp,setR_currentWP <- set_currentWP,setR_radiation <- set_radiation]]
+						)
+					)
+					 \ hideSet)
+					[[
+						mission_start__.x____ <- mission_start,
+						mission_complete__.x____ <- mission_complete,
+						mission_abort__.x____ <- mission_abort,
+						inspect__.x____ <- inspect,
+						move__.x____ <- move,
+						radiation_level__.x____ <- radiation_level,
+						inspected__.x____ <- inspected,
+						arrived_at__.x____ <- arrived_at
+						| x____ <- NIDS
+					]]
+				)
+				)
+				 [| union(stateClockSync,{terminate}) |]
+				 StateClocks(id__,
+				 		          const_stm0_first,
+				 		          const_stm0_WPs)
+				)\diff(stateClockSync,enteredSS))
+				 [| {| interrupt |} |] SKIP)
+			)
+			)
+		
+		Behaviour(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((let
+				stateClockSync = {|get_CLID_AtWaypoint,AtWaypoint::entered,get_CLID_Idle,Idle::entered,get_CLID_Ending,Ending::entered,get_CLID_Aborting,Aborting::entered,get_CLID_Moving,Moving::entered,get_CLID_Fail,Fail::entered,get_CLID_Inspecting,Inspecting::entered,get_CLID_Aborted,Aborted::entered|}
+			 within
+				(MachineBody(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)) \ union(stateClockSync,enteredSS)
+			)
+			)
+		
+		IteratedBehaviour(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((let
+				stateClockSync = {|get_CLID_AtWaypoint,AtWaypoint::entered,get_CLID_Idle,Idle::entered,get_CLID_Ending,Ending::entered,get_CLID_Aborting,Aborting::entered,get_CLID_Moving,Moving::entered,get_CLID_Fail,Fail::entered,get_CLID_Inspecting,Inspecting::entered,get_CLID_Aborted,Aborted::entered|}
+			 within
+				(dbisim(
+					sbisim(
+						dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										dbisim(
+											sbisim(
+												dbisim(
+													sbisim(
+														dbisim(
+															sbisim(
+																dbisim(
+																	sbisim(
+																		dbisim(
+																			sbisim(
+																				MachineBody(id__,
+																						    const_stm0_first,
+																						    const_stm0_WPs)
+																				[| {|get_CLID_Aborted,Aborted::entered,terminate|} |]
+																				dbisim(Clock_CLID_Aborted(id__,0,
+																						          const_stm0_first,
+																						          const_stm0_WPs))
+																			)\{|get_CLID_Aborted|}
+																		)
+																		[| {|get_CLID_Inspecting,Inspecting::entered,terminate|} |]
+																		dbisim(Clock_CLID_Inspecting(id__,0,
+																				          const_stm0_first,
+																				          const_stm0_WPs))
+																	)\{|get_CLID_Inspecting|}
+																)
+																[| {|get_CLID_Fail,Fail::entered,terminate|} |]
+																dbisim(Clock_CLID_Fail(id__,0,
+																		          const_stm0_first,
+																		          const_stm0_WPs))
+															)\{|get_CLID_Fail|}
+														)
+														[| {|get_CLID_Moving,Moving::entered,terminate|} |]
+														dbisim(Clock_CLID_Moving(id__,0,
+																          const_stm0_first,
+																          const_stm0_WPs))
+													)\{|get_CLID_Moving|}
+												)
+												[| {|get_CLID_Aborting,Aborting::entered,terminate|} |]
+												dbisim(Clock_CLID_Aborting(id__,0,
+														          const_stm0_first,
+														          const_stm0_WPs))
+											)\{|get_CLID_Aborting|}
+										)
+										[| {|get_CLID_Ending,Ending::entered,terminate|} |]
+										dbisim(Clock_CLID_Ending(id__,0,
+												          const_stm0_first,
+												          const_stm0_WPs))
+									)\{|get_CLID_Ending|}
+								)
+								[| {|get_CLID_Idle,Idle::entered,terminate|} |]
+								dbisim(Clock_CLID_Idle(id__,0,
+										          const_stm0_first,
+										          const_stm0_WPs))
+							)\{|get_CLID_Idle|}
+						)
+						[| {|get_CLID_AtWaypoint,AtWaypoint::entered,terminate|} |]
+						dbisim(Clock_CLID_AtWaypoint(id__,0,
+								          const_stm0_first,
+								          const_stm0_WPs))
+					)\{|get_CLID_AtWaypoint|}
+				)
+				) \ union(stateClockSync,enteredSS)
+			)
+			)
+		
+		Stateful(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			((let
+				getsetLocalChannels = {|get_currentWP,set_currentWP,
+				get_wp,set_wp,
+				get_radiation,set_radiation,
+				get_inspectedWPs,set_inspectedWPs|}
+				clockSync = {||}
+			within
+				(Behaviour(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) 
+				 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+				 (varMemory(id__,
+				 		    const_stm0_first,
+				 		    const_stm0_WPs) [| {terminate} |] Clocks(id__,
+				 		          const_stm0_first,
+				 		          const_stm0_WPs))
+			 	)\union(getsetLocalChannels,clockSync)
+			)
+			)
+		
+		IteratedStateful(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) =
+			(dbisim(
+				sbisim(
+					dbisim(
+						sbisim(
+							dbisim(
+								sbisim(
+									dbisim(
+										sbisim(
+											IteratedBehaviour(id__,
+													    const_stm0_first,
+													    const_stm0_WPs)
+											[| {|get_inspectedWPs,set_inspectedWPs,terminate|} |]
+											Memory_inspectedWPs({})
+										)\{|get_inspectedWPs,set_inspectedWPs|}
+									)
+									[| {|get_radiation,set_radiation,terminate|} |]
+									Memory_radiation(Radiation_Red)
+								)\{|get_radiation,set_radiation|}
+							)
+							[| {|get_wp,set_wp,terminate|} |]
+							Memory_wp(0)
+						)\{|get_wp,set_wp|}
+					)
+					[| {|get_currentWP,set_currentWP,terminate|} |]
+					Memory_currentWP(0)
+				)\{|get_currentWP,set_currentWP|}
+			)
+			)
+		
+		-- Visible counterparts
+		MachineBody_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((
+			let
+				finalNodesEntered = {|f0::entered|}
+			within
+				(dbisim((dbisim((let
+					-- IMPLEMENTATION NOTE:
+					-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+					-- modules for defining the semantics of each node.
+					enterSS = {|
+					i0::enter,
+					Idle::enter,
+					j2::enter,
+					Aborting::enter,
+					AtWaypoint::enter,
+					j0::enter,
+					Moving::enter,
+					Inspecting::enter,
+					j1::enter,
+					j3::enter,
+					j4::enter,
+					j5::enter,
+					Aborted::enter,
+					f0::enter,
+					Ending::enter,
+					j6::enter,
+					Fail::enter,
+					j7::enter,
+					j8::enter
+					|}
+					hideSet = union(enterSS,{|exit,exited,internal__|})
+				within 
+					((let
+						-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+						-- because CSPM modules are used for the semantics of Node.
+						flowevts = union(enterSS,{|exit,exited,interrupt|})
+						transSync = {|internal__.NID_i0,radiation_level__.NID_Idle.in,internal__.NID_j2,internal__.NID_j2,move__.NID_Idle.in,radiation_level__.NID_AtWaypoint.in,internal__.NID_j0,internal__.NID_j0,internal__.NID_AtWaypoint,radiation_level__.NID_Moving.in,internal__.NID_j1,internal__.NID_j1,radiation_level__.NID_Aborting.in,arrived_at__.NID_Moving.in,internal__.NID_j3,inspected__.NID_Inspecting.in,radiation_level__.NID_Inspecting.in,internal__.NID_j5,internal__.NID_j5,move__.NID_Aborting.in,internal__.NID_Aborted,internal__.NID_j4,internal__.NID_Ending,internal__.NID_j4,internal__.NID_j6,internal__.NID_j6,internal__.NID_j3,internal__.NID_j7,internal__.NID_j7,radiation_level__.NID_Ending.in,internal__.NID_j8,internal__.NID_j8|}
+					within
+						((
+						 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+						   i0::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Idle::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j2::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Aborting::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   AtWaypoint::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j0::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Moving::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Inspecting::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j1::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j3::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j4::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j5::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Aborted::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   f0::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Ending::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j6::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   Fail::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j7::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   [| { share__, terminate } |] (
+						   j8::VS_O__(id__,
+						   		    const_stm0_first,
+						   		    const_stm0_WPs)
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						   )
+						 )
+						 [[Idle::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Idle.in,move__.NID_Idle.in|}]]
+						 [[Aborting::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Aborting.in,move__.NID_Aborting.in|}]]
+						 [[AtWaypoint::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_AtWaypoint.in,internal__.NID_AtWaypoint|}]]
+						 [[Moving::interrupt <- x__ | x__ <- {|interrupt,radiation_level__.NID_Moving.in,arrived_at__.NID_Moving.in|}]]
+						 [[Inspecting::interrupt <- x__ | x__ <- {|interrupt,inspected__.NID_Inspecting.in,radiation_level__.NID_Inspecting.in|}]]
+						 [[Aborted::interrupt <- x__ | x__ <- {|interrupt,internal__.NID_Aborted|}]]
+						 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[Ending::interrupt <- x__ | x__ <- {|interrupt,internal__.NID_Ending,radiation_level__.NID_Ending.in|}]]
+						 [[Fail::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+						 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
+						 [[j0::interrupt <- x__ | x__ <- {|internal__.NID_j0,internal__.NID_j0|}]]
+						 [[j1::interrupt <- x__ | x__ <- {|internal__.NID_j1,internal__.NID_j1|}]]
+						 [[j3::interrupt <- x__ | x__ <- {|internal__.NID_j3,internal__.NID_j3|}]]
+						 [[j4::interrupt <- x__ | x__ <- {|internal__.NID_j4,internal__.NID_j4|}]]
+						 [[j5::interrupt <- x__ | x__ <- {|internal__.NID_j5,internal__.NID_j5|}]]
+						 [[j6::interrupt <- x__ | x__ <- {|internal__.NID_j6,internal__.NID_j6|}]]
+						 [[j7::interrupt <- x__ | x__ <- {|internal__.NID_j7,internal__.NID_j7|}]]
+						 [[j8::interrupt <- x__ | x__ <- {|internal__.NID_j8,internal__.NID_j8|}]]
+						 )
+						  [[ share__ <- x__ | x__ <- {| share__,setR_wp,setR_currentWP,setR_radiation |} ]] 
+						  [[set_inspectedWPs <- setL_inspectedWPs,set_wp <- setL_wp,set_currentWP <- setL_currentWP,set_radiation <- setL_radiation]]
+						 )
+						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+						 			,setL_inspectedWPs
+						 			,setL_wp
+						 			,setL_currentWP
+						 			,setL_radiation
+						 			,setR_wp
+						 			 			,setR_currentWP
+						 			 			,setR_radiation
+						 			|}) |]
+						 ((i0::enter -> Transitions(id__,
+						 		    const_stm0_first,
+						 		    const_stm0_WPs))
+						  [[ share__ <- x__ | x__ <- {| share__,setL_inspectedWPs,setL_wp,setL_currentWP,setL_radiation |} ]]
+						  [[set_wp <- setR_wp,set_currentWP <- setR_currentWP,set_radiation <- setR_radiation]]
+						 )
+						)[[setL_inspectedWPs <- set_inspectedWPs,setL_wp <- set_wp,setL_currentWP <- set_currentWP,setL_radiation <- set_radiation]]
+						 [[setR_wp <- set_wp,setR_currentWP <- set_currentWP,setR_radiation <- set_radiation]]
+						)
+					)
+					 \ hideSet)
+					[[
+						mission_start__.x____ <- mission_start,
+						mission_complete__.x____ <- mission_complete,
+						mission_abort__.x____ <- mission_abort,
+						inspect__.x____ <- inspect,
+						move__.x____ <- move,
+						radiation_level__.x____ <- radiation_level,
+						inspected__.x____ <- inspected,
+						arrived_at__.x____ <- arrived_at
+						| x____ <- NIDS
+					]]
+				)
+				)
+				 [| union(stateClockSync,{terminate}) |]
+				 StateClocks(id__,
+				 		          const_stm0_first,
+				 		          const_stm0_WPs)
+				)\diff(stateClockSync,enteredSS))
+				 [| {| interrupt |} |] SKIP)
+			)
+			)
+		
+		Behaviour_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((let
+				stateClockSync = {|get_CLID_AtWaypoint,AtWaypoint::entered,get_CLID_Idle,Idle::entered,get_CLID_Ending,Ending::entered,get_CLID_Aborting,Aborting::entered,get_CLID_Moving,Moving::entered,get_CLID_Fail,Fail::entered,get_CLID_Inspecting,Inspecting::entered,get_CLID_Aborted,Aborted::entered|}
+			 within
+				(MachineBody_VS_O(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+			)
+			)
+		
+		IteratedBehaviour_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((let
+				stateClockSync = {|get_CLID_AtWaypoint,AtWaypoint::entered,get_CLID_Idle,Idle::entered,get_CLID_Ending,Ending::entered,get_CLID_Aborting,Aborting::entered,get_CLID_Moving,Moving::entered,get_CLID_Fail,Fail::entered,get_CLID_Inspecting,Inspecting::entered,get_CLID_Aborted,Aborted::entered|}
+			 within
+				(dbisim(
+					sbisim(
+						dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										dbisim(
+											sbisim(
+												dbisim(
+													sbisim(
+														dbisim(
+															sbisim(
+																dbisim(
+																	sbisim(
+																		dbisim(
+																			sbisim(
+																				MachineBody_VS_O(id__,
+																						    const_stm0_first,
+																						    const_stm0_WPs)
+																				[| {|get_CLID_Aborted,Aborted::entered,terminate|} |]
+																				dbisim(Clock_CLID_Aborted(id__,0,
+																						          const_stm0_first,
+																						          const_stm0_WPs))
+																			)\{|get_CLID_Aborted|}
+																		)
+																		[| {|get_CLID_Inspecting,Inspecting::entered,terminate|} |]
+																		dbisim(Clock_CLID_Inspecting(id__,0,
+																				          const_stm0_first,
+																				          const_stm0_WPs))
+																	)\{|get_CLID_Inspecting|}
+																)
+																[| {|get_CLID_Fail,Fail::entered,terminate|} |]
+																dbisim(Clock_CLID_Fail(id__,0,
+																		          const_stm0_first,
+																		          const_stm0_WPs))
+															)\{|get_CLID_Fail|}
+														)
+														[| {|get_CLID_Moving,Moving::entered,terminate|} |]
+														dbisim(Clock_CLID_Moving(id__,0,
+																          const_stm0_first,
+																          const_stm0_WPs))
+													)\{|get_CLID_Moving|}
+												)
+												[| {|get_CLID_Aborting,Aborting::entered,terminate|} |]
+												dbisim(Clock_CLID_Aborting(id__,0,
+														          const_stm0_first,
+														          const_stm0_WPs))
+											)\{|get_CLID_Aborting|}
+										)
+										[| {|get_CLID_Ending,Ending::entered,terminate|} |]
+										dbisim(Clock_CLID_Ending(id__,0,
+												          const_stm0_first,
+												          const_stm0_WPs))
+									)\{|get_CLID_Ending|}
+								)
+								[| {|get_CLID_Idle,Idle::entered,terminate|} |]
+								dbisim(Clock_CLID_Idle(id__,0,
+										          const_stm0_first,
+										          const_stm0_WPs))
+							)\{|get_CLID_Idle|}
+						)
+						[| {|get_CLID_AtWaypoint,AtWaypoint::entered,terminate|} |]
+						dbisim(Clock_CLID_AtWaypoint(id__,0,
+								          const_stm0_first,
+								          const_stm0_WPs))
+					)\{|get_CLID_AtWaypoint|}
+				)
+				) \ diff(union(stateClockSync,enteredSS),enteredSS)
+			)
+			)
+		
+		Stateful_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = 
+			dbisim((let
+				getsetLocalChannels = {|get_currentWP,set_currentWP,
+				get_wp,set_wp,
+				get_radiation,set_radiation,
+				get_inspectedWPs,set_inspectedWPs|}
+				clockSync = {||}
+			within
+				(Behaviour_VS_O(id__,
+						    const_stm0_first,
+						    const_stm0_WPs) 
+				 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+				 (varMemory(id__,
+				 		    const_stm0_first,
+				 		    const_stm0_WPs) [| {terminate} |] Clocks(id__,
+				 		          const_stm0_first,
+				 		          const_stm0_WPs))
+			 	)\union(getsetLocalChannels,clockSync)
+			)
+			)
+		
+		IteratedStateful_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) =
+			(dbisim(
+				sbisim(
+					dbisim(
+						sbisim(
+							dbisim(
+								sbisim(
+									dbisim(
+										sbisim(
+											IteratedBehaviour_VS_O(id__,
+													    const_stm0_first,
+													    const_stm0_WPs)
+											[| {|get_inspectedWPs,set_inspectedWPs,terminate|} |]
+											Memory_inspectedWPs({})
+										)\{|get_inspectedWPs,set_inspectedWPs|}
+									)
+									[| {|get_radiation,set_radiation,terminate|} |]
+									Memory_radiation(Radiation_Red)
+								)\{|get_radiation,set_radiation|}
+							)
+							[| {|get_wp,set_wp,terminate|} |]
+							Memory_wp(0)
+						)\{|get_wp,set_wp|}
+					)
+					[| {|get_currentWP,set_currentWP,terminate|} |]
+					Memory_currentWP(0)
+				)\{|get_currentWP,set_currentWP|}
+			)
+			)
+		
+		-- END
+		
+		-- Memory
+		-- Memory variables
+		Memory_currentWP(currentWP) =
+			get_currentWP!currentWP -> Memory_currentWP(currentWP)
+			[]
+			set_currentWP?x__ -> Memory_currentWP(x__)
+			[]
+			terminate -> SKIP
+		Memory_wp(wp) =
+			get_wp!wp -> Memory_wp(wp)
+			[]
+			set_wp?x__ -> Memory_wp(x__)
+			[]
+			terminate -> SKIP
+		Memory_radiation(radiation) =
+			get_radiation!radiation -> Memory_radiation(radiation)
+			[]
+			set_radiation?x__ -> Memory_radiation(x__)
+			[]
+			terminate -> SKIP
+		Memory_inspectedWPs(inspectedWPs) =
+			get_inspectedWPs!inspectedWPs -> Memory_inspectedWPs(inspectedWPs)
+			[]
+			set_inspectedWPs?x__ -> Memory_inspectedWPs(x__)
+			[]
+			terminate -> SKIP
+		
+		-- varMemory process
+		varMemory(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = Memory_currentWP(0)
+		[| { terminate } |] (
+		Memory_wp(0)
+		[| { terminate } |] (
+		Memory_radiation(Radiation_Red)
+		[| { terminate } |] (
+		Memory_inspectedWPs({})
+		)
+		)
+		)
+		
+		getsetLocalChannels = {|get_currentWP,set_currentWP,get_wp,set_wp,get_radiation,set_radiation,get_inspectedWPs,set_inspectedWPs|}
+		
+		-- Definition of the behaviour of state machines (default, optimised, visible, visible and optimised)
+		FVS__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = STM_VS_O(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) \ localClockResets
+		D__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = timed_priority(STM(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) \ union(internal_events,localClockResets))
+		O__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = dbisim(D__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs))
+		VS__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = FVS__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs)
+		VS_O__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = dbisim(FVS__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs))
+		HEXT__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = O__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) [|shared_variable_events|] SKIP
+		FVS_C__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = dbisim(timed_priority(STM(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) \ internal_events))
+		HUP__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = timed_priority(O__(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) [|{share__}|] SKIP)
+		
+		-- Clocks
+		
+		Clocks(id__,
+				          const_stm0_first,
+				          const_stm0_WPs) = terminate -> SKIP
+		
+		clockSync = {||}
+		
+		Clock_CLID_AtWaypoint(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				AtWaypoint::entered -> Clock_CLID_AtWaypoint(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_AtWaypoint!x__ -> Clock_CLID_AtWaypoint(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_AtWaypoint(id__,clock_type_plus(x__,1,CLID_AtWaypoint_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Idle(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Idle::entered -> Clock_CLID_Idle(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Idle!x__ -> Clock_CLID_Idle(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Idle(id__,clock_type_plus(x__,1,CLID_Idle_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Ending(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Ending::entered -> Clock_CLID_Ending(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Ending!x__ -> Clock_CLID_Ending(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Ending(id__,clock_type_plus(x__,1,CLID_Ending_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Aborting(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Aborting::entered -> Clock_CLID_Aborting(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Aborting!x__ -> Clock_CLID_Aborting(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Aborting(id__,clock_type_plus(x__,1,CLID_Aborting_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Moving(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Moving::entered -> Clock_CLID_Moving(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Moving!x__ -> Clock_CLID_Moving(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Moving(id__,clock_type_plus(x__,1,CLID_Moving_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Fail(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Fail::entered -> Clock_CLID_Fail(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Fail!x__ -> Clock_CLID_Fail(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Fail(id__,clock_type_plus(x__,1,CLID_Fail_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Inspecting(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Inspecting::entered -> Clock_CLID_Inspecting(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Inspecting!x__ -> Clock_CLID_Inspecting(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Inspecting(id__,clock_type_plus(x__,1,CLID_Inspecting_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		Clock_CLID_Aborted(id__,x__,
+				          const_stm0_first,
+				          const_stm0_WPs) = 
+			TimeOut_1(
+				Aborted::entered -> Clock_CLID_Aborted(id__,0,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				get_CLID_Aborted!x__ -> Clock_CLID_Aborted(id__,x__,
+						          const_stm0_first,
+						          const_stm0_WPs)
+				[]
+				terminate -> SKIP,Clock_CLID_Aborted(id__,clock_type_plus(x__,1,CLID_Aborted_clock_type(id__,
+						          const_stm0_first,
+						          const_stm0_WPs)),
+						          const_stm0_first,
+						          const_stm0_WPs))
+		
+		StateClocks(id__,
+				          const_stm0_first,
+				          const_stm0_WPs) = dbisim(Clock_CLID_AtWaypoint(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Idle(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Ending(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Aborting(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Moving(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Fail(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Inspecting(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Aborted(id__,0,
+				          const_stm0_first,
+				          const_stm0_WPs))
+		)
+		)
+		)
+		)
+		)
+		)
+		)
+		
+		stateClockSync = {|get_CLID_AtWaypoint,AtWaypoint::entered,get_CLID_Idle,Idle::entered,get_CLID_Ending,Ending::entered,get_CLID_Aborting,Aborting::entered,get_CLID_Moving,Moving::entered,get_CLID_Fail,Fail::entered,get_CLID_Inspecting,Inspecting::entered,get_CLID_Aborted,Aborted::entered|}
+		
+		-- Shared memory
+		-- Shared memory variables
+		
+		-- sharedVarMemory process
+		sharedVarMemory(id__,
+				    const_stm0_first,
+				    const_stm0_WPs) = terminate -> SKIP
+		
+		sharedVarSync = {||}
+		
+		sharedVarHide = {||}
+		}
+endmodule
+
+
