@@ -16,7 +16,7 @@ Then we have the trace files that we used for the timed runs:
 
 * `trace-json-pass` is a modified version of `trace-json-good`, where all the radiation results are green. Specifically modified the values on line 40 so that the "value" parameter is lower than 120 (Orange radiation).
 * `trace-json-fail-safety` is `trace-json-good`, using the Orange radiation spike to show the safety requirement being ignored.
-* `trace-json-fail-message-order` swaps the order of `move` and `inspect` (so now `inspect` comes first) to show that out-of-order ROS messages will be caught. The error is on line 166 and 194. This should be caught in 'strict' mode.
+* `trace-json-fail-message-order` swaps the order of `move` and `inspect` (so now `inspect` comes first) to show that out-of-order ROS messages will be caught. The error is on line 101 and 132. This should be caught in 'strict' mode.
 * `trace-json-fail-param-mismatch` has move.1 and then arrived_at.3 (the `current_loc` ROS message ) on line 93
 
 There are config files for both the RoboChart and CSP versions of the model.
