@@ -1,0 +1,95 @@
+2026-01-27 18:35:50,111 - varanus - INFO - +++ Testing rover_robochart_model_ras_fail_safety +++
+2026-01-27 18:35:50,111 - varanus - INFO - Preprocessing...
+2026-01-27 18:35:50,111 - varanus - INFO - Preprocessing: pass
+2026-01-27 18:35:50,111 - varanus - INFO - +++ Running Offline +++
+2026-01-27 18:35:50,238 - varanus - INFO - Building CSP State Machine. Please Wait
+2026-01-27 18:36:45,157 - varanus - INFO - Building CSP State Machine
+2026-01-27 18:36:45,164 - varanus - INFO - +++ checking that normal(RCSystem) is deterministic with given alphabets +++
+2026-01-27 18:36:45,164 - varanus - INFO - +++ starting monitoring against normal(RCSystem) +++
+2026-01-27 18:36:45,164 - varanus - INFO - +++ Running Offline -- Using State Machine +++
+2026-01-27 18:36:45,164 - varanus - INFO - Parsing trace file at: oracles/inspection-rover-ras/trace-json-fail-safety.txt
+2026-01-27 18:36:45,179 - varanus - INFO - Parsed trace file OK
+2026-01-27 18:36:45,180 - varanus - INFO - Checking trace file: oracles/inspection-rover-ras/trace-json-fail-safety.txt
+2026-01-27 18:36:45,180 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,180 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,180 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,180 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,181 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,181 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,181 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,184 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,184 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,184 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,184 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,185 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,185 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,185 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,185 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,186 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,186 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,186 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,186 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,186 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,187 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,188 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,188 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,189 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,189 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,189 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,189 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,189 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,190 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,190 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,190 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,190 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,190 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,191 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,191 - varanus - INFO - In state 16187007277633237420 saw radiation_level.Radiation_Orange
+2026-01-27 18:36:45,191 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,191 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,191 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,191 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,192 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,193 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,194 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw radiation_level.Radiation_Green
+2026-01-27 18:36:45,195 - varanus - INFO - In state 12800499468460568903 saw move.1
+2026-01-27 18:36:45,195 - varanus - INFO - UNEXPECTED TRANSITION
+2026-01-27 18:36:45,195 - varanus - INFO - Stated alphabet returning bad state i.e. None - saw bad event
+2026-01-27 18:36:45,196 - varanus - ERROR - System Violated the Specification with Trace: ['radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Orange', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Green', 'move.1']
+2026-01-27 18:36:45,196 - varanus - ERROR - The permissible events were: ['radiation_level.Radiation_Red', 'radiation_level.Radiation_Green', 'radiation_level.Radiation_Orange', 'move.0']
+2026-01-27 18:36:45,196 - varanus - INFO - Trace file finished with violations
+2026-01-27 18:36:47,670 - varanus - INFO - +++ Build Time: 			54.925798893s +++
+2026-01-27 18:36:47,670 - varanus - INFO - +++ Check Time: 			0.0315721035004s +++
+2026-01-27 18:36:47,670 - varanus - INFO - +++ Average Transition Time: 	0.000214557389955s (74 events) +++
+2026-01-27 18:36:47,671 - varanus - INFO - +++ Total Time: 			55.0844330788s +++
