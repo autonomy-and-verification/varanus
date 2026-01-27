@@ -37,3 +37,5 @@ python2 varanus-python/varanus.py offline oracles/inspection-rover-ras/config_ro
 ```
 
 Which runs `varanus.py` in `offline` mode, using the `config_rover_pass.yaml` config file. The `-l` switch overrides the default log file path.
+
+The experiments on the CSP version of the model are executed in Varanus' 'strict' mode, where if the trace contains events the model cannot do then it is considered a violation. The experiments on the RoboChart version of the model are executed in 'permissive' mode, where events in the trace that the model cannot do mean the model stays in its current state. This difference is to keep the length of the explored trace the same between the experiments, so that we can better compare the results. The RoboChart version of the model only considered waypoints 0, 1, and 2 (to keep the state space tractable); whereas the CSP version of the model considers waypoints 0--5.
