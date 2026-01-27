@@ -5,9 +5,5 @@ main_process: "normal(RCSystem)"
 model: "robochart-version/comparison.csp" 
 trace_file: "trace-json-fail-param-mismatch.txt"
 name: "rover_robochart_model_ras_fail_param_mismatch"
-<<<<<<< HEAD
-mode: "strict"
-=======
 mode: "permissive"
 map:   "radiation_event_map.json" 
->>>>>>> aec977a256a2edc20f7d17202bbd1d94a467b8cb
