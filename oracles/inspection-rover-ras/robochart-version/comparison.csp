@@ -29,6 +29,6 @@ assert ROVER_SYSTEM [T= RCSystem
 assert RCSystem [FD= ROVER_SYSTEM
 assert ROVER_SYSTEM [FD= RCSystem
 
-transparent chase
+transparent diamond
 
-RoboChartRover = chase(RCSystem)
+RoboChartRover = diamond(RCSystem)
