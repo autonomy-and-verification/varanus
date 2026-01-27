@@ -1,0 +1,4 @@
+channel a : Bool
+channel b
+
+P = a.True -> b -> SKIP

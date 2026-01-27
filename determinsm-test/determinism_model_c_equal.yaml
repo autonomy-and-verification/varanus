@@ -1,0 +1,8 @@
+---
+alphabet: [a,b, c]
+common_alphabet: [a,b, c]
+main_process: "Proc2"
+model: "determinism.csp"
+map:   "event_map.json" 
+trace_file: "test-traces/scen1.json"
+name: "determinism_test-pass"

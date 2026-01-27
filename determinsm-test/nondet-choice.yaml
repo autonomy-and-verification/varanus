@@ -1,0 +1,8 @@
+---
+alphabet: [a,b,c]
+common_alphabet: [a,b,c]
+mode: "strict"
+main_process: "diamond(Proc4)"
+model: "determinism.csp" 
+trace_file: "test-traces/scen1.json"
+name: "notndet_choice_fail"
