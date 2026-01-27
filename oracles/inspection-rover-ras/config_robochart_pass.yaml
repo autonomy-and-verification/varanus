@@ -6,4 +6,6 @@ main_process: "normal(RCSystem)"
 model: "robochart-version/comparison.csp" 
 trace_file: "trace-json-pass.txt"
 name: "rover_robochart_model_ras_pass"
-mode: "strict"
+mode: "permissive"
+map:   "radiation_event_map.json" 
+

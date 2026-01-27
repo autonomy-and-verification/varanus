@@ -96,6 +96,9 @@ class SystemInterface(object):
                     else:
                         raise ValueError("Event has invalid radiation reading")
 
+                    if self.event_map is not None:
+                        radiationStatus = self.convert_event(radiationStatus)
+
                     parsed_event = Event("radiation_level", [radiationStatus])
                     print ("SUA Event -> " + topic_name + " with value: " + str(value))
             else:
