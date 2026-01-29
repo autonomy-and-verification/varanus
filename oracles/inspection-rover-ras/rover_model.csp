@@ -7,6 +7,7 @@
 -- Guarantee C: And, if the Robot inspects a waypoint and the radiation level is dangerous, then the Robot will return to the original waypoint (the exit)
 include "rover_defs.csp"
 transparent diamond
+transparent normal
 
 ---------------------------------------------------------------------------------------------
 
