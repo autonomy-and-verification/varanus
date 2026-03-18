@@ -21,7 +21,7 @@ PORT = 5087
 ### Arguments###
 argParser = argparse.ArgumentParser()
 argParser.add_argument("type", help="The type of action or check for Varanus to perform.",
-                       choices=['offline', 'online', 'sm-test', 'offline-test', 'stress-test', 'build-only'])
+                       choices=['offline', 'online', 'sm-test', 'offline-test', 'stress-test', 'build-only', 'buchi-automaton'])
 argParser.add_argument("config", help="The location of the config file.")
 #argParser.add_argument("--model", help="The location of the model used as the oracle.",
 #                       default="model/mascot-safety-system.csp")
@@ -241,6 +241,23 @@ def run(check_type):
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
         else:
             mon.build_state_machine(MAIN_PROCESS)
+        build_end = time.time()
+        varanus_times.add_time("build", build_end - build_start)
+
+    elif check_type == "buchi-automaton":
+        varanus_logger.info("+++ Exporting Büchi Automaton +++")
+        t0 = time.time()
+        if CONF_MAP is not None:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
+        else:
+            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        build_start = time.time()
+        if COMMON_ALPHA:
+            mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
+        else:
+            mon.build_state_machine(MAIN_PROCESS)
+        with open('buchi_automaton.hoa', 'w') as f:
+            f.write(mon.to_buchi_automaton())
         build_end = time.time()
         varanus_times.add_time("build", build_end - build_start)
 

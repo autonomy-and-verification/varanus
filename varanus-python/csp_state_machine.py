@@ -383,6 +383,79 @@ class CSPStateMachine(object):
 
         return output
 
+    def to_buchi_automaton(self):
+        """
+        Export this CSPStateMachine as a Buchi automaton in HOA format.
+
+        - Accepting states are the destinations of terminate transitions.
+        - Tau transitions are ignored.
+        - Accepting terminal states receive a [true] self-loop so that
+        the Buchi run can continue infinitely.
+        """
+
+        # Map states to indices
+        state_list = list(self.states.values())
+        state_index = {s.name: i for i, s in enumerate(state_list)}
+
+        # Alphabet (ignore tau and terminate)
+        ap = sorted(a for a in self.alphabet
+                    if a not in (Transition._TAU, Transition._TERMINATE))
+        ap_index = {a: i for i, a in enumerate(ap)}
+
+        # Determine accepting states (destinations of ✓ transitions)
+        accepting_states = set()
+        for state in state_list:
+            for t in state.transitions.values():
+                if t.isTerminate:
+                    for dest in t.destinations.values():
+                        accepting_states.add(dest.name)
+
+        hoa = []
+        hoa.append("HOA: v1")
+        hoa.append("States: {}".format(len(state_list)))
+        hoa.append("Start: {}".format(state_index[self.initial_state.name]))
+        hoa.append("AP: {} {}".format(len(ap), " ".join('"{}"'.format(a) for a in ap)))
+        hoa.append("Acceptance: 1 Inf(0)")
+        hoa.append("properties: explicit-labels state-acc deterministic")
+        hoa.append("--BODY--")
+
+        # Generate transitions
+        for state in state_list:
+            idx = state_index[state.name]
+
+            # State declaration
+            if state.name in accepting_states:
+                hoa.append("State: {} {{0}}".format(idx))
+            else:
+                hoa.append("State: {}".format(idx))
+
+            has_visible_transition = False
+
+            for t in state.transitions.values():
+
+                # Ignore tau transitions
+                if t.isTau:
+                    continue
+
+                has_visible_transition = True
+
+                if t.isTerminate:
+                    label = "true"
+                else:
+                    label = str(ap_index.get(t.name, "true"))
+
+                for dest in t.destinations.values():
+                    hoa.append("[{}] {}".format(label, state_index[dest.name]))
+
+            # If accepting state has no outgoing transitions,
+            # add self-loop to allow infinite Büchi run
+            if state.name in accepting_states and not has_visible_transition:
+                hoa.append("[true] {}".format(idx))
+
+        hoa.append("--END--")
+
+        return "\n".join(hoa)
+
 if __name__ == "__main__":
     """ Test the CSP State Machine"""
 

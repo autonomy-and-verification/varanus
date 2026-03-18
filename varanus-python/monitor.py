@@ -654,5 +654,8 @@ class Monitor(object):
         else:
             varanus_logger.debug("oops?")
 
+    def to_buchi_automaton(self):
+        return self.process.to_buchi_automaton()
+
 
 
