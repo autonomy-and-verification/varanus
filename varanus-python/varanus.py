@@ -9,7 +9,10 @@ import sys
 import csv
 from os.path import exists
 import yaml
-from urllib.parse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 ################
 ###CONSTANTS###
@@ -46,7 +49,10 @@ def _validate_predictive_ws_url(predictive_url, varanus_host, varanus_port):
     if predictive_host == own_host and predictive_port == int(varanus_port):
         raise ValueError(
             "predictive_ltl_ws_url points to Varanus input websocket endpoint "
-            f"({varanus_host}:{varanus_port}). Use a different port (e.g. ws://127.0.0.1:5088)."
+            "({host}:{port}). Use a different port (e.g. ws://127.0.0.1:5088).".format(
+                host=varanus_host,
+                port=varanus_port,
+            )
         )
 
 ### Arguments###
@@ -121,7 +127,6 @@ except ValueError as validation_error:
     print("+++++++ VARANUS +++++++")
     print("++++ version " + str(VERSION_NUM) + " +++")
     print("++++ Matt Luckcuck ++++")
-    varanus_logger.error(str(validation_error))
     print(str(validation_error))
     quit()
 
