@@ -9,6 +9,7 @@ import sys
 import csv
 from os.path import exists
 import yaml
+from urllib.parse import urlparse
 
 ################
 ###CONSTANTS###
@@ -17,6 +18,36 @@ VERSION_NUM = '0.9.6'
 IP = '127.0.0.1'
 PORT = 5087
 ###############
+
+
+def _normalize_local_host(host):
+    if host in {'localhost', '127.0.0.1'}:
+        return '127.0.0.1'
+    return host
+
+
+def _validate_predictive_ws_url(predictive_url, varanus_host, varanus_port):
+    if not predictive_url:
+        return
+
+    parsed = urlparse(str(predictive_url))
+    if parsed.scheme not in {'ws', 'wss'} or parsed.hostname is None:
+        raise ValueError(
+            "Invalid predictive_ltl_ws_url. Expected format like ws://127.0.0.1:5088"
+        )
+
+    predictive_port = parsed.port
+    if predictive_port is None:
+        predictive_port = 443 if parsed.scheme == 'wss' else 80
+
+    predictive_host = _normalize_local_host(parsed.hostname)
+    own_host = _normalize_local_host(varanus_host)
+
+    if predictive_host == own_host and predictive_port == int(varanus_port):
+        raise ValueError(
+            "predictive_ltl_ws_url points to Varanus input websocket endpoint "
+            f"({varanus_host}:{varanus_port}). Use a different port (e.g. ws://127.0.0.1:5088)."
+        )
 
 ### Arguments###
 argParser = argparse.ArgumentParser()
@@ -55,6 +86,10 @@ with open(config_path, 'r') as data:
         CONF_MAP = config_path_prefix + config['map']
     else:
         CONF_MAP = None
+    if 'predictive_ltl_ws_url' in config:
+        PREDICTIVE_LTL_WS_URL = config['predictive_ltl_ws_url']
+    else:
+        PREDICTIVE_LTL_WS_URL = None
     if 'trace_file' in config:
         TRACE_FILE = config_path_prefix + config['trace_file']
     else:
@@ -79,6 +114,16 @@ if args.name:
     CHECK_NAME = args.name
 elif CHECK_NAME is None:
     CHECK_NAME = "scenario x"
+
+try:
+    _validate_predictive_ws_url(PREDICTIVE_LTL_WS_URL, IP, PORT)
+except ValueError as validation_error:
+    print("+++++++ VARANUS +++++++")
+    print("++++ version " + str(VERSION_NUM) + " +++")
+    print("++++ Matt Luckcuck ++++")
+    varanus_logger.error(str(validation_error))
+    print(str(validation_error))
+    quit()
 
 #MODEL = args.model
 #MAP = config_path_prefix + args.map
@@ -126,19 +171,35 @@ def preprocess():
 def run(check_type):
     """runs Varanus, executing the check_type supplied by the user (as the type parameter)"""
 
+    def make_monitor(old_version=False):
+        if CONF_MAP is not None:
+            return Monitor(
+                CONF_MODEL,
+                CONFIG_FILE,
+                CONF_MAP,
+                MODE,
+                old_version=old_version,
+                predictive_ltl_ws_url=PREDICTIVE_LTL_WS_URL,
+            )
+        return Monitor(
+            CONF_MODEL,
+            CONFIG_FILE,
+            None,
+            MODE,
+            old_version=old_version,
+            predictive_ltl_ws_url=PREDICTIVE_LTL_WS_URL,
+        )
+
     if check_type == "offline-old": # deprecated
         t0 = time.time()
-        mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, old_version=True)
+        mon = make_monitor(old_version=True)
         mon._run_offline_traces_interate(MAIN_PROCESS, TRACE_FILE)
     elif check_type == "online":
         t0 = time.time()
         t0 = time.time()
 
         varanus_logger.debug(CONF_MAP)
-        if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
-        else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        mon = make_monitor()
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
@@ -171,10 +232,7 @@ def run(check_type):
         varanus_logger.info("Repetitions: " + str(stress_reps))
 
         t0 = time.time()
-        if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
-        else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        mon = make_monitor()
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
@@ -203,10 +261,7 @@ def run(check_type):
         t0 = time.time()
 
         varanus_logger.debug(CONF_MAP)
-        if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
-        else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        mon = make_monitor()
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
@@ -232,10 +287,7 @@ def run(check_type):
     elif check_type == "build-only":
         varanus_logger.info("+++ Building State Machine Only +++")
         t0 = time.time()
-        if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
-        else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        mon = make_monitor()
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)
@@ -247,10 +299,7 @@ def run(check_type):
     elif check_type == "buchi-automaton":
         varanus_logger.info("+++ Exporting Büchi Automaton +++")
         t0 = time.time()
-        if CONF_MAP is not None:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, CONF_MAP, MODE)
-        else:
-            mon = Monitor(CONF_MODEL, CONFIG_FILE, None, MODE)
+        mon = make_monitor()
         build_start = time.time()
         if COMMON_ALPHA:
             mon.build_state_machine(MAIN_PROCESS, COMMON_ALPHA)

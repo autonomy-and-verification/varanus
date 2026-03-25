@@ -1,4 +1,5 @@
 import random
+import threading
 
 from fdr_interface import FDRInterface
 from system_interface import *
@@ -14,16 +15,75 @@ import time
 import logging
 import yaml
 
+try:
+    import websocket as ws_client
+except ImportError:
+    ws_client = None
+
 # "MASCOT_SAFETY_SYSTEM :[has trace]: <system_init>"
 # "model/mascot-safety-system.csp"
 varanus_logger = logging.getLogger("varanus")
 varanus_times = Time_Store()
 
 
+class PredictiveLTLWebSocketClient(object):
+    """Best-effort websocket client for querying an external predictive LTL monitor."""
+
+    def __init__(self, url, timeout=2.0):
+        self.url = url
+        self.timeout = timeout
+        self._socket = None
+
+    def _ensure_connected(self):
+        if ws_client is None:
+            raise RuntimeError("python package 'websocket-client' is required for predictive_ltl_ws_url.")
+        if self._socket is None:
+            self._socket = ws_client.create_connection(self.url, timeout=self.timeout)
+
+    def query(self, payload):
+        self._ensure_connected()
+        try:
+            self._socket.send(payload)
+            reply = self._socket.recv()
+        except Exception:
+            self.close()
+            self._ensure_connected()
+            self._socket.send(payload)
+            reply = self._socket.recv()
+
+        if isinstance(reply, bytes):
+            reply = reply.decode("utf-8", errors="replace")
+
+        try:
+            parsed = json.loads(reply)
+        except ValueError:
+            return {"status": "error", "raw_reply": reply}
+
+        if isinstance(parsed, dict):
+            return parsed
+        return {"status": "error", "raw_reply": parsed}
+
+    def close(self):
+        if self._socket is not None:
+            try:
+                self._socket.close()
+            except Exception:
+                pass
+            self._socket = None
+
+
 class Monitor(object):
     """The main class of the program, controls the process """
 
-    def __init__(self, model_path, config_file, event_map_path=None, mode=None, old_version=False):
+    def __init__(
+        self,
+        model_path,
+        config_file,
+        event_map_path=None,
+        mode=None,
+        old_version=False,
+        predictive_ltl_ws_url=None,
+    ):
         self.number_of_events = 0
         self.trace = Trace()
         self.mode = mode
@@ -47,6 +107,42 @@ class Monitor(object):
             self.load_alphabet_from_config(config_file)
         self.monitored_system = None
         self.transition_times = []
+        self.predictive_ltl_ws_url = predictive_ltl_ws_url
+        self.predictive_ltl_client = None
+        self.predictive_ltl_client_lock = threading.Lock()
+        if self.predictive_ltl_ws_url:
+            self.predictive_ltl_client = PredictiveLTLWebSocketClient(self.predictive_ltl_ws_url)
+            varanus_logger.info(
+                "Predictive LTL override enabled via websocket: " + str(self.predictive_ltl_ws_url)
+            )
+
+    def _query_predictive_verdict(self, original_message, parsed_event):
+        if self.predictive_ltl_client is None:
+            return None
+
+        request = json.dumps({"event": parsed_event, "raw_event": str(original_message)})
+        try:
+            with self.predictive_ltl_client_lock:
+                reply = self.predictive_ltl_client.query(request)
+        except Exception as error:
+            varanus_logger.error("Failed querying predictive monitor: " + str(error))
+            return None
+
+        verdict = None
+        if isinstance(reply, dict):
+            if "predictive_verdict" in reply:
+                verdict = reply["predictive_verdict"]
+            elif "verdict" in reply:
+                verdict = reply["verdict"]
+
+        if verdict is None:
+            return None
+
+        verdict = str(verdict).strip()
+        lower = verdict.lower()
+        if lower in {"true", "false", "?"}:
+            return lower
+        return None
 
     def load_alphabet_from_config(self, config_fn):
         """ Loads the alphabet of the CSP process represented by this State Machine from the config file, which is located at config_fn"""
@@ -514,6 +610,10 @@ class Monitor(object):
 
         # decode the event from the message
         event = self.monitored_system.parse_ROSMon_event(str(message)) # message is unicode
+        try:
+            answer = json.loads(message)
+        except ValueError:
+            answer = {"raw_event": str(message)}
         if event is not None:
             varanus_logger.debug("Monitor decoded event: " + event)
 
@@ -528,8 +628,17 @@ class Monitor(object):
                 #result[old_state].append((event, resulting_state.name))
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
-                answer = json.loads(message)
                 answer["verdict"] = "currently_true"
+                answer["parsed_event"] = event
+
+                predictive_verdict = self._query_predictive_verdict(message, event)
+                if predictive_verdict in {"true", "false"}:
+                    answer["predictive_verdict"] = predictive_verdict
+                    answer["verdict"] = "True" if predictive_verdict == "true" else "False"
+                elif predictive_verdict == "?":
+                    answer["predictive_verdict"] = "?"
+                    answer["verdict"] = "currently_true"
+
                 server.send_message(client, json.dumps(answer))
             else:
                 #result[old_state].append((event, resulting_state))
@@ -540,9 +649,13 @@ class Monitor(object):
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
                 passed = False
-                answer = json.loads(message)
                 answer["verdict"] = "false"
+                answer["parsed_event"] = event
                 server.send_message(client, json.dumps(answer))
+        else:
+            answer["verdict"] = "ignored"
+            answer["parsed_event"] = None
+            server.send_message(client, json.dumps(answer))
 
 
 
@@ -609,7 +722,8 @@ class Monitor(object):
         #     server.send_message(client, json.dumps(message_dict))
 
     def close(self):
-
+        if self.predictive_ltl_client is not None:
+            self.predictive_ltl_client.close()
         self.fdr.close()
 
     def run_state_machine_test(self, main_process):
@@ -656,6 +770,3 @@ class Monitor(object):
 
     def to_buchi_automaton(self):
         return self.process.to_buchi_automaton()
-
-
-
