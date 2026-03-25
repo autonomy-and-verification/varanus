@@ -116,6 +116,20 @@ class Monitor(object):
                 "Predictive LTL override enabled via websocket: " + str(self.predictive_ltl_ws_url)
             )
 
+    def _normalize_parsed_event(self, event):
+        if event is None:
+            return None
+        try:
+            return unicode(event)
+        except NameError:
+            return str(event)
+
+    def _set_parsed_event_fields(self, answer, event):
+        parsed_event = self._normalize_parsed_event(event)
+        answer["parsed_event"] = parsed_event
+        answer["event"] = parsed_event
+        return parsed_event
+
     def _query_predictive_verdict(self, original_message, parsed_event):
         if self.predictive_ltl_client is None:
             return None
@@ -629,9 +643,9 @@ class Monitor(object):
                 transition_end = time.time()
                 self.transition_times.append(transition_end - transition_start)
                 answer["verdict"] = "currently_true"
-                answer["parsed_event"] = event
+                parsed_event = self._set_parsed_event_fields(answer, event)
 
-                predictive_verdict = self._query_predictive_verdict(message, event)
+                predictive_verdict = self._query_predictive_verdict(message, parsed_event)
                 if predictive_verdict in {"true", "false"}:
                     answer["predictive_verdict"] = predictive_verdict
                     answer["verdict"] = "True" if predictive_verdict == "true" else "False"
@@ -650,11 +664,11 @@ class Monitor(object):
                 self.transition_times.append(transition_end - transition_start)
                 passed = False
                 answer["verdict"] = "false"
-                answer["parsed_event"] = event
+                self._set_parsed_event_fields(answer, event)
                 server.send_message(client, json.dumps(answer))
         else:
             answer["verdict"] = "ignored"
-            answer["parsed_event"] = None
+            self._set_parsed_event_fields(answer, None)
             server.send_message(client, json.dumps(answer))
 
 
