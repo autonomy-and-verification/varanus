@@ -5,6 +5,28 @@ import logging
 varanus_logger = logging.getLogger("varanus")
 
 
+try:
+    text_type = unicode
+except NameError:
+    text_type = str
+
+try:
+    binary_type = bytes
+except NameError:
+    binary_type = str
+
+
+def _to_text(value):
+    if isinstance(value, text_type):
+        return value
+    if isinstance(value, binary_type):
+        try:
+            return value.decode("utf-8")
+        except Exception:
+            return text_type(value)
+    return text_type(value)
+
+
 class State(object):
     """Represents one state in the Labelled Transition System"""
 
@@ -53,22 +75,31 @@ class State(object):
 class Transition(object):
     """ Represents a transition between States in the Labelled Transition System
     """
-    _TERMINATE = '\xe2\x9c\x93'
+    _TERMINATE = u'\u2713'
     """this is FDR's terminate transition, tick; if we see this we just go to the next state"""
 
-    _TAU = '\xcf\x84'
+    _TAU = u'\u03c4'
     """The tau character."""
+
+    _TERMINATE_TEXT = u'\u2713'
+    _TAU_TEXT = u'\u03c4'
+    _STUTTER_TICK_TEXT = u'tick'
 
    # _ACCEPTINGSTATE = State('accepting')
 
-    def __init__(self, name):
-        self.isTerminate = False
-        self.isTau = False
-        if name == self._TERMINATE:
-            self.isTerminate = True
+    @classmethod
+    def is_terminate_name(cls, name):
+        normalized = _to_text(name)
+        return normalized == cls._TERMINATE_TEXT or normalized.lower() == u'tick'
 
-        if name == self._TAU: # Python is a silly language. This used to use "is" but that fails.
-            self.isTau = True
+    @classmethod
+    def is_tau_name(cls, name):
+        normalized = _to_text(name)
+        return normalized == cls._TAU_TEXT or normalized.lower() == u'tau'
+
+    def __init__(self, name):
+        self.isTerminate = self.is_terminate_name(name)
+        self.isTau = self.is_tau_name(name)
         # Name is the transition is the event that triggers it
         self.name = name
         # TODO Is states only ever one item??
@@ -387,12 +418,15 @@ class CSPStateMachine(object):
         """
         Export this CSPStateMachine as a Buchi automaton in HOA format.
 
-        - Accepting states are the destinations of terminate transitions.
         - Tau transitions are ignored.
+        - ✓ (terminate) is treated as unobservable for online monitoring.
+        - A dedicated AP `tick` is added and used only for post-termination
+          stuttering transitions.
         - Visible transitions are emitted as total BDD cubes so every AP is
-        explicitly constrained on each edge.
-        - Accepting terminal states receive a [true] self-loop so that
-        the Buchi run can continue infinitely.
+          explicitly constrained on each edge (including !tick).
+        - Accepting states are inferred from terminate structure when present;
+          otherwise, deadlock/all-state fallbacks are used to avoid empty
+          omega-languages caused by export artefacts.
         """
 
         def complete_label(true_ap_index=None):
@@ -413,18 +447,51 @@ class CSPStateMachine(object):
         state_list = list(self.states.values())
         state_index = {s.name: i for i, s in enumerate(state_list)}
 
-        # Alphabet (ignore tau and terminate)
-        ap = sorted(a for a in self.alphabet
-                    if a not in (Transition._TAU, Transition._TERMINATE))
-        ap_index = {a: i for i, a in enumerate(ap)}
+        # Alphabet (ignore tau/terminate) plus dedicated stutter atom.
+        ap = [
+            a for a in self.alphabet
+            if not Transition.is_tau_name(a) and not Transition.is_terminate_name(a)
+        ]
+        ap_text = set(_to_text(a) for a in ap)
+        if Transition._STUTTER_TICK_TEXT not in ap_text:
+            ap.append(Transition._STUTTER_TICK_TEXT)
 
-        # Determine accepting states (destinations of ✓ transitions)
+        ap = sorted(ap, key=lambda a: _to_text(a))
+        ap_index = {}
+        for i, a in enumerate(ap):
+            ap_index[a] = i
+            ap_index[_to_text(a)] = i
+
+        tick_index = ap_index[Transition._STUTTER_TICK_TEXT]
+
+        # Determine accepting states from terminate structure.
+        # Because ✓ is unobservable in the online stream, both the source and
+        # destination side of a terminate step are treated as accepting.
         accepting_states = set()
         for state in state_list:
             for t in state.transitions.values():
                 if t.isTerminate:
+                    accepting_states.add(state.name)
                     for dest in t.destinations.values():
                         accepting_states.add(dest.name)
+
+        # Some FDR semantic exports omit explicit ✓ transitions and represent
+        # successful termination as deadlock states. Fall back accordingly.
+        if not accepting_states:
+            for state in state_list:
+                has_non_tau = False
+                for t in state.transitions.values():
+                    if not t.isTau:
+                        has_non_tau = True
+                        break
+                if not has_non_tau:
+                    accepting_states.add(state.name)
+
+        # Last-resort safety net: if acceptance is still empty, accept all states
+        # so that the automaton language is not spuriously empty.
+        if not accepting_states:
+            for state in state_list:
+                accepting_states.add(state.name)
 
         hoa = []
         hoa.append("HOA: v1")
@@ -453,20 +520,26 @@ class CSPStateMachine(object):
                 if t.isTau:
                     continue
 
-                has_visible_transition = True
-
                 if t.isTerminate:
-                    label = complete_label()
-                else:
-                    label = complete_label(ap_index[t.name])
+                    # ✓ is unobservable to the online monitor: do not require a
+                    # synthetic alphabet event to traverse it.
+                    continue
+
+                has_visible_transition = True
+                idx_true = ap_index.get(t.name)
+                if idx_true is None:
+                    idx_true = ap_index.get(_to_text(t.name))
+                if idx_true is None:
+                    continue
+                label = complete_label(idx_true)
 
                 for dest in t.destinations.values():
                     hoa.append("[{}] {}".format(label, state_index[dest.name]))
 
-            # If accepting state has no outgoing transitions,
-            # add self-loop to allow infinite Büchi run
+            # If an accepting state has no visible outgoing transitions,
+            # add a stuttering self-loop where only `tick` is true.
             if state.name in accepting_states and not has_visible_transition:
-                hoa.append("[true] {}".format(idx))
+                hoa.append("[{}] {}".format(complete_label(tick_index), idx))
 
         hoa.append("--END--")
 
