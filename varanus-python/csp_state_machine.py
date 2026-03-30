@@ -389,9 +389,25 @@ class CSPStateMachine(object):
 
         - Accepting states are the destinations of terminate transitions.
         - Tau transitions are ignored.
+        - Visible transitions are emitted as total BDD cubes so every AP is
+        explicitly constrained on each edge.
         - Accepting terminal states receive a [true] self-loop so that
         the Buchi run can continue infinitely.
         """
+
+        def complete_label(true_ap_index=None):
+            """Build a total HOA label over the full AP set."""
+            if not ap:
+                return "true"
+
+            clauses = []
+            for i in range(len(ap)):
+                if i == true_ap_index:
+                    clauses.append(str(i))
+                else:
+                    clauses.append("!{}".format(i))
+
+            return " & ".join(clauses)
 
         # Map states to indices
         state_list = list(self.states.values())
@@ -440,9 +456,9 @@ class CSPStateMachine(object):
                 has_visible_transition = True
 
                 if t.isTerminate:
-                    label = "true"
+                    label = complete_label()
                 else:
-                    label = str(ap_index.get(t.name, "true"))
+                    label = complete_label(ap_index[t.name])
 
                 for dest in t.destinations.values():
                     hoa.append("[{}] {}".format(label, state_index[dest.name]))
